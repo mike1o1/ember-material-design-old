@@ -2,7 +2,14 @@
 
 var EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
-var app = new EmberApp();
+var app = new EmberApp({
+    hinting: false,
+    autoprefixer: {
+        browsers: ['last 2 versions', 'last 4 Android versions'],
+        sourceMap: true,
+        enabled: true
+    }
+});
 
 // Use `app.import` to add additional libraries to the generated
 // output files.
