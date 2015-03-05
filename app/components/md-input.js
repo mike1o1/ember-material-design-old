@@ -20,8 +20,8 @@ var RbInputComponent = Ember.TextField.extend({
     }.on('didInsertElement'),
 
     resetContainer: function() {
-        this.get('inputContainer').send('setFocused', false);
-        this.get('inputContainer').send('setHasValue', false);
+        this.get('inputContainer').set('isFocused', false);
+        this.get('inputContainer').set('hasValue', false);
     }.on('willDestroyElement'),
 
     setFocused: function(ev) {

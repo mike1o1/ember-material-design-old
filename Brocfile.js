@@ -11,7 +11,6 @@ var app = new EmberApp({
         generateAssetMap: false
     },
 
-
     autoprefixer: {
         browsers: ['last 2 versions', 'last 4 Android versions'],
         sourceMap: true,
