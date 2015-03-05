@@ -4,8 +4,8 @@ module.exports = function(environment) {
     var ENV = {
         modulePrefix: 'ember-material-design',
         environment: environment,
-        baseURL: '/',
-        locationType: 'auto',
+        baseURL: '/ember-material-design',
+        locationType: 'hash',
         sassOptions: {
             sourceMapEmbed: true
         },
