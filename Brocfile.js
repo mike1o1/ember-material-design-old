@@ -4,6 +4,14 @@ var EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
 var app = new EmberApp({
     hinting: false,
+
+    fingerprint: {
+        prepend: '/',
+        enabled: false,
+        generateAssetMap: false
+    },
+
+
     autoprefixer: {
         browsers: ['last 2 versions', 'last 4 Android versions'],
         sourceMap: true,

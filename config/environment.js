@@ -6,9 +6,9 @@ module.exports = function(environment) {
         environment: environment,
         baseURL: '/ember-material-design',
         locationType: 'hash',
-        sassOptions: {
-            sourceMapEmbed: true
-        },
+        //sassOptions: {
+        //    sourceMapEmbed: true
+        //},
         EmberENV: {
             FEATURES: {
                 // Here you can enable experimental features on an ember canary build
