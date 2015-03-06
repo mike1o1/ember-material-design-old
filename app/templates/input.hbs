@@ -1,0 +1,83 @@
+<div class="demo-content">
+    <div class="doc-content" layout="column">
+        <div flex layout="column">
+
+            <section class="demo-container">
+                <demo-include class="md-whiteframe-z1 buttondemoBasicUsage">
+
+
+                    <md-content md-theme="docs-dark" class="md-padding" layout="row" layout-sm="column" style="font-size:1.2em">
+                        {{#md-input-container}}
+                            <label>Title</label>
+                            {{md-input value=user.title}}
+                        {{/md-input-container}}
+                        {{#md-input-container}}
+                            <label>Email</label>
+                            {{md-input value=user.email type="email"}}
+                        {{/md-input-container}}
+                    </md-content>
+
+                    <md-content class="md-padding">
+                        <form name="userForm">
+
+                            <div layout layout-sm="column">
+                                {{#md-input-container style="width:80%"}}
+                                    <label>Company (Disabled)</label>
+                                    {{md-input value=user.company disabled=true}}
+                                {{/md-input-container}}
+
+                                {{#md-input-container flex=''}}
+                                    <label>Submission Date</label>
+                                    {{md-input type="date" value=user.submissionDate}}
+                                {{/md-input-container}}
+                            </div>
+
+                            <div layout layout-sm="column">
+                                {{#md-input-container flex=''}}
+                                    <label>First Name</label>
+                                    {{md-input value=user.firstName placeholder="Placeholder text"}}
+                                {{/md-input-container}}
+                                {{#md-input-container flex=''}}
+                                    <label>Last Name</label>
+                                    {{md-input value=theMax}}
+                                {{/md-input-container}}
+                            </div>
+
+                            {{#md-input-container flex=''}}
+                                <label>Address</label>
+                                {{md-input value=user.address}}
+                            {{/md-input-container}}
+
+                            <div layout layout-sm="column">
+                                {{#md-input-container flex=''}}
+                                    <label>City</label>
+                                    {{md-input value=user.city}}
+                                {{/md-input-container}}
+                                {{#md-input-container flex=''}}
+                                    <label>State</label>
+                                    {{md-input value=user.state}}
+                                {{/md-input-container}}
+                                {{#md-input-container flex=''}}
+                                    <label>Postal Code</label>
+                                    {{md-input value=user.postalCode}}
+                                {{/md-input-container}}
+                            </div>
+
+                            {{#md-input-container flex=''}}
+                                <label>Biography</label>
+                                {{md-textarea value=user.biography columns="1" md-maxlength="150"}}
+                            {{/md-input-container}}
+
+
+                        </form>
+                    </md-content>
+
+
+
+                </demo-include>
+            </section>
+
+        </div>
+    </div>
+
+</div>

@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 
-var RbToolbar = Ember.Component.extend({
+var MdToolbar = Ember.Component.extend({
     tagName: ['md-toolbar'],
 
     shrinkSpeedFactor: 0.5,
@@ -24,4 +24,4 @@ var RbToolbar = Ember.Component.extend({
     }
 });
 
-export default RbToolbar;
+export default MdToolbar;

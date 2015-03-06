@@ -10,6 +10,8 @@ Router.map(function() {
   this.route('content');
   this.route('divider');
   this.route('card');
+  this.route('input');
+  this.route('list');
 });
 
 export default Router;

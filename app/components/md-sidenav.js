@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-var RbSidenav = Ember.Component.extend({
+var MdSidenav = Ember.Component.extend({
     tagName: 'md-sidenav',
 
     mediaQueries: Ember.inject.service('media-queries'),
@@ -63,4 +63,4 @@ var RbSidenav = Ember.Component.extend({
 
 });
 
-export default RbSidenav;
+export default MdSidenav;

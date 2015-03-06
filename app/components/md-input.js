@@ -1,10 +1,18 @@
 import Ember from 'ember';
 
-var RbInputComponent = Ember.TextField.extend({
+var MdInputComponent = Ember.TextField.extend({
+
+    classNames: ['md-input'],
 
     inputContainer: Ember.computed.alias('parentView'),
 
     setupPlaceholder: function() {
+
+        // this animates on page load, which isn't ideal
+        // TODO: move this to input container?
+        if (this.get('value')) {
+            this.processInput();
+        }
 
         if (!this.get('inputContainer') || !this.get('placeholder')) {
             return;
@@ -20,6 +28,7 @@ var RbInputComponent = Ember.TextField.extend({
     }.on('didInsertElement'),
 
     resetContainer: function() {
+
         this.get('inputContainer').set('isFocused', false);
         this.get('inputContainer').set('hasValue', false);
     }.on('willDestroyElement'),
@@ -30,7 +39,7 @@ var RbInputComponent = Ember.TextField.extend({
     }.on('focusIn', 'focusOut'),
 
     processInput: function() {
-        var hasValue = this.$().val().length > 0;
+        var hasValue = this.get('value').length > 0;
         this.get('inputContainer').set('hasValue', hasValue);
 
     }.on('input')
@@ -38,4 +47,4 @@ var RbInputComponent = Ember.TextField.extend({
 
 });
 
-export default RbInputComponent;
+export default MdInputComponent;
