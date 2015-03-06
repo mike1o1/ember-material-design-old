@@ -7,6 +7,12 @@ var RipplesMixin = Ember.Mixin.create({
     didInsertElement: function() {
         this._super();
 
+        var isMdButton = this.get('classNames').contains('md-button');
+
+        if (!isMdButton || this.get('mdNoInk')) {
+            return;
+        }
+
         var $element = this.$();
 
         var elementHasText = $element[0].textContent.trim();
@@ -15,11 +21,12 @@ var RipplesMixin = Ember.Mixin.create({
             // show ARIA warning
         }
 
+        // we only want to insert on a tags if the md-button class name is present
         var bs = this.get('buttonService');
 
-        if (!this.get('mdNoInk')) {
-            bs.attachButtonBehavior($element);
-        }
+
+        bs.attachButtonBehavior($element);
+
     }
 
 });

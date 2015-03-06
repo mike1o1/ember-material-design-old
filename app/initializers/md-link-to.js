@@ -11,11 +11,16 @@ export function initialize(/* container, application */) {
         flex: null
     });
 
-    Ember.LinkView.reopen(RipplesMixin, {});
+    // by default we will insert the ripples mixin to links,
+    // but ripples will only apply if the class is named 'md-button'
+    // and the 'md-no-ink' attribute isn't set
+    Ember.LinkView.reopen(RipplesMixin, {
+
+    });
 
 }
 
 export default {
-    name: 'rb-link-to',
+    name: 'md-link-to',
     initialize: initialize
 };

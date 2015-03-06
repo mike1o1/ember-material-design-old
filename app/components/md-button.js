@@ -9,7 +9,7 @@ var RbButtonComponent = Ember.Component.extend(RipplesMixin, {
 
     classNames: ['md-button'],
 
-    attributeBindings: ['disabled'],
+    attributeBindings: ['disabled', 'href'],
 
     buttonClassNames: function() {
 
