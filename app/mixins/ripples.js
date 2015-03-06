@@ -20,8 +20,6 @@ var RipplesMixin = Ember.Mixin.create({
         if (!this.get('mdNoInk')) {
             bs.attachButtonBehavior($element);
         }
-
-
     }
 
 });
