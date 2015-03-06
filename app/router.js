@@ -12,6 +12,7 @@ Router.map(function() {
   this.route('card');
   this.route('input');
   this.route('list');
+  this.route('toolbar');
 });
 
 export default Router;
