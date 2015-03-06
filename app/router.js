@@ -9,6 +9,7 @@ Router.map(function() {
   this.route('buttons');
   this.route('content');
   this.route('divider');
+  this.route('card');
 });
 
 export default Router;

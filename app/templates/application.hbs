@@ -4,6 +4,7 @@
         <h1 class="md-toolbar-tools">
             {{#link-to 'index' flex='' layoutType="row"}}
                 <img src="images/ember-construction-57.png" width="48" height="48">
+
                 <div class="docs-logotype">Material Design</div>
             {{/link-to}}
         </h1>
@@ -12,6 +13,9 @@
         <ul class="docs-menu">
             <li>
                 {{#link-to 'buttons' class="md-button"}}Buttons{{/link-to}}
+            </li>
+            <li>
+                {{#link-to 'card' class="md-button"}}Card{{/link-to}}
             </li>
 
             <li>
@@ -62,7 +66,6 @@
     <md-content class="md-padding" md-scroll-y flex>
         {{outlet}}
     </md-content>
-
 
 
 </div>
