@@ -8,7 +8,7 @@ var app = new EmberApp({
     fingerprint: {
         prepend: '/',
         enabled: false,
-        generateAssetMap: false
+        generateAssetMap: true
     },
 
     autoprefixer: {
