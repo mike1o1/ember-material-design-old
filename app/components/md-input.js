@@ -8,12 +8,6 @@ var MdInputComponent = Ember.TextField.extend({
 
     setupPlaceholder: function() {
 
-        // this animates on page load, which isn't ideal
-        // TODO: move this to input container?
-        if (this.get('value')) {
-            this.processInput();
-        }
-
         if (!this.get('inputContainer') || !this.get('placeholder')) {
             return;
         }
@@ -26,6 +20,14 @@ var MdInputComponent = Ember.TextField.extend({
         this.set('placeholder', '');
 
     }.on('didInsertElement'),
+
+    setupElement: function() {
+        // this animates on page load, which isn't ideal
+        // TODO: move this to input container?
+        if (this.get('value')) {
+            this.processInput();
+        }
+    }.on('willInsertElement'),
 
     resetContainer: function() {
 

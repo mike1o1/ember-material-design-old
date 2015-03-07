@@ -92,7 +92,7 @@ var RippleService = Ember.Service.extend({
     attach: function(element, options) {
 
         // check if element has md-no-ink attribute
-        if (element[0].hasAttribute('mdNoInk')) { 
+        if (element[0].hasAttribute('mdNoInk')) {
             return Ember.K;
         }
 

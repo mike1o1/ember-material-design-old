@@ -1,39 +1,43 @@
-<div class="demo-content">
-    <div class="doc-content" layout="column">
-        <div flex layout="column">
+<div class="doc-content" layout="column">
+    <div flex layout="column">
 
-            <section class="demo-container">
-                <demo-include class="md-whiteframe-z1 contentdemoBasicUsage">
+        <section class="demo-container">
+            <demo-include class="md-whiteframe-z1 contentdemoBasicUsage">
 
-                    <md-content>
+                <div class="demo-content">
+                    <div class="display-content">
+                        <md-content>
 
-                        <md-list>
+                            <md-list>
 
-                            {{#each item in todos}}
-                            <md-item ng-repeat="item in todos">
-                                <md-item-content>
-                                    <div class="md-tile-left">
-                                        <img {{bind-attr src=item.face alt=item.who}} class="face">
-                                    </div>
-                                    <div class="md-tile-content">
-                                        <h3>{{item.what}}</h3>
-                                        <h4>{{item.who}}</h4>
-                                        <p>
-                                            {{item.notes}}
-                                        </p>
-                                    </div>
-                                </md-item-content>
-                            </md-item>
-                            {{/each}}
+                                {{#each item in todos}}
+                                    <md-item ng-repeat="item in todos">
+                                        <md-item-content>
+                                            <div class="md-tile-left">
+                                                <img {{bind-attr src=item.face alt=item.who}} class="face">
+                                            </div>
+                                            <div class="md-tile-content">
+                                                <h3>{{item.what}}</h3>
+                                                <h4>{{item.who}}</h4>
 
-                        </md-list>
+                                                <p>
+                                                    {{item.notes}}
+                                                </p>
+                                            </div>
+                                        </md-item-content>
+                                    </md-item>
+                                {{/each}}
 
-                    </md-content>
+                            </md-list>
 
-                </demo-include>
-            </section>
+                        </md-content>
+                    </div>
+                </div>
 
 
-        </div>
+            </demo-include>
+        </section>
+
+
     </div>
 </div>
