@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import App from 'client/app';
 
 const Promise = Ember.RSVP.Promise;
 const forEach = Ember.EnumerableUtils.forEach;
@@ -8,18 +7,7 @@ const ELEMENT_NODE = 1;
 const RB_ANIMATE_STATE = '$$rbAnimateState';
 const RB_ANIMATE_CLASS_NAME = 'rb-animate';
 
-const extractElementNode = (element) => {
-    for (var i = 0; i < element.length; i++) {
-        const elm = element[i];
-        if (elm.nodeType == ELEMENT_NODE) {
-            return elm;
-        }
-    }
-};
-
-const prepareElement = (element) => {
-    return element && Ember.$(element);
-};
+var rootAnimateState = {running: false};
 
 const runAnimationPostSync = (fn) => {
     return new Promise((resolve, reject) => {
@@ -77,11 +65,28 @@ const lookup = (name) => {
 
 var AnimationService = Ember.Service.extend({
 
-    sniffer: Ember.injector.service('sniffer'),
+    sniffer: Ember.inject.service('sniffer'),
 
     rootElement: function() {
         return this.container.lookup('application:main').get('rootElement');
     }.property(),
+
+    extractElementNode: function(element) {
+        for (var i = 0; i < element.length; i++) {
+            const elm = element[i];
+            if (elm.nodeType == ELEMENT_NODE) {
+                return elm;
+            }
+        }
+    },
+
+    prepareElement: function(element) {
+        return element && Ember.$(element);
+    },
+
+    stripCommentsFromElement: function(element) {
+        return Ember.$(this.extractElementNode(element));
+    },
 
     lookup: function(name) {
         if (name) {
@@ -107,7 +112,45 @@ var AnimationService = Ember.Service.extend({
             });
     },
 
+    cleanup: function(element, className) {
+        if (this.isMatchingElement(element, this.rootElement())) {
+            if (!rootAnimateState.disabled) {
+                rootAnimateState.running = false;
+                rootAnimateState.structural = false;
+            }
+        } else if (className) {
+            var data = element.data(RB_ANIMATE_STATE) || {};
 
+            var removeAnimations = className === true;
+            if (!removeAnimations && data.active && data.active[className]) {
+                data.totalActive--;
+            }
+        }
+    },
+
+    enabled: function(value, element) {
+        switch (arguments.length) {
+            case 2:
+                if (value) {
+                    cleanup(element);
+                } else {
+                    var data = element.data(RB_ANIMATE_STATE) || {};
+                    data.disabled = true;
+                    element.data(RB_ANIMATE_STATE, data);
+                }
+                break;
+            case 1:
+                rootAnimateState.disabled = !value;
+                break;
+
+            default:
+                value = !rootAnimateState.disabled;
+                break;
+
+        }
+
+        return !!value;
+    },
 
     hasTransitions: function() {
         return hasTransitions();

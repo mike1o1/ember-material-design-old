@@ -11,43 +11,44 @@
     {{/md-toolbar}}
     <md-content flex>
         <ul class="docs-menu">
-            <li>
+            {{#link-to 'buttons' activeClass="parentActive" tagName='li'}}
                 {{#link-to 'buttons' class="md-button"}}Buttons{{/link-to}}
-            </li>
+            {{/link-to}}
 
-            <li>
+            {{#link-to 'card' activeClass="parentActive" tagName='li'}}
                 {{#link-to 'card' class="md-button"}}Card{{/link-to}}
-            </li>
-            <li>
+            {{/link-to}}
+
+            {{#link-to 'checkbox' activeClass='parentActive' tagName='li'}}
                 {{#link-to 'checkbox' class="md-button"}}Checkbox{{/link-to}}
-            </li>
+            {{/link-to}}
 
-            <li>
+            {{#link-to 'content' activeClass='parentActive' tagName='li'}}
                 {{#link-to 'content' class="md-button"}}Content{{/link-to}}
-            </li>
+            {{/link-to}}
 
-            <li>
+            {{#link-to 'divider' activeClass='parentActive' tagName='li'}}
                 {{#link-to 'divider' class="md-button"}}Divider{{/link-to}}
-            </li>
+            {{/link-to}}
 
 
-            <li>
+            {{#link-to 'input' activeClass='parentActive' tagName='li'}}
                 {{#link-to 'input' class="md-button"}}Input{{/link-to}}
-            </li>
+            {{/link-to}}
 
 
-            <li>
+            {{#link-to 'list' activeClass='parentActive' tagName='li'}}
                 {{#link-to 'list' class="md-button"}}List{{/link-to}}
-            </li>
+            {{/link-to}}
 
-            <li>
+            {{#link-to 'toolbar' activeClass='parentActive' tagName='li'}}
                 {{#link-to 'toolbar' class="md-button"}}Toolbar{{/link-to}}
-            </li>
+            {{/link-to}}
 
 
-            <li>
+            {{#link-to 'index' activeClass='parentActive' tagName='li'}} 
                 {{#link-to 'index' classNames="md-button"}}Index{{/link-to}}
-            </li>
+            {{/link-to}}
 
         </ul>
     </md-content>

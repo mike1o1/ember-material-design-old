@@ -16,9 +16,7 @@ module.exports = function(environment) {
             }
         },
 
-        googleAnalytics : {
-            webPropertyId: 'UA-34906353-1'
-        },
+
 
         APP: {
             // Here you can pass flags/options to your application instance
@@ -43,7 +41,7 @@ module.exports = function(environment) {
 
     if (environment === 'test') {
         // Testem prefers this...
-        ENV.baseURL = '/';
+        ENV.baseURL = '/ember-material-design';
         ENV.locationType = 'none';
 
         // keep test console output quieter
@@ -54,7 +52,9 @@ module.exports = function(environment) {
     }
 
     if (environment === 'production') {
-
+        ENV.googleAnalytics = {
+            webPropertyId: 'UA-34906353-1'
+        }
     }
 
     return ENV;
