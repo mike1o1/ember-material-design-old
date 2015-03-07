@@ -11,7 +11,11 @@ var RbInputContainer = Ember.Component.extend({
         'isInvalid:md-input-invalid'],
 
     isFocused: false,
-    hasValue: false,
+
+    hasValue: function() {
+        return this.get('value') && this.get('value').length > 0;
+    }.property('value'),
+
     iInvalid: false
 });
 

@@ -6,6 +6,8 @@ var MdInputComponent = Ember.TextField.extend({
 
     inputContainer: Ember.computed.alias('parentView'),
 
+    attributeBindings: ['style'],
+
     setupPlaceholder: function() {
 
         if (!this.get('inputContainer') || !this.get('placeholder')) {
@@ -21,18 +23,8 @@ var MdInputComponent = Ember.TextField.extend({
 
     }.on('didInsertElement'),
 
-    setupElement: function() {
-        // this animates on page load, which isn't ideal
-        // TODO: move this to input container?
-        if (this.get('value')) {
-            this.processInput();
-        }
-    }.on('willInsertElement'),
-
     resetContainer: function() {
-
         this.get('inputContainer').set('isFocused', false);
-        this.get('inputContainer').set('hasValue', false);
     }.on('willDestroyElement'),
 
     setFocused: function(ev) {
@@ -41,8 +33,8 @@ var MdInputComponent = Ember.TextField.extend({
     }.on('focusIn', 'focusOut'),
 
     processInput: function() {
-        var hasValue = this.get('value').length > 0;
-        this.get('inputContainer').set('hasValue', hasValue);
+        console.log('input input: ', this.get('value'));
+        this.get('inputContainer').set('value', this.get('value'));
 
     }.on('input')
 
