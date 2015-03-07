@@ -74,19 +74,32 @@ var RippleService = Ember.Service.extend({
 
     attachButtonBehavior: function(element, options) {
         return this.attach(element, $.extend({
-            isFAB: element.hasClass('md-fab'),
+            fullRipple: true,
             isMenuItem: element.hasClass('md-menu-item'),
             center: false,
             dimBackground: true
         }, options));
     },
 
+    attachCheckboxBehavior: function(element, options) {
+        return this.attach(element, Ember.merge({
+            center: true,
+            dimBackground: false,
+            fitRipple: true
+        }, options));
+    },
+
     attach: function(element, options) {
 
         // check if element has md-no-ink attribute
+        var n = element[0];
+        console.log(n.hasAttribute('md-no-ink'));
+        if (n.hasAttribute('mdNoInk')) {
+            return Ember.K;
+        }
 
         // TODO: Does Ember have a native extend?
-        options = $.extend({
+        options = Ember.merge({
             colorElement: element,
             mousedown: true,
             hover: true,
@@ -95,7 +108,7 @@ var RippleService = Ember.Service.extend({
             mousedownPauseTime: 150,
             dimBackground: false,
             outline: false,
-            isFAB: false,
+            fullRipple: true,
             isMenuItem: false,
             fitRipple: false
 
@@ -114,10 +127,10 @@ var RippleService = Ember.Service.extend({
 
         switch (rippleSizeSetting) {
             case 'full':
-                options.isFAB = true;
+                options.fullRipple = true;
                 break;
             case 'partial':
-                options.isFAB = false;
+                options.fullRipple = false;
                 break;
         }
 
@@ -265,7 +278,7 @@ var RippleService = Ember.Service.extend({
                     height = Math.max(top, height - top);
                     size = 2 * Math.sqrt(Math.pow(width, 2) + Math.pow(height, 2));
                 } else {
-                    multiplier = options.isFAB ? 1.1 : 0.8;
+                    multiplier = options.fullRipple ? 1.1 : 0.8;
                     size = Math.sqrt(Math.pow(width, 2) + Math.pow(height, 2)) * multiplier;
                     if (options.fitRipple) {
                         size = Math.min(height, width, size);
@@ -282,7 +295,7 @@ var RippleService = Ember.Service.extend({
              * @param {number} left the left cursor offset
              * @param {number} top the top cursor offset
              *
-             * @returns {{backgroundColor: *, width: string, height: string, marginLeft: string, marginTop: string}}
+             * @returns {{backgroundColor: string, borderColor: string, width: string, height: string}}
              */
             function getRippleCss(size, left, top) {
                 var rect,
@@ -314,11 +327,26 @@ var RippleService = Ember.Service.extend({
 
         function onPressDown(ev) {
 
+            if (!isRippleAllowed()) {
+                return;
+            }
+
             var x = ev.clientX || ev.originalEvent.touches[0].clientX,
                 y = ev.clientY || ev.originalEvent.touches[0].clientY;
 
             var ripple = createRipple(x, y);
             isHeld = true;
+        }
+
+        function isRippleAllowed() {
+            var parent = node.parentNode;
+            var grandparent = parent && parent.parentNode;
+            var ancestor = grandparent && grandparent.parentNode;
+            return !isDisabled(node) && !isDisabled(parent) && !isDisabled(grandparent) && !isDisabled(ancestor);
+
+            function isDisabled(elem) {
+                return elem && elem.hasAttribute && elem.hasAttribute('disabled');
+            }
         }
 
         function onPressUp(ev) {

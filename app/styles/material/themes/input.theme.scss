@@ -6,6 +6,10 @@ md-input-container {
     text-shadow: $foreground-shadow;
   }
 
+  > md-icon {
+    fill: color($foreground, "1");
+  }
+
   label,
   .md-placeholder {
     text-shadow: $foreground-shadow;
@@ -25,6 +29,9 @@ md-input-container {
       }
       label {
         color: color($primary);
+      }
+      md-icon {
+        fill: color($primary);
       }
 
       &.md-accent {

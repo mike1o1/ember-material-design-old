@@ -4,6 +4,8 @@ var HasFlexMixin = Ember.Mixin.create({
 
     attributeBindings: ['flex'],
 
+
+
     flex: null
 
 

@@ -3,9 +3,11 @@ import RipplesMixin from '../mixins/ripples';
 
 var RbButtonComponent = Ember.Component.extend(RipplesMixin, {
 
-    buttonService: Ember.inject.service('ripple'),
-
     tagName: 'button',
+
+    setupRipples: function() {
+        this.get('rippleService').attachButtonBehavior(this.$());
+    }.on('didInsertElement'),
 
     classNames: ['md-button'],
 

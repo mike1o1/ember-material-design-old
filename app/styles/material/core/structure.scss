@@ -212,14 +212,14 @@ input {
     $positionDuration: 0.9s * 2;
     $sizeDuration: 0.65s * 2;
 
-    transition: left $positionDuration $swift-ease-out-timing-function,
-    top $positionDuration $swift-ease-out-timing-function,
-    margin $sizeDuration $swift-ease-out-timing-function,
-    border $sizeDuration $swift-ease-out-timing-function,
-    width $sizeDuration $swift-ease-out-timing-function,
-    height $sizeDuration $swift-ease-out-timing-function,
-    opacity $sizeDuration $swift-ease-out-timing-function,
-    transform $sizeDuration $swift-ease-out-timing-function;
+    transition: left  $positionDuration $swift-ease-out-timing-function,
+                top $positionDuration $swift-ease-out-timing-function,
+                margin $sizeDuration $swift-ease-out-timing-function,
+                border $sizeDuration $swift-ease-out-timing-function,
+                width $sizeDuration $swift-ease-out-timing-function,
+                height $sizeDuration $swift-ease-out-timing-function,
+                opacity $sizeDuration $swift-ease-out-timing-function,
+                transform $sizeDuration $swift-ease-out-timing-function;
   }
 
   &.md-ripple-scaled {
@@ -231,7 +231,7 @@ input {
   }
 }
 
-md-tab {
+/*md-tab {
   > .md-ripple-container {
     .md-ripple {
       box-sizing: content-box;
@@ -249,7 +249,7 @@ md-tab {
       }
     }
   }
-}
+}*/
 
 @function map-to-string($map) {
   $map-str: '{';

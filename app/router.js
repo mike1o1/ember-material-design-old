@@ -14,6 +14,7 @@ Router.map(function() {
   this.route('input');
   this.route('list');
   this.route('toolbar');
+  this.route('checkbox');
 });
 
 export default Router;

@@ -29,7 +29,7 @@ module.exports = function(environment) {
             'img-src': "'self' data: * https://placehold.it",
             'font-src': "'self' https://fonts.gstatic.com",
             'style-src': "'self' https://fonts.googleapis.com 'unsafe-inline'",
-            'script-src': "'self' 'unsafe-eval' https://www.google-analytics"
+            'script-src': "'self' 'unsafe-eval' https://www.google-analytics.com"
         }
     };
 
