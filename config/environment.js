@@ -16,6 +16,10 @@ module.exports = function(environment) {
             }
         },
 
+        googleAnalytics : {
+            webPropertyId: 'UA-34906353-1'
+        },
+
         APP: {
             // Here you can pass flags/options to your application instance
             // when it is created
@@ -24,7 +28,8 @@ module.exports = function(environment) {
         contentSecurityPolicy: {
             'img-src': "'self' data: * https://placehold.it",
             'font-src': "'self' https://fonts.gstatic.com",
-            'style-src': "'self' https://fonts.googleapis.com 'unsafe-inline'"
+            'style-src': "'self' https://fonts.googleapis.com 'unsafe-inline'",
+            'script-src': "'self' 'unsafe-eval' https://www.google-analytics"
         }
     };
 
