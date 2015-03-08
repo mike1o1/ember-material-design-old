@@ -8,17 +8,22 @@ var MdInputComponent = Ember.TextField.extend({
 
     attributeBindings: ['style'],
 
+    originalPlaceholder: '',
+
     setupPlaceholder: function() {
+
+        this.set('originalPlaceholder', this.get('placeholder'));
 
         if (!this.get('inputContainer') || !this.get('placeholder')) {
             return;
         }
 
-        var placeholderText = this.get('placeholder');
-
-        this.get('inputContainer').$().append('<div class="md-placeholder">' + placeholderText + '</div>');
-
-        // we don't need this on the element anymore, so get rid of it
+        this.set('inputContainer.placeholder', this.get('placeholder'));
+        //var placeholderText = this.get('placeholder');
+        //
+        //this.get('inputContainer').$().append('<div class="md-placeholder">' + this.get('placeholder') + '</div>');
+        //
+        //// we don't need this on the element anymore, so get rid of it
         this.set('placeholder', '');
 
     }.on('didInsertElement'),
@@ -33,8 +38,15 @@ var MdInputComponent = Ember.TextField.extend({
     }.on('focusIn', 'focusOut'),
 
     processInput: function() {
-        console.log('input input: ', this.get('value'));
-        this.get('inputContainer').set('value', this.get('value'));
+
+        if (this.get('value') && this.get('value').length > 0) {
+            this.get('inputContainer').set('value', this.get('value'));
+            this.set('inputContainer.placeholder', '');
+
+        } else {
+            this.get('inputContainer').set('placeholder', this.get('originalPlaceholder'));
+        }
+
 
     }.on('input')
 

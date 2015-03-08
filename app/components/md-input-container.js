@@ -12,6 +12,8 @@ var RbInputContainer = Ember.Component.extend({
 
     isFocused: false,
 
+    placeholder: '',
+
     hasValue: function() {
         return this.get('value') && this.get('value').length > 0;
     }.property('value'),
