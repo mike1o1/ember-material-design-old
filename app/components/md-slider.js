@@ -70,31 +70,49 @@ var MdSlider = Ember.Component.extend(EventsMixin, {
         return this.get('trackContainer')[0].getBoundingClientRect();
     }.property(),
 
-    start: function(event) {
-        if (this.get('disabled')) {
-            return;
-        }
-
-        this.set('active', true);
-        this.$().focus();
-
-        this.get('sliderDimensions');
-
+    setValueFromEvent: function(event) {
         var exactVal = this.percentToValue(this.positionToPercent(event.clientX || event.originalEvent.touches[0].clientX));
         var closestVal = this.minMaxValidator( this.stepValidator(exactVal));
 
         this.set('value', closestVal);
     },
 
-    end: function() {
+    start: function(event) {
         if (this.get('disabled')) {
             return;
         }
+
+        this.set('active', true);
+        this.set('dragging', true);
+        this.$().focus();
+
+        this.get('sliderDimensions');
+
+        this.setValueFromEvent(event);
+    },
+
+    end: function(event) {
+        if (this.get('disabled')) {
+            return;
+        }
+
+        event.stopPropagation();
 
         this.beginPropertyChanges();
         this.set('active', false);
         this.set('dragging', false);
         this.endPropertyChanges();
+    },
+
+    move: function(event) {
+        if (this.get('disabled') || !this.get('dragging')) {
+            return;
+        }
+
+        event.stopPropagation();
+
+        this.setValueFromEvent(event);
+
     },
 
     keyDown: function(event) {
