@@ -1,7 +1,8 @@
 import Ember from 'ember';
 import RippleMixin from '../mixins/ripples';
+import { KEY_CODE } from '../utils/constants';
 
-var KEY_CODE_SPACE = 32;
+
 
 var MdCheckbox = Ember.Component.extend(RippleMixin, {
 
@@ -35,7 +36,7 @@ var MdCheckbox = Ember.Component.extend(RippleMixin, {
     },
 
     keyPress: function(event) {
-        if (event.which === KEY_CODE_SPACE) {
+        if (event.which === KEY_CODE.SPACE) {
             this.click();
         }
     }

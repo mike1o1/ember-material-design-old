@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import { START_EVENTS, END_EVENTS } from '../utils/constants';
 
 /**
  * Converts rgb value to rgba string
@@ -66,9 +67,6 @@ function parseColor(color) {
         return hexToRGBA(color);
     }
 }
-
-var START_EVENTS = 'mousedown touchstart pointerdown';
-var END_EVENTS = 'mouseup mouseleave touchend touchcancel pointerup pointercancel';
 
 var RippleService = Ember.Service.extend({
 
