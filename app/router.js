@@ -15,6 +15,7 @@ Router.map(function() {
   this.route('list');
   this.route('toolbar');
   this.route('checkbox');
+  this.route('slider');
 });
 
 export default Router;

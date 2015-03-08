@@ -6,6 +6,7 @@
 @import "core/mixins";
 @import "core/structure";
 @import "core/layout";
+
 // Components
 @import "components/button";
 @import "components/whiteframe";
@@ -18,6 +19,8 @@
 @import "components/card";
 @import "components/checkbox";
 @import "components/sidenav";
+@import "components/slider";
+
 // Themes
 @import "themes/button.theme";
 @import "themes/toolbar.theme";
@@ -27,4 +30,4 @@
 @import "themes/input.theme";
 @import "themes/card.theme";
 @import "themes/checkbox.theme";
-@import "themes/sidenav.theme";
+@import "themes/slider.theme";
