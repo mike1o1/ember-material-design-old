@@ -1,8 +1,9 @@
 import Ember from 'ember';
 import EventsMixin from '../mixins/events';
+import GestureEventsMixin from '../mixins/gesture-events';
 import { KEY_CODE } from '../utils/constants';
 
-var MdSlider = Ember.Component.extend(EventsMixin, {
+var MdSlider = Ember.Component.extend(GestureEventsMixin, {
 
     tagName: 'md-slider',
 

@@ -1,4 +1,6 @@
-const START_EVENTS = 'mousedown touchstart pointerdown';
+const START_EVENTS = ['mouseDown', 'touchStart', 'pointerDown'];
+
+const MOVE_EVENTS = 'mousemove touchmove pointermove';
 const END_EVENTS = 'mouseup mouseleave touchend touchcancel pointerup pointercancel';
 const KEY_CODE = {
     ENTER: 13,
@@ -22,6 +24,7 @@ const MEDIA = {
 
 export {
     START_EVENTS,
+    MOVE_EVENTS,
     END_EVENTS,
     KEY_CODE,
     MEDIA

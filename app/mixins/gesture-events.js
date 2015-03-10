@@ -1,0 +1,147 @@
+import Ember from 'ember';
+import { START_EVENTS, MOVE_EVENTS, END_EVENTS } from '../utils/constants';
+
+function getEventPoint(ev) {
+    ev = ev.originalEvent || ev;
+    return  (ev.touches && ev.touches[0]) ||
+            (ev.changedTouches && ev.changedTouches[0]) ||
+            ev;
+}
+
+function makeStartPointer(ev) {
+    var point = getEventPoint(ev);
+    var startPointer = {
+        startTime: +Date.now(),
+        target: ev.target,
+        // 'p' for pointer, 'm' for mouse, 't' for touch
+        type: ev.type.charAt(0)
+    };
+
+    startPointer.startX = startPointer.x = point.pageX;
+    startPointer.startY = startPointer.y = point.pageY;
+
+    return startPointer;
+}
+
+function typesMatch(ev, pointer) {
+    return ev && pointer && ev.type.charAt(0) === pointer.type;
+}
+
+function updatePointerState(ev, pointer) {
+    var point = getEventPoint(ev);
+    var x = pointer.x = point.pageX;
+    var y = pointer.y = point.pageY;
+
+    pointer.distanceX = x - pointer.startX;
+    pointer.distanceY = y - pointer.startY;
+    pointer.distance = Math.sqrt(
+        pointer.distanceX * pointer.distanceX + pointer.distanceY * pointer.distanceY
+    );
+
+    pointer.directionX = pointer.distanceX > 0 ? 'right' : pointer.distanceX < 0 ? 'left' : '';
+    pointer.directionY = pointer.distanceY > 0 ? 'up' : pointer.distanceY < 0 ? 'down' : '';
+
+    pointer.duration = +Date.now() - pointer.startTime;
+    pointer.velocityX = pointer.distanceX / pointer.duration;
+    pointer.velocityY = pointer.distanceY / pointer.duration;
+}
+
+var pointer, lastPointer;
+
+
+
+var GestureEventsMixin = Ember.Mixin.create(Ember.Evented, {
+
+
+    handlers: null,
+
+    gestureStart: function(ev) {
+        // if we're already touched down, abort
+        if (pointer) {
+            return;
+        }
+
+        var now = +Date.now();
+
+        if (lastPointer && !typesMatch(ev, lastPointer) && (now - lastPointer.endTime < 1500)) {
+            return;
+        }
+
+        pointer =  makeStartPointer(ev);
+
+        this.runHandlers('start', ev);
+    }.on('mouseDown', 'touchStart', 'pointerDown'),
+
+    gestureMove: function(ev) {
+        if (!pointer || !typesMatch(ev, pointer)) {
+            return;
+        }
+
+        updatePointerState(ev, pointer);
+        this.runHandlers('move', ev);
+    },
+
+    gestureEnd: function(ev) {
+        if (!pointer || !typesMatch(ev, pointer)) {
+            return;
+        }
+
+        updatePointerState(ev, pointer);
+        pointer.endTime = +Date.now();
+
+        this.runHandlers('end', ev);
+
+        lastPointer = pointer;
+        pointer = null;
+
+    }.on('mouseUp', 'mouseLeave', 'touchEnd', 'touchCancel', 'pointerUp', 'pointerCancel'),
+
+    runHandlers: function(type, event) {
+        console.log('executing ' + type + ' handler: ', event);
+    },
+
+
+
+    ///*
+    // * Start events
+    // */
+    //mouseDown: function(e) {
+    //    return this.gestureStart(e);
+    //},
+    //
+    //touchStart: function(e) {
+    //    return this.gestureStart(e);
+    //},
+    //
+    //pointerDown: function(e) {
+    //    return this.gestureStart(e);
+    //},
+    //
+    //start: function() {
+    //
+    //},
+
+
+    /*
+     * Move events
+     */
+
+    mouseMove: function(e) {
+        return this.move(e);
+    },
+
+    touchMove: function(e) {
+        return this.move(e);
+    },
+
+    pointerMove: function(e) {
+        return this.move(e);
+    },
+
+    move: Ember.K
+
+
+
+});
+
+export default GestureEventsMixin;
