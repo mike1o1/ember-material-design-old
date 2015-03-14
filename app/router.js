@@ -16,6 +16,7 @@ Router.map(function() {
   this.route('toolbar');
   this.route('checkbox');
   this.route('slider');
+  this.route('progress-circular');
 });
 
 export default Router;

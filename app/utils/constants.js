@@ -1,3 +1,5 @@
+import Ember from 'ember';
+
 const START_EVENTS = ['mouseDown', 'touchStart', 'pointerDown'];
 
 const MOVE_EVENTS = 'mousemove touchmove pointermove';
@@ -11,6 +13,29 @@ const KEY_CODE = {
     RIGHT_ARROW: 39,
     DOWN_ARROW: 40,
     TAB: 9
+};
+
+var SnifferService = Ember.inject.service('sniffer');
+
+var webkit = /webkit/i.test(Ember.get('SnifferService.vendorPrefix'));
+function vendorProperty(name) {
+    return webkit ? ('webkit' + name.charAt(0).toUpperCase() + name.substring(1)) : name;
+}
+
+const CSS = {
+    /* Constants */
+    TRANSITIONEND: 'transitionend' + (webkit ? ' webkitTransitionEnd' : ''),
+    ANIMATIONEND: 'animationend' + (webkit ? ' webkitAnimationEnd' : ''),
+
+    TRANSFORM: vendorProperty('transform'),
+    TRANSFORM_ORIGIN: vendorProperty('transformOrigin'),
+    TRANSITION: vendorProperty('transition'),
+    TRANSITION_DURATION: vendorProperty('transitionDuration'),
+    ANIMATION_PLAY_STATE: vendorProperty('animationPlayState'),
+    ANIMATION_DURATION: vendorProperty('animationDuration'),
+    ANIMATION_NAME: vendorProperty('animationName'),
+    ANIMATION_TIMING: vendorProperty('animationTimingFunction'),
+    ANIMATION_DIRECTION: vendorProperty('animationDirection')
 };
 
 const MEDIA = {
@@ -27,5 +52,6 @@ export {
     MOVE_EVENTS,
     END_EVENTS,
     KEY_CODE,
-    MEDIA
+    MEDIA,
+    CSS
 };

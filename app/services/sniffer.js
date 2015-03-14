@@ -34,10 +34,6 @@ var SnifferService = Ember.Service.extend({
     init: function() {
         this._super();
 
-        //console.log(this.get('document').body.style);
-
-        //var document = this.get('document');
-
         var bodyStyle = this.get('document').body && this.get('document').body.style;
         var vendorPrefix;
         var vendorRegex = /^(Moz|webkit|ms)(?=[A-Z])/;
