@@ -48,12 +48,60 @@ function updatePointerState(ev, pointer) {
 
 var pointer, lastPointer;
 
+function GestureHandler(name) {
+    this.name = name;
+    this.state = {};
+}
+
+GestureHandler.prototype = {
+    onStart: Ember.K,
+    onMove: Ember.K,
+    onEnd: Ember.K,
+    onCancel: Ember.K,
+    options: {},
+
+    start: function(ev, pointer) {
+        if (this.state.isRunning) {
+            return;
+        }
+
+        this.state = {
+            isRunning: true,
+            options: Ember.merge({}, this.options)
+        };
+
+        this.onStart(ev, pointer);
+    },
+
+    move: function(ev, pointer) {
+        if (!this.state.isRunning) {
+            return;
+        }
+
+        this.onMove(ev, pointer);
+    },
+
+    end: function(ev, pointer) {
+        if (!this.state.isRunning) {
+            return;
+        }
+
+        this.onEnd(ev, pointer);
+        this.state.isRunning = false;
+    },
+
+    cancel: function(ev, pointer) {
+        this.onCancel(ev, pointer);
+        this.state = {};
+    }
+};
+
 
 
 var GestureEventsMixin = Ember.Mixin.create(Ember.Evented, {
 
 
-    handlers: null,
+    handlers: {},
 
     gestureStart: function(ev) {
         // if we're already touched down, abort
@@ -70,6 +118,7 @@ var GestureEventsMixin = Ember.Mixin.create(Ember.Evented, {
         pointer =  makeStartPointer(ev);
 
         this.runHandlers('start', ev);
+
     }.on('mouseDown', 'touchStart', 'pointerDown'),
 
     gestureMove: function(ev) {
@@ -79,7 +128,7 @@ var GestureEventsMixin = Ember.Mixin.create(Ember.Evented, {
 
         updatePointerState(ev, pointer);
         this.runHandlers('move', ev);
-    },
+    }.on('mouseMove', 'touchMove', 'pointerMove'),
 
     gestureEnd: function(ev) {
         if (!pointer || !typesMatch(ev, pointer)) {
@@ -96,49 +145,24 @@ var GestureEventsMixin = Ember.Mixin.create(Ember.Evented, {
 
     }.on('mouseUp', 'mouseLeave', 'touchEnd', 'touchCancel', 'pointerUp', 'pointerCancel'),
 
-    runHandlers: function(type, event) {
-        console.log('executing ' + type + ' handler: ', event);
+    addHandler: function(name, definition) {
+        var handler = new GestureHandler(name);
+        Ember.merge(handler, definition);
+        this.handlers[name] = handler;
     },
 
+    pressStart: function(ev, pointer) {
 
+    }.on('press.start'),
 
-    ///*
-    // * Start events
-    // */
-    //mouseDown: function(e) {
-    //    return this.gestureStart(e);
-    //},
-    //
-    //touchStart: function(e) {
-    //    return this.gestureStart(e);
-    //},
-    //
-    //pointerDown: function(e) {
-    //    return this.gestureStart(e);
-    //},
-    //
-    //start: function() {
-    //
-    //},
+    pressOnStart: function(ev, pointer) {
+        this.trigger('$md.pressdown', ev);
+    }.on('press.onStart'),
 
+    pressOnEnd: function(ev, pointer) {
+        this.trigger('$md.pressup', ev);
+    }.on('press.onEnd'),
 
-    /*
-     * Move events
-     */
-
-    mouseMove: function(e) {
-        return this.move(e);
-    },
-
-    touchMove: function(e) {
-        return this.move(e);
-    },
-
-    pointerMove: function(e) {
-        return this.move(e);
-    },
-
-    move: Ember.K
 
 
 
