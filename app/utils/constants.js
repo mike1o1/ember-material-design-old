@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-const START_EVENTS = ['mouseDown', 'touchStart', 'pointerDown'];
+const START_EVENTS = 'mousedown touchstart pointerdown';
 
 const MOVE_EVENTS = 'mousemove touchmove pointermove';
 const END_EVENTS = 'mouseup mouseleave touchend touchcancel pointerup pointercancel';
