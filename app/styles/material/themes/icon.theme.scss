@@ -1,0 +1,13 @@
+md-icon {
+  &.md-primary {
+    color: color($primary);
+  }
+
+  &.md-accent {
+    color: color($accent);
+  }
+
+  &.md-warn {
+    color: color($warn);
+  }
+}

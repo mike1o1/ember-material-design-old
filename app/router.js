@@ -18,6 +18,7 @@ Router.map(function() {
   this.route('slider');
   this.route('progress-circular');
   this.route('progress-linear');
+  this.route('icon');
 });
 
 export default Router;
