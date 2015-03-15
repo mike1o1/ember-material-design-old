@@ -1,12 +1,9 @@
 import Ember from 'ember';
 import RippleMixin from '../mixins/ripples';
-import { KEY_CODE } from '../utils/constants';
-
-
 
 var MdCheckbox = Ember.Component.extend(RippleMixin, {
 
-
+    constants: Ember.inject.service('constants'),
     tagName: 'md-checkbox',
     classNames: ['md-checkbox'],
     classNameBindings: ['checked:md-checked'],
@@ -36,7 +33,7 @@ var MdCheckbox = Ember.Component.extend(RippleMixin, {
     },
 
     keyPress: function(event) {
-        if (event.which === KEY_CODE.SPACE) {
+        if (event.which === this.get('constants.KEY_CODE.SPACE')) {
             this.click();
         }
     }

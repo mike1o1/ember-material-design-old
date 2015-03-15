@@ -1,9 +1,10 @@
 import Ember from 'ember';
 import EventsMixin from '../mixins/events';
 import GestureEventsMixin from '../mixins/gesture-events';
-import { KEY_CODE } from '../utils/constants';
 
 var MdSlider = Ember.Component.extend(EventsMixin, {
+
+    constants: Ember.inject.service('constants'),
 
     tagName: 'md-slider',
 
@@ -123,9 +124,9 @@ var MdSlider = Ember.Component.extend(EventsMixin, {
 
         var changeAmount;
 
-        if (event.keyCode === KEY_CODE.LEFT_ARROW) {
+        if (event.keyCode === this.get('constants.KEY_CODE.LEFT_ARROW')) {
             changeAmount = this.get('step') * -1;
-        } else if (event.keyCode === KEY_CODE.RIGHT_ARROW) {
+        } else if (event.keyCode === this.get('constants.KEY_CODE.RIGHT_ARROW')) {
             changeAmount = this.get('step')
         }
         if (changeAmount) {

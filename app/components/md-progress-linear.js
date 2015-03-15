@@ -1,13 +1,23 @@
 import Ember from 'ember';
-import { CSS } from '../utils/constants';
 
 function makeTransform(value) {
     var scale = value / 100;
-    var translateX = (value-100) / 2;
+    var translateX = (value - 100) / 2;
     return 'translateX(' + translateX.toString() + '%) scale(' + scale.toString() + ', 1)';
 }
 
 var MdProgressLinear = Ember.Component.extend({
+
+    isInserted: false,
+
+    didInsertElement: function() {
+        this._super();
+
+        this.set('isInserted', true);
+    },
+
+    constants: Ember.inject.service('constants'),
+
     tagName: 'md-progress-linear',
 
     attributeBindings: ['value', 'md-mode', 'md-buffer-value'],
@@ -23,15 +33,11 @@ var MdProgressLinear = Ember.Component.extend({
     }.on('didInsertElement'),
 
     bar1Style: function() {
-
-        return CSS.TRANSFORM + ': ' + this.transforms[this.get('clampedBufferValue')];
-
+        return this.get('constants.CSS.TRANSFORM') + ': ' + this.transforms[this.get('clampedBufferValue')];
     }.property('clampedBufferValue'),
 
     bar2Style: function() {
-
-        return CSS.TRANSFORM + ': ' + this.transforms[this.get('clampedValue')];
-
+        return this.get('constants.CSS.TRANSFORM') + ': ' + this.transforms[this.get('clampedValue')];
     }.property('clampedValue'),
 
     clampedValue: function() {

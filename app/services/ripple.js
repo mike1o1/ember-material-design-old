@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import { START_EVENTS, END_EVENTS } from '../utils/constants';
+//import { START_EVENTS, END_EVENTS } from '../utils/constants';
 
 /**
  * Converts rgb value to rgba string
@@ -70,6 +70,8 @@ function parseColor(color) {
 
 var RippleService = Ember.Service.extend({
 
+    constants: Ember.inject.service('constants'),
+
     attachButtonBehavior: function(element, options) {
         return this.attach(element, $.extend({
             fullRipple: true,
@@ -132,8 +134,8 @@ var RippleService = Ember.Service.extend({
 
         if (options.mousedown) {
             element
-                .on(START_EVENTS, onPressDown)
-                .on(END_EVENTS, onPressUp);
+                .on(this.get('constants.START_EVENTS'), onPressDown)
+                .on(this.get('constants.END_EVENTS'), onPressUp);
         }
 
         function getRippleContainer() {
@@ -208,8 +210,7 @@ var RippleService = Ember.Service.extend({
             rippleSize = size;
 
             state.animating = true;
-
-            // TODO: Use Ember.run
+            
             Ember.run.schedule('render', this, () => {
                 if (options.dimBackground) {
                     container.css({backgroundColor: color});

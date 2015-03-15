@@ -68,6 +68,9 @@ var SnifferService = Ember.Service.extend({
 
         this.set('transitions', transitions);
         this.set('animations', animations);
+
+        console.log('vendor prefix: ', vendorPrefix);
+
         this.set('vendorPrefix', vendorPrefix);
 
 

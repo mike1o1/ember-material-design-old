@@ -1,7 +1,7 @@
 import Ember from 'ember';
-import { CSS } from '../utils/constants';
 
 var MdProgressCircular = Ember.Component.extend({
+    constants: Ember.inject.service('constants'),
 
     tagName: 'md-progress-circular',
 
@@ -34,15 +34,15 @@ var MdProgressCircular = Ember.Component.extend({
     },
 
     circleStyle: function() {
-        return CSS.TRANSFORM + ': ' + 'scale(' + this.get('scale').toString() + ')';
+        return this.get('constants.CSS.TRANSFORM') + ': ' + 'scale(' + this.get('scale').toString() + ')';
     }.property('scale'),
 
     fillStyle: function() {
-        return CSS.TRANSFORM + ': ' + this.fillRotations(this.get('clampvedValue'));
+        return this.get('constants.CSS.TRANSFORM') + ': ' + this.fillRotations(this.get('clampvedValue'));
     }.property('clampedValue'),
 
     fixStyle: function() {
-        return CSS.TRANSFORM + ': ' + this.fixRotations[this.get('clampedValue')];
+        return this.get('constants.CSS.TRANSFORM') + ': ' + this.fixRotations[this.get('clampedValue')];
     }.property('clampedValue'),
 
 

@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import { START_EVENTS, MOVE_EVENTS, END_EVENTS } from '../utils/constants';
 
 function getEventPoint(ev) {
     ev = ev.originalEvent || ev;
@@ -161,7 +160,7 @@ var GestureEventsMixin = Ember.Mixin.create(Ember.Evented, {
 
     pressOnEnd: function(ev, pointer) {
         this.trigger('$md.pressup', ev);
-    }.on('press.onEnd'),
+    }.on('press.onEnd')
 
 
 
