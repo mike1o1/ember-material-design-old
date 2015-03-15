@@ -1,4 +1,6 @@
-{{#md-sidenav classNames="site-sidenav md-sidenav-left md-whiteframe-z2" md-component-id="left" sidebarVisible=sidebarVisible}}
+{{#md-sidenav classNames="site-sidenav md-sidenav-left md-whiteframe-z2"
+            md-component-id="left"
+            sidebarVisible=sidebarVisible}}
 
     {{#md-toolbar}}
         <h1 class="md-toolbar-tools">
@@ -73,8 +75,8 @@
 <div layout="column" role="main" flex tabindex="-1">
     {{#md-toolbar}}
         <div class="md-toolbar-tools">
-            <button class="docs-menu-icon" hide-gt-sm aria-label="Toggle Menu">
-
+            <button class="docs-menu-icon" hide-gt-sm aria-label="Toggle Menu" {{action 'toggleSidebar'}}>
+                {{md-icon md-svg-src="images/icons/ic_menu_24px.svg"}}
             </button>
 
             <div class="fill-height" flex layout="row">

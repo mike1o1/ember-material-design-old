@@ -13,7 +13,7 @@ var MdSidenav = Ember.Component.extend({
     }.on('didInsertElement'),
 
     backdrop: function() {
-        return $('<rb-backdrop class="md-sidenav-backdrop md-opaque">');
+        return $('<md-backdrop class="md-sidenav-backdrop md-opaque">');
     }.property(),
 
     isLocked: function() {
@@ -50,8 +50,6 @@ var MdSidenav = Ember.Component.extend({
             this.$().addClass('md-closed');
             backdrop.removeClass('ng-enter');
             backdrop.addClass('ng-leave');
-
-            console.log('backdrop delay', backdrop.css.transitionDelay);
 
             Ember.run.later(() => {
                 backdrop.remove();
