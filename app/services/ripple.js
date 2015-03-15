@@ -210,7 +210,7 @@ var RippleService = Ember.Service.extend({
             rippleSize = size;
 
             state.animating = true;
-            
+
             Ember.run.schedule('render', this, () => {
                 if (options.dimBackground) {
                     container.css({backgroundColor: color});
