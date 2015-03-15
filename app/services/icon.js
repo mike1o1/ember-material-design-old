@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import { request } from 'ic-ajax';
+import { raw } from 'ic-ajax';
 
 var config = {
     defaultIconSize: 24
@@ -42,11 +42,8 @@ function cloneSVG(){
  * loaded iconCache store.
  */
 function prepareAndStyle() {
-    debugger;
     var iconSize = this.config ? this.config.iconSize : config.defaultIconSize;
-    var svg = Ember.$(this.element);
-
-    debugger;
+    var svg = this.element;
 
         svg.attr({
             'fit' : '',
@@ -130,20 +127,18 @@ var IconService = Ember.Service.extend({
         if (this.templateCache[url]) {
             req = Ember.RSVP.Promise.resolve(this.templateCache[url]);
         } else {
-            req = request(url);
+            req = raw(url, { dataType: 'text'});
         }
 
         return req
             .then(function(response) {
-                debugger;
+                var els = Ember.$(response.jqXHR.responseText);
 
-                return response.documentElement;
-
-                //for(var i = 0; i < els.length; ++i) {
-                //    if (els[i].nodeName === 'svg') {
-                //        return els[i];
-                //    }
-                //}
+                for(var i = 0; i < els.length; ++i) {
+                    if (els[i].nodeName === 'svg') {
+                        return els[i];
+                    }
+                }
             });
     },
 

@@ -27,7 +27,6 @@ var MdIcon = Ember.Component.extend({
             var is = this.get('iconService');
             is.getIcon(iconName)
                 .then(function(svg) {
-                    debugger;
                     element.append(svg);
                 });
         }
