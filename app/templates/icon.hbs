@@ -2,9 +2,9 @@
     <div flex layout="column">
 
         <section class="demo-container">
-            <demo-include class="md-whiteframe-z1 buttondemoBasicUsage">
+            <demo-include class="md-whiteframe-z1 icondemoFontIcons">
 
-                <div class="demo-content progressCircularDemo1">
+                <div class="demo-content demoFontIcons">
 
                     <div class="display-content">
 
@@ -44,6 +44,41 @@
                     </div>
                 </div>
             </demo-include>
+
+
+            <demo-include class="md-whiteframe-z1 icondemoLoadSvgIconsFromUrl">
+
+                <div class="demo-content demoFontIcons">
+
+                    <div class="display-content">
+
+                        <div layout="column" layout-margin style="padding:25px;">
+
+                            <p>The simplest way to display a single SVG icon is by referencing it by URL:</p>
+                            <p>
+                                {{md-icon md-svg-src=insertDriveIconURL
+                                alt="Insert Drive Icon"}}
+                            </p>
+
+                            <p>Style the icon size and color with CSS:</p>
+                            <p>
+                                {{md-icon md-svg-src="images/icons/cake.svg" class="s24" alt="Cake"}}
+                                {{md-icon md-svg-src=getAndroid class="s36" alt="Android "}}
+                                {{md-icon md-svg-src="images/icons/addShoppingCart.svg" class="s48" alt="Cart"}}
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+
+                </div>
+            </demo-include>
+
+
+
+
         </section>
     </div>
 </div>

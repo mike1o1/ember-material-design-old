@@ -26,34 +26,20 @@ export default Ember.Controller.extend({
         iconData.forEach(function(i) {
             i.sizes = Ember.copy(self.sizes, true);
 
-            debugger;
-
             i.sizes.forEach(function(size) {
                 var color = !i.theme && i.color;
                 size.sizeStyle = size.sizeStyle + ' color: ' + color + '; ';
             });
         });
 
-        //iconData.forEach(function(i) {
-        //    var sizes = i.sizes;
-        //
-        //    var color = !i.theme && i.color;
-        //
-        //    debugger;
-        //
-        //    sizes.forEach(function(s) {
-        //        s.sizeStyle = s.sizeStyle + ' color: ' + color + ';';
-        //    });
-        //
-        //});
-
-
-        console.log('icons', this.get('iconData'));
-
         return this.get('iconData');
 
+    }.property('iconData'),
 
+    insertDriveIconURL: 'images/icons/ic_insert_drive_file_24px.svg',
 
-    }.property('iconData')
+    getAndroid: function() {
+        return 'images/icons/android.svg';
+    }.property()
 
 });

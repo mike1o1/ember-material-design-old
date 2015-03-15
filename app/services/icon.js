@@ -42,8 +42,12 @@ function cloneSVG(){
  * loaded iconCache store.
  */
 function prepareAndStyle() {
+    debugger;
     var iconSize = this.config ? this.config.iconSize : config.defaultIconSize;
     var svg = Ember.$(this.element);
+
+    debugger;
+
         svg.attr({
             'fit' : '',
             'height': '100%',
@@ -85,7 +89,7 @@ var IconService = Ember.Service.extend({
             }
         ];
 
-        svgRegistry.forEach(function(asset) {
+        svgRegistry.forEach((asset) => {
             config[asset.id] = {
                 url: asset.url,
                 iconSize: config.defaultIconSize
@@ -131,13 +135,15 @@ var IconService = Ember.Service.extend({
 
         return req
             .then(function(response) {
-                var els = $(response.data);
+                debugger;
 
-                for(var i = 0; i < els.length; ++i) {
-                    if (els[i].nodeName === 'svg') {
-                        return els[i];
-                    }
-                }
+                return response.documentElement;
+
+                //for(var i = 0; i < els.length; ++i) {
+                //    if (els[i].nodeName === 'svg') {
+                //        return els[i];
+                //    }
+                //}
             });
     },
 
@@ -146,10 +152,11 @@ var IconService = Ember.Service.extend({
     },
 
     cacheIcon: function(id) {
+        var self = this;
         return function updateCache(icon) {
-            this.iconCache[id] = this.isIcon(icon) ? icon : new Icon(icon, config[id]);
+            self.iconCache[id] = self.isIcon(icon) ? icon : new Icon(icon, config[id]);
 
-            return this.iconCache[id].clone();
+            return self.iconCache[id].clone();
         }
     }
 
