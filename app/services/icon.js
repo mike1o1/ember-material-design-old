@@ -45,14 +45,15 @@ function prepareAndStyle() {
     var iconSize = this.config ? this.config.iconSize : config.defaultIconSize;
     var svg = this.element;
 
-        svg.attr({
-            'fit' : '',
-            'height': '100%',
-            'width' : '100%',
-            'preserveAspectRatio' : 'xMidYMid meet',
-            'viewBox' : svg.attr('viewBox') || ('0 0 ' + iconSize + ' ' + iconSize)
-        })
-        .css({
+        svg[0].setAttribute('fit', '');
+        svg[0].setAttribute('height', '100%');
+        svg[0].setAttribute('width', '100%');
+        svg[0].setAttribute('preserveAspectRatio', 'xMidYMid meet');
+        svg[0].setAttribute('viewBox', svg.attr('viewBox') || ('0 0 ' + iconSize + ' ' + iconSize));
+
+
+
+        svg.css({
                 'pointer-events' : 'none',
                 'display' : 'block'
             });
@@ -87,11 +88,7 @@ var IconService = Ember.Service.extend({
         ];
 
         svgRegistry.forEach((asset) => {
-            config[asset.id] = {
-                url: asset.url,
-                iconSize: config.defaultIconSize
-            };
-
+            this.icon(asset.id, asset.url);
             this.templateCache[asset.url] = asset.svg;
         });
 
@@ -115,6 +112,66 @@ var IconService = Ember.Service.extend({
         if (urlRegex.test(id)) {
             return this.loadByURL(id)
                 .then(this.cacheIcon(id));
+        }
+
+        if (id.indexOf(':') == -1) {
+            id = '$default:' + id;
+        }
+
+        return this.loadByID(id)
+            .catch(Ember.run.bind(this, this.loadFromIconSet))
+            .catch(this.announceIdNotFound)
+            .catch(this.announceNotFound)
+            .then(this.cacheIcon(id));
+    },
+
+    icon: function(id, url, iconSize) {
+        if (id.indexOf(':') == -1) {
+            id = '$default:' + id;
+        }
+
+        config[id] = {
+            url: url,
+            iconSize: iconSize || config.defaultIconSize
+        };
+    },
+
+    iconSet: function(id, url, iconSize) {
+        config[id] = {
+            url: url,
+            iconSize: iconSize || config.defaultIconSize
+        };
+    },
+
+    defaultIconSet: function(url, iconSize) {
+        var setName = '$default';
+
+        if (!config[setName]) {
+            config[setName] = {
+                url: url,
+                iconSize: iconSize || config.defaultIconSize
+            };
+        }
+    },
+
+    loadByID: function(id) {
+        var iconConfig = config[id];
+
+        return !iconConfig ? Ember.RSVP.Promise.reject(id) : this.loadByURL(iconConfig.url).then(function(icon) {
+            return new Icon(icon, iconConfig);
+        });
+    },
+
+    loadFromIconSet: function(id) {
+        var setName = id.substring(0, id.lastIndexOf(':')) || '$default';
+        var iconSetConfig = config[setName];
+
+        return !iconSetConfig ? Ember.RSVP.Promise.reject(id) : this.loadByURL(iconSetConfig.url).then(extractFromSet);
+
+        function extractFromSet(set) {
+            var iconName = id.slice(id.lastIndexOf(':') + 1);
+            var icon = set.querySelector('#' + iconName);
+            return !icon ? Ember.RSVP.Promise.reject(id) : new Icon(icon, iconSetConfig);
         }
     },
 
@@ -140,6 +197,25 @@ var IconService = Ember.Service.extend({
                     }
                 }
             });
+    },
+
+    announceIdNotFound: function(id) {
+        var msg;
+
+        if (typeof id === 'string') {
+            msg = 'icon ' + id + ' not found';
+            console.log(msg);
+        }
+
+        return Ember.RSVP.Promise.reject(msg || id);
+    },
+
+    announceNotFound: function(err) {
+        var msg = (typeof err === 'string') ? err : (err.message || err.data || err.statusText);
+        debugger;
+        console.log(msg);
+
+        return Ember.RSVP.Promise.reject(msg);
     },
 
     isIcon: function(target) {
