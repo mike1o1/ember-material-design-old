@@ -5,10 +5,6 @@ var RbButtonComponent = Ember.Component.extend(RipplesMixin, {
 
     tagName: 'button',
 
-    setupRipples: function() {
-        this.get('rippleService').attachButtonBehavior(this.$());
-    }.on('didInsertElement'),
-
     classNames: ['md-button'],
 
     attributeBindings: ['disabled', 'href'],
@@ -23,7 +19,11 @@ var RbButtonComponent = Ember.Component.extend(RipplesMixin, {
 
         return classNames;
 
-    }.property('classNames')
+    }.property('classNames'),
+
+    click: function() {
+        this.sendAction();
+    }
 
 });
 

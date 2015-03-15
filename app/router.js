@@ -19,6 +19,7 @@ Router.map(function() {
   this.route('progress-circular');
   this.route('progress-linear');
   this.route('icon');
+  this.route('radio-button');
 });
 
 export default Router;
