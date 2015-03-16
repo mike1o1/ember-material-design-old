@@ -1,16 +1,20 @@
 import Ember from 'ember';
 
-var RbInputContainer = Ember.Component.extend({
+var MdInputContainer = Ember.Component.extend({
 
     tagName: 'md-input-container',
 
-    attributeBindings: ['style'],
+    attributeBindings: ['style', 'md-no-float'],
 
     classNameBindings: ['isFocused:md-input-focused',
         'hasValue:md-input-has-value',
         'isInvalid:md-input-invalid'],
 
     isFocused: false,
+
+    setupValue: function() {
+
+    }.on('willInsertElement'),
 
     placeholder: '',
 
@@ -21,4 +25,4 @@ var RbInputContainer = Ember.Component.extend({
     iInvalid: false
 });
 
-export default RbInputContainer;
+export default MdInputContainer;

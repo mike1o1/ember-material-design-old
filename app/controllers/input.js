@@ -13,5 +13,12 @@ export default Ember.Controller.extend({
         biography: 'Loves kittens, snowboarding, and can type at 130 WPM.\n\nAnd rumor has it she bouldered up Castle Craig!',
         postalCode : '94043',
         submissionDate: null
+    },
+
+    user2: {
+        name: 'John Doe',
+        email: 'ipsum@lorem.com',
+        phone: '',
+        address: ''
     }
 });

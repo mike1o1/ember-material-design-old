@@ -5,6 +5,7 @@ var MdInputComponent = Ember.TextField.extend({
     classNames: ['md-input'],
 
     inputContainer: Ember.computed.alias('parentView'),
+    value: Ember.computed.alias('parentView.value'),
 
     attributeBindings: ['style'],
 
@@ -18,6 +19,11 @@ var MdInputComponent = Ember.TextField.extend({
             return;
         }
 
+        if (typeof this.get('inputContainer.md-no-float') !== 'undefined') {
+
+            return;
+        }
+
         this.set('inputContainer.placeholder', this.get('placeholder'));
         //var placeholderText = this.get('placeholder');
         //
@@ -26,7 +32,7 @@ var MdInputComponent = Ember.TextField.extend({
         //// we don't need this on the element anymore, so get rid of it
         this.set('placeholder', '');
 
-    }.on('didInsertElement'),
+    }.on('willInsertElement'),
 
     resetContainer: function() {
         this.get('inputContainer').set('isFocused', false);

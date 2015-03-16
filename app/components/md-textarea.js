@@ -4,13 +4,10 @@ var MdTextArea = Ember.TextArea.extend({
     classNames: ['md-input'],
 
     inputContainer: Ember.computed.alias('parentView'),
+    value: Ember.computed.alias('parentView.value'),
 
     resetContainer: function() {
-
         this.get('inputContainer').set('isFocused', false);
-        this.get('inputContainer').set('hasValue', false);
-
-
     }.on('willDestroyElement'),
 
     setupTextArea: function() {
