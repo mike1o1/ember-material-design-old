@@ -1,0 +1,78 @@
+<div class="doc-content" layout="column">
+    <div flex layout="column">
+
+        <section class="demo-container">
+
+
+            <demo-include class="md-whiteframe-z1 demoDynamicTabs">
+
+
+                <div class="demo-content ">
+
+                    <div class="display-content">
+
+
+                        <div class="sample" layout="column">
+
+                            {{#md-tabs md-selected=selectedIndex flex='' tabs=tabs}}
+                                {{#each tab in tabs}}
+                                {{#md-tab disabled=tab.disabled
+                                        label="{{tab.title}}"}}
+
+                                    <div class="demo-tab" layout="column" layout-align="space-around center">
+                                        <div>
+                                            {{tab.content}}
+                                        </div>
+                                        {{#md-button class="md-primary md-raised" action='removeTab'}}
+                                            Remove Tab
+                                        {{/md-button}}
+                                    </div>
+                                {{/md-tab}}
+                                {{/each}}
+                            {{/md-tabs}}
+
+                            <form layout="column" style="padding-top:20px;padding-left:20px;">
+                                <div layout="row" layout-sm="column" layout-margin >
+                                    {{#md-input-container value=selectedIndex}}
+                                        <label for="activeIndex">Active Index {{selectedIndex}}</label>
+                                        {{md-input type="text" id="activeIndex" disabled=true}}
+                                    {{/md-input-container}}
+
+                                    {{#md-input-container value=selectedTab.title}}
+                                        <label for="activeTitle">Active Title</label>
+                                        {{md-input type="text" id="activeTitle"}}
+                                    {{/md-input-container}}
+                                </div>
+
+                                <div layout="row" layout-sm="column" layout-margin >
+                                    <span class="title">Add a new Tab:</span>
+                                    {{#md-input-container value=tTitle}}
+                                        <label for="label">Label</label>
+                                        {{md-input type="text" id="label"}}
+                                    {{/md-input-container}}
+                                    {{#md-input-container value=tContent}}
+                                        <label for="content">Content</label>
+                                        {{md-input type="text" id="content"}}
+                                    {{/md-input-container}}
+                                    {{#md-button class="add-tab md-primary" type="submit" style="max-height: 40px" action='addTab'}}Add Tab{{/md-button}}
+                                </div>
+                            </form>
+
+
+                        </div>
+
+
+
+
+                    </div>
+
+                </div>
+
+
+            </demo-include>
+
+
+        </section>
+    </div>
+</div>
+

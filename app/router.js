@@ -20,6 +20,7 @@ Router.map(function() {
   this.route('progress-linear');
   this.route('icon');
   this.route('radio-button');
+  this.route('tabs');
 });
 
 export default Router;

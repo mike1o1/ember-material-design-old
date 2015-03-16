@@ -12,14 +12,11 @@ var MdInputContainer = Ember.Component.extend({
 
     isFocused: false,
 
-    setupValue: function() {
-
-    }.on('willInsertElement'),
-
     placeholder: '',
 
     hasValue: function() {
-        return this.get('value') && this.get('value').length > 0;
+        return this.get('value');
+        //return this.get('value') && this.get('value').length > 0;
     }.property('value'),
 
     iInvalid: false

@@ -32,6 +32,8 @@ var MdInputComponent = Ember.TextField.extend({
         //// we don't need this on the element anymore, so get rid of it
         this.set('placeholder', '');
 
+        this.processInput();
+
     }.on('willInsertElement'),
 
     resetContainer: function() {

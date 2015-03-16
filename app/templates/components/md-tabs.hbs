@@ -1,0 +1,24 @@
+<section class="md-header">
+
+    {{#if displayPreviousPaginator}}
+    <button class="md-paginator md-prev" {{action 'clickPrevious'}}>
+        {{md-icon md-svg-icon="tabs-arrow"}}
+    </button>
+    {{/if}}
+
+    <div class="md-header-items-container">
+        <div class="md-header-items">
+            <md-tabs-ink-bar></md-tabs-ink-bar>
+        </div>
+    </div>
+
+    {{#if displayNextPaginator}}
+        <button class="md-paginator md-next" {{action 'clickNext'}}>
+            {{md-icon md-svg-icon="tabs-arrow"}}
+        </button>
+    {{/if}}
+
+</section>
+<section class="md-tabs-content">
+    {{yield}}
+</section>

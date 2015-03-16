@@ -1,0 +1,84 @@
+md-tabs {
+  .md-header {
+    background-color: transparent;
+  }
+  .md-paginator md-icon {
+    color: color($primary);
+  }
+
+  &.md-accent {
+    .md-header {
+      background-color: color($accent);
+    }
+
+    md-tab:not([disabled]) {
+      color: color($accent, '100');
+      &.active {
+        color: color($accent, 'contrast');
+      }
+    }
+  }
+
+  &.md-primary {
+    .md-header {
+      background-color: color($primary);
+    }
+    md-tab:not([disabled]) {
+      color: color($primary, '100');
+      &.active {
+        color: color($primary, 'contrast');
+      }
+    }
+    md-tab {
+      color: color($primary, '100');
+      &[disabled] {
+        color: color($foreground, '3');
+      }
+      &:focus {
+        color: color($primary, 'contrast');
+        background-color: rgba(color($primary, 'contrast'), 0.1);
+      }
+      &.active {
+        color: color($primary, 'contrast');
+      }
+      .md-ripple-container {
+        color: color($primary, 'contrast');
+      }
+    }
+  }
+
+  &.md-warn {
+    .md-header {
+      background-color: color($warn);
+    }
+
+    md-tab:not([disabled]) {
+      color: color($warn, '100');
+      &.active {
+        color: color($warn, 'contrast');
+      }
+    }
+  }
+
+  md-tabs-ink-bar {
+    color: color($accent);
+    background: color($accent);
+  }
+
+  md-tab {
+    color: color($foreground, '2');
+    &[disabled] {
+      color: color($foreground, '3');
+    }
+    &:focus {
+      color: color($foreground, '1');
+    }
+    &.active {
+      color: color($primary);
+    }
+    .md-ripple-container {
+      color: color($accent, '100');
+    }
+  }
+
+}
