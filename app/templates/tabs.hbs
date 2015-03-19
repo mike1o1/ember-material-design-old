@@ -15,20 +15,29 @@
                         <div class="sample" layout="column">
 
                             {{#md-tabs md-selected=selectedIndex flex='' tabs=tabs}}
-                                {{#each tab in tabs}}
-                                {{#md-tab disabled=tab.disabled
-                                        label="{{tab.title}}"}}
 
-                                    <div class="demo-tab" layout="column" layout-align="space-around center">
-                                        <div>
-                                            {{tab.content}}
+                                {{#md-tab-header-items}}
+                                    {{#each tab in tabs}}
+                                        {{#md-tab}}{{tab.title}}{{/md-tab}}
+                                    {{/each}}
+                                {{/md-tab-header-items}}
+
+                                {{#md-tabs-content}}
+                                    {{#each tab in tabs}}
+                                        <div class="demo-tab" layout="column" layout-align="space-around center">
+                                            <div>
+                                                {{tab.content}}
+                                            </div>
+                                            {{#md-button class="md-primary md-raised" action='removeTab'}}
+                                                Remove Tab
+                                            {{/md-button}}
                                         </div>
-                                        {{#md-button class="md-primary md-raised" action='removeTab'}}
-                                            Remove Tab
-                                        {{/md-button}}
-                                    </div>
-                                {{/md-tab}}
-                                {{/each}}
+                                    {{/each}}
+                                {{/md-tabs-content}}
+
+
+
+
                             {{/md-tabs}}
 
                             <form layout="column" style="padding-top:20px;padding-left:20px;">
