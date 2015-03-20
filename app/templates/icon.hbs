@@ -1,7 +1,40 @@
 <div class="doc-content" layout="column">
     <div flex layout="column">
 
-        <section class="demo-container">
+        <section class="demo-container {{showSourceClass}}">
+
+            {{#md-toolbar classNames='demo-toolbar'}}
+                <div class="md-toolbar-tools">
+                    <span>Font Icons</span>
+                    <span flex></span>
+                    {{#md-button action='showSource' layoutType="row" layout-align="center center" style='min-width: 72px;'}}
+                        {{md-icon md-svg-src='images/icons/ic_visibility_24px.svg' style='margin: 0 4px 0 0;'}}
+                        <span>Source</span>
+                    {{/md-button}}
+                </div>
+            {{/md-toolbar}}
+
+            {{#md-tabs style='border-top: solid 1px #00ADC3;' classNameBindings='showSource::ng-hide'
+            classNames='demo-source-tabs'
+            tabs=sourceFiles md-selected=0}}
+                {{#md-tab-header-items}}
+                    {{#each sourceFiles as |tab index|}}
+                        {{#md-tab tab=tab position=index}}
+                            {{tab.name}}
+                        {{/md-tab}}
+                    {{/each}}
+                {{/md-tab-header-items}}
+                {{#md-tabs-content}}
+                    {{#each sourceFiles as |tab index|}}
+                        {{#md-tab-content tab=tab position=index}}
+                            <md-content md-scroll-y class="demo-source-container">
+                                {{code-snippet name=tab.content }}
+                            </md-content>
+                        {{/md-tab-content}}
+                    {{/each}}
+                {{/md-tabs-content}}
+            {{/md-tabs}}
+
             <demo-include class="md-whiteframe-z1 icondemoFontIcons">
 
                 <div class="demo-content demoFontIcons">
@@ -45,36 +78,72 @@
                 </div>
             </demo-include>
 
+            <section class="demo-container {{showSourceClassFromUrl}}">
 
-            <demo-include class="md-whiteframe-z1 icondemoLoadSvgIconsFromUrl">
+                {{#md-toolbar classNames='demo-toolbar'}}
+                    <div class="md-toolbar-tools">
+                        <span>Load Svg Icons From Url</span>
+                        <span flex></span>
+                        {{#md-button action='showSourceFromUrl' layoutType="row" layout-align="center center" style='min-width: 72px;'}}
+                            {{md-icon md-svg-src='images/icons/ic_visibility_24px.svg' style='margin: 0 4px 0 0;'}}
+                            <span>Source</span>
+                        {{/md-button}}
+                    </div>
+                {{/md-toolbar}}
 
-                <div class="demo-content demoFontIcons">
+                {{#md-tabs style='border-top: solid 1px #00ADC3;' classNameBindings='showSourceFromUrl::ng-hide'
+                classNames='demo-source-tabs'
+                tabs=sourceFilesFromUrl md-selected=0}}
+                    {{#md-tab-header-items}}
+                        {{#each sourceFilesFromUrl as |tab index|}}
+                            {{#md-tab tab=tab position=index}}
+                                {{tab.name}}
+                            {{/md-tab}}
+                        {{/each}}
+                    {{/md-tab-header-items}}
+                    {{#md-tabs-content}}
+                        {{#each sourceFilesFromUrl as |tab index|}}
+                            {{#md-tab-content tab=tab position=index}}
+                                <md-content md-scroll-y class="demo-source-container">
+                                    {{code-snippet name=tab.content }}
+                                </md-content>
+                            {{/md-tab-content}}
+                        {{/each}}
+                    {{/md-tabs-content}}
+                {{/md-tabs}}
 
-                    <div class="display-content">
 
-                        <div layout="column" layout-margin style="padding:25px;">
+                <demo-include class="md-whiteframe-z1 icondemoLoadSvgIconsFromUrl">
 
-                            <p>The simplest way to display a single SVG icon is by referencing it by URL:</p>
-                            <p>
-                                {{md-icon md-svg-src=insertDriveIconURL
-                                alt="Insert Drive Icon"}}
-                            </p>
+                    <div class="demo-content demoFontIcons">
 
-                            <p>Style the icon size and color with CSS:</p>
-                            <p>
-                                {{md-icon md-svg-src="images/icons/cake.svg" class="s24" alt="Cake"}}
-                                {{md-icon md-svg-src=getAndroid class="s36" alt="Android "}}
-                                {{md-icon md-svg-src="images/icons/addShoppingCart.svg" class="s48" alt="Cart"}}
-                            </p>
+                        <div class="display-content">
+
+                            <div layout="column" layout-margin style="padding:25px;">
+
+                                <p>The simplest way to display a single SVG icon is by referencing it by URL:</p>
+
+                                <p>
+                                    {{md-icon md-svg-src=insertDriveIconURL
+                                    alt="Insert Drive Icon"}}
+                                </p>
+
+                                <p>Style the icon size and color with CSS:</p>
+
+                                <p>
+                                    {{md-icon md-svg-src="images/icons/cake.svg" class="s24" alt="Cake"}}
+                                    {{md-icon md-svg-src=getAndroid class="s36" alt="Android "}}
+                                    {{md-icon md-svg-src="images/icons/addShoppingCart.svg" class="s48" alt="Cart"}}
+                                </p>
+
+                            </div>
 
                         </div>
 
+
                     </div>
-
-
-
-                </div>
-            </demo-include>
+                </demo-include>
+            </section>
 
             <demo-include class="md-whiteframe-z1 icondemoSvgIconFonts">
 
@@ -97,10 +166,8 @@
                     </div>
 
 
-
                 </div>
             </demo-include>
-
 
 
         </section>
@@ -109,16 +176,16 @@
 
 <style>
     @font-face {
-        font-family:"icomoon";
-        src:url("icomoon.eot");
-        font-weight:normal;
-        font-style:normal;
+        font-family: "icomoon";
+        src: url("icomoon.eot");
+        font-weight: normal;
+        font-style: normal;
     }
 
     @font-face {
         font-family: 'icomoon';
-        src:url('fonts/icomoon.eot?-cmq1um');
-        src:url('fonts/icomoon.eot?#iefix-cmq1um') format('embedded-opentype'),
+        src: url('fonts/icomoon.eot?-cmq1um');
+        src: url('fonts/icomoon.eot?#iefix-cmq1um') format('embedded-opentype'),
         url('fonts/icomoon.woff?-cmq1um') format('woff'),
         url('fonts/icomoon.ttf?-cmq1um') format('truetype'),
         url('fonts/icomoon.svg?-cmq1um#icomoon') format('svg');

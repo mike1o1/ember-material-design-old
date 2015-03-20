@@ -1,40 +1,6 @@
 import Ember from 'ember';
-import BaseDemoController from '../controllers/base-demo-controller';
 
-export default BaseDemoController.extend({
-
-    demoName: 'icon-fontIcons',
-
-    showSourceFromUrl: false,
-
-    showSourceClassFromUrl: function() {
-        return this.get('showSourceFromUrl') ? 'show-source' : '';
-    }.property('showSourceFromUrl'),
-
-
-
-    sourceFilesFromUrl: null,
-
-    setSourceFilesFromUrl: function() {
-        var demoName = 'icon-fromUrl';
-
-        var sourceFiles = Ember.ArrayProxy.create({
-            content: [
-                {name: 'hbs', content: demoName + '-index.hbs'},
-                {name: 'controller', content: demoName + '-controller.js'},
-                {name: 'route', content: demoName + '-route.js'},
-                {name: 'css', content: demoName + '-style.css'}
-            ]
-        });
-
-        this.set('sourceFilesFromUrl', sourceFiles);
-    }.on('init'),
-
-    actions: {
-        showSourceFromUrl: function() {
-            this.toggleProperty('showSourceFromUrl');
-        }
-    },
+export default Ember.Controller.extend({
 
     iconData: [
         {name: 'icon-home'        , color: "#777" },

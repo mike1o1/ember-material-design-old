@@ -1,7 +1,39 @@
 <div class="doc-content" layout="column">
     <div flex layout="column">
 
-        <section class="demo-container">
+        <section class="demo-container {{showSourceClass}}">
+
+            {{#md-toolbar classNames='demo-toolbar'}}
+                <div class="md-toolbar-tools">
+                    <span>Basic Usage</span>
+                    <span flex></span>
+                    {{#md-button action='showSource' layoutType="row" layout-align="center center" style='min-width: 72px;'}}
+                        {{md-icon md-svg-src='images/icons/ic_visibility_24px.svg' style='margin: 0 4px 0 0;'}}
+                        <span>Source</span>
+                    {{/md-button}}
+                </div>
+            {{/md-toolbar}}
+
+            {{#md-tabs style='border-top: solid 1px #00ADC3;' classNameBindings='showSource::ng-hide'
+            classNames='demo-source-tabs'
+            tabs=sourceFiles md-selected=0}}
+                {{#md-tab-header-items}}
+                    {{#each sourceFiles as |tab index|}}
+                        {{#md-tab tab=tab position=index}}
+                            {{tab.name}}
+                        {{/md-tab}}
+                    {{/each}}
+                {{/md-tab-header-items}}
+                {{#md-tabs-content}}
+                    {{#each sourceFiles as |tab index|}}
+                        {{#md-tab-content tab=tab position=index}}
+                            <md-content md-scroll-y class="demo-source-container">
+                                {{code-snippet name=tab.content }}
+                            </md-content>
+                        {{/md-tab-content}}
+                    {{/each}}
+                {{/md-tabs-content}}
+            {{/md-tabs}}
 
             <demo-include class="md-whiteframe-z1 contentdemoBasicUsage">
                 <div class="demo-content">

@@ -1,0 +1,36 @@
+<div class="display-content">
+
+    <div layout="column" layout-margin style="padding:25px;">
+
+        <p>
+            Display 5 font-icons, each with different sizes and colors:
+        </p>
+
+        <!-- Display font icons from Icomoon.io: -->
+
+        {{#each font in icons}}
+            <div layout="row" layout-padding layout-margin class="glyph">
+
+                {{#each it in font.sizes}}
+                    <div flex layout-align="center center">
+                        <div class="preview-glyphs">
+                            {{md-icon
+                            mdFontIcon=font.name
+                            class=font.theme
+                            style=it.sizeStyle
+                            classNames="step "}}
+                        </div>
+
+                        <div class="preview-scale">
+                            <span class="step" {{bind-attr style=it.paddingScaleStyle}}>{{it.size}}</span>
+                        </div>
+                    </div>
+                {{/each}}
+
+
+            </div>
+        {{/each}}
+
+    </div>
+
+</div>
