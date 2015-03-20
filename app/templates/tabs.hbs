@@ -1,7 +1,45 @@
 <div class="doc-content" layout="column">
-    <div flex layout="column">
+    <div flex layout="column" style="z-index: 1;">
 
-        <section class="demo-container">
+        <div class="doc-description">
+            <p>The Dynamic Tabs demo shows how internal tab views can be easily used.</p>
+        </div>
+
+        <section class="demo-container {{showSourceClass}}">
+
+            {{#md-toolbar classNames='demo-toolbar'}}
+                <div class="md-toolbar-tools">
+                    <span>Dynamic Tabs</span>
+                    <span flex></span>
+                    {{#md-button action='showSource' layoutType="row" layout-align="center center" style='min-width: 72px;'}}
+                        {{md-icon md-svg-src='images/icons/ic_visibility_24px.svg' style='margin: 0 4px 0 0;'}}
+                        <span>Source</span>
+                    {{/md-button}}
+                </div>
+            {{/md-toolbar}}
+
+            {{#if showSource}}
+                {{#md-tabs style='border-top: solid 1px #00ADC3;'
+                classNames='demo-source-tabs' tabs=sourceFiles md-selected=0}}
+                    {{#md-tab-header-items}}
+                        {{#each sourceFiles as |tab index|}}
+                            {{#md-tab tab=tab position=index}}
+                                {{tab.name}}
+                            {{/md-tab}}
+                        {{/each}}
+                    {{/md-tab-header-items}}
+                    {{#md-tabs-content}}
+                        {{#each sourceFiles as |tab index|}}
+                            {{#md-tab-content tab=tab position=index}}
+                                <md-content md-scroll-y class="demo-source-container">
+                                    {{code-snippet name=tab.content }}
+                                </md-content>
+                            {{/md-tab-content}}
+                        {{/each}}
+                    {{/md-tabs-content}}
+                {{/md-tabs}}
+            {{/if}}
+
 
 
             <demo-include class="md-whiteframe-z1 demoDynamicTabs">
@@ -17,33 +55,33 @@
                             {{#md-tabs md-selected=selectedIndex flex='' tabs=tabs}}
 
                                 {{#md-tab-header-items}}
-                                    {{#each tab in tabs}}
-                                        {{#md-tab}}{{tab.title}}{{/md-tab}}
+                                    {{#each tabs as |tab index|}}
+                                        {{#md-tab tab=tab position=index}}{{tab.title}}{{/md-tab}}
                                     {{/each}}
                                 {{/md-tab-header-items}}
 
                                 {{#md-tabs-content}}
-                                    {{#each tab in tabs}}
-                                        <div class="demo-tab" layout="column" layout-align="space-around center">
-                                            <div>
-                                                {{tab.content}}
+                                    {{#each tabs as |tab index|}}
+                                        {{#md-tab-content tab=tab position=index}}
+                                            <div class="demo-tab" layout="column" layout-align="space-around center">
+                                                <div>
+                                                    {{tab.content}}
+                                                </div>
+                                                {{#md-button class="md-primary md-raised" action='removeTab'}}
+                                                    Remove Tab
+                                                {{/md-button}}
                                             </div>
-                                            {{#md-button class="md-primary md-raised" action='removeTab'}}
-                                                Remove Tab
-                                            {{/md-button}}
-                                        </div>
+                                        {{/md-tab-content}}
+
                                     {{/each}}
                                 {{/md-tabs-content}}
-
-
-
 
                             {{/md-tabs}}
 
                             <form layout="column" style="padding-top:20px;padding-left:20px;">
                                 <div layout="row" layout-sm="column" layout-margin >
                                     {{#md-input-container value=selectedIndex}}
-                                        <label for="activeIndex">Active Index {{selectedIndex}}</label>
+                                        <label for="activeIndex">Active Index</label>
                                         {{md-input type="text" id="activeIndex" disabled=true}}
                                     {{/md-input-container}}
 

@@ -7,7 +7,16 @@ var RbButtonComponent = Ember.Component.extend(RipplesMixin, {
 
     classNames: ['md-button'],
 
-    attributeBindings: ['disabled', 'href'],
+    attributeBindings: ['disabled', 'href', 'style'],
+
+    setupRipples: function() {
+        if (this.get('mdNoInk')) {
+            return;
+        }
+        this.get('rippleService').attachButtonBehavior(this.$());
+
+    }.on('didInsertElement'),
+
 
     buttonClassNames: function() {
 

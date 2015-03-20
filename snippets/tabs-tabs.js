@@ -2,22 +2,6 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
 
-    showSource: false,
-
-    showSourceClass: function() {
-        return this.get('showSource') ? 'show-source' : '';
-    }.property('showSource'),
-
-    sourceFiles: Ember.ArrayProxy.create({
-        content: [
-            {name: 'html', content: 'tabs-tabs.hbs'},
-            {name: 'js', content: 'tabs-tabs.js'},
-            {name: 'css', content: 'css'}
-        ]
-    }),
-
-
-
     tabs: Ember.ArrayProxy.create({
         content: [
             { title: 'One', content: "Tabs will become paginated if there isn't enough room for them."},
@@ -40,10 +24,6 @@ export default Ember.Controller.extend({
     }.property('selectedIndex'),
 
     actions: {
-        showSource: function() {
-            this.toggleProperty('showSource');
-        },
-
         addTab: function() {
             var title = this.get('tTitle'),
                 content = this.get('tContent');

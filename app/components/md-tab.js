@@ -1,30 +1,39 @@
 import Ember from 'ember';
+import RippleMixin from '../mixins/ripples';
 
-var MdTab = Ember.Component.extend({
+
+var MdTab = Ember.Component.extend(RippleMixin, {
     tagName: 'md-tab',
 
-    attributeBindings: ['label', 'disabled'],
+    attributeBindings: ['label', 'disabled', 'tab', 'position'],
 
-    setupLabel: function() {
+    classNameBindings: ['isSelected:active'],
 
-        var tabLabel = this.$().find('md-tab-label');
-
-        if (tabLabel.length) {
-            tabLabel.remove();
-        } else if (this.get('label')) {
-            tabLabel = Ember.$('<md-tab-label>').html(this.get('label'));
-        } else {
-            // if nothing is found, use the tabs content as the label
-            tabLabel = Ember.$('<md-tab-panel>')
-                            .append(this.$().contents().remove());
-
+    setupRipples: function() {
+        if (this.get('mdNoInk')) {
+            return;
         }
 
-        this.$().append(tabLabel);
+        var inkBarElement = this.get('headerItems').$('md-tabs-ink-bar');
 
+        this.get('rippleService').attachTabBehavior(this.$(), {
+            colorElement: inkBarElement
+        });
 
+    }.on('didInsertElement'),
 
-    }.on('didInsertElement')
+    headerItems: Ember.computed.alias('parentView'),
+
+    tabsContainer: Ember.computed.alias('parentView.parentView'),
+
+    isSelected: function() {
+        return this.get('position') === this.get('tabsContainer.md-selected');
+    }.property('position', 'tabsContainer.md-selected'),
+
+    click: function() {
+        this.get('tabsContainer').select(this);
+    }
+
 
 
 });

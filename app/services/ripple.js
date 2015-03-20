@@ -89,6 +89,15 @@ var RippleService = Ember.Service.extend({
         }, options));
     },
 
+    attachTabBehavior: function(element, options) {
+        return this.attach(element, Ember.merge({
+            center: false,
+            dimBackground: true,
+            outline: false,
+            rippleSize: 'full'
+        }, options));
+    },
+
     attach: function(element, options) {
 
         // check if element has md-no-ink attribute
@@ -96,7 +105,6 @@ var RippleService = Ember.Service.extend({
             return Ember.K;
         }
 
-        // TODO: Does Ember have a native extend?
         options = Ember.merge({
             colorElement: element,
             mousedown: true,
@@ -195,8 +203,6 @@ var RippleService = Ember.Service.extend({
          * @returns {*|jQuery|HTMLElement} the generated ripple element
          */
         function createRipple(left, top) {
-
-            //console.log('creating ripple at x: ' + left + ' y: ' + top);
 
             color = parseColor(element.attr('md-ink-ripple')) || parseColor(window.getComputedStyle(options.colorElement[0]).color || 'rgb(0, 0, 0)');
 
