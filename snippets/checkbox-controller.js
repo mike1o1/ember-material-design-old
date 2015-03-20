@@ -1,10 +1,6 @@
 import Ember from 'ember';
-import BaseDemoController from '../controllers/base-demo-controller';
 
-export default BaseDemoController.extend({
-
-    demoName: 'checkbox',
-
+export default Ember.Controller.extend({
     data: {
         cb1: true,
         cb2: false,
