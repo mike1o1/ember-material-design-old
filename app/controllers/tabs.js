@@ -10,9 +10,9 @@ export default Ember.Controller.extend({
 
     sourceFiles: Ember.ArrayProxy.create({
         content: [
-            {name: 'html', content: 'tabs-tabs.hbs'},
+            {name: 'hbs', content: 'tabs-tabs.hbs'},
             {name: 'js', content: 'tabs-tabs.js'},
-            {name: 'css', content: 'css'}
+            {name: 'scss', content: 'tabs-tabs.scss'}
         ]
     }),
 
