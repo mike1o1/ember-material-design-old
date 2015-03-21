@@ -22,13 +22,22 @@ var MdTab = Ember.Component.extend(RippleMixin, {
 
     }.on('didInsertElement'),
 
+    insertToParent: function() {
+        var parentContainer = this.get('tabsContainer');
+        parentContainer.add(this);
+    }.on('didInsertElement'),
+
+    removeFromParent: function() {
+        var parentContainer = this.get('tabsContainer');
+        parentContainer.remove(this);
+    }.on('willDestroyElement'),
+
+
     headerItems: Ember.computed.alias('parentView'),
 
     tabsContainer: Ember.computed.alias('parentView.parentView'),
 
-    isSelected: function() {
-        return this.get('position') === this.get('tabsContainer.md-selected');
-    }.property('position', 'tabsContainer.md-selected'),
+    isSelected: false,
 
     click: function() {
         this.get('tabsContainer').select(this);

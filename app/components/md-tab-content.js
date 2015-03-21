@@ -8,13 +8,9 @@ var MdTabContent = Ember.Component.extend({
     tabsContainer: Ember.computed.alias('parentView.parentView'),
 
     isSelected: function() {
-        //var selected = this.get('tabsContainer.md-selected');
-        //var selectedTab = this.get('tabsContainer.tabs').objectAt(selected);
-        //return selectedTab === this.get('tab');
+        return this.get('tabsContainer.selectedItem.tab') === this.get('tab');
 
-        return this.get('position') === this.get('tabsContainer.md-selected');
-
-    }.property('tabsContainer.md-selected')
+    }.property('tabsContainer.selectedItem.tab')
 
 
 });

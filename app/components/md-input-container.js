@@ -15,7 +15,7 @@ var MdInputContainer = Ember.Component.extend({
     placeholder: '',
 
     hasValue: function() {
-        return this.get('value');
+        return !Ember.isNone(this.get('value')) && !Ember.isEmpty(this.get('value'));
         //return this.get('value') && this.get('value').length > 0;
     }.property('value'),
 

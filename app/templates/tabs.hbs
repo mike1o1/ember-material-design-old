@@ -20,7 +20,7 @@
 
             {{#md-tabs style='border-top: solid 1px #00ADC3;' classNameBindings='showSource::ng-hide'
                 classNames='demo-source-tabs'
-                tabs=sourceFiles md-selected=0}}
+                md-selected=0}}
                 {{#md-tab-header-items}}
                     {{#each sourceFiles as |tab index|}}
                         {{#md-tab tab=tab position=index}}
@@ -51,17 +51,17 @@
 
                         <div class="sample" layout="column">
 
-                            {{#md-tabs md-selected=selectedIndex flex='' tabs=tabs}}
+                            {{#md-tabs md-selected=selectedIndex flex=''}}
 
                                 {{#md-tab-header-items}}
                                     {{#each tabs as |tab index|}}
-                                        {{#md-tab tab=tab position=index}}{{tab.title}}{{/md-tab}}
+                                        {{#md-tab tab=tab}}{{tab.title}}{{/md-tab}}
                                     {{/each}}
                                 {{/md-tab-header-items}}
 
                                 {{#md-tabs-content}}
                                     {{#each tabs as |tab index|}}
-                                        {{#md-tab-content tab=tab position=index}}
+                                        {{#md-tab-content tab=tab}}
                                             <div class="demo-tab" layout="column" layout-align="space-around center">
                                                 <div>
                                                     {{tab.content}}
@@ -100,7 +100,7 @@
                                         <label for="content">Content</label>
                                         {{md-input type="text" id="content"}}
                                     {{/md-input-container}}
-                                    {{#md-button class="add-tab md-primary" type="submit" style="max-height: 40px" action='addTab'}}
+                                    {{#md-button class="add-tab md-primary" style="max-height: 40px" action='addTab'}}
                                         Add Tab{{/md-button}}
                                 </div>
                             </form>

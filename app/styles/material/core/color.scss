@@ -430,7 +430,7 @@ $colors: (
 //  }
 //}
 
-@function color($color, $type: '500') {
+@function color($color, $type: $default-color) {
   @if map-has-key($colors, $color) {
     $curr_color: map-get($colors, $color);
     @if map-has-key($curr_color, $type) {
