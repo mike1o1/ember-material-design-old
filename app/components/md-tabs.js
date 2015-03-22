@@ -165,7 +165,7 @@ var MdTabs = Ember.Component.extend(Ember.Evented, RippleMixin, {
             canvasWidth -= tab.offsetWidth;
         });
         return canvasWidth <= 0;
-    }.property('tabElements.tabs.[]'),
+    }.property('tabs.[]'),
 
     insertTab: function(tabData, index) {
         var self = this;

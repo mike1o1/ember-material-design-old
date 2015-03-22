@@ -2,6 +2,8 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
 
+    iconService: Ember.inject.service('icon'),
+
     showSource: false,
 
     showSourceClass: function() {

@@ -112,8 +112,8 @@ var IconService = Ember.Service.extend({
 
 
         // if already loaded and cached, use a clone of the cached icon.
-        if (this.get('iconCache')[id]) {
-            return Ember.RSVP.Promise.resolve(this.get('iconCache')[id].clone());
+        if (config[id]) {
+            return Ember.RSVP.Promise.resolve(config[id].clone());
         }
 
         if (urlRegex.test(id)) {
@@ -198,7 +198,11 @@ var IconService = Ember.Service.extend({
 
         return req
             .then(function(response) {
-                var els = Ember.$(response.jqXHR.responseText);
+                // if its an actual ajax request, just get the response text
+                if (response.jqXHR) {
+                    response = response.jqXHR.responseText;
+                }
+                var els = Ember.$(response);
 
                 for (var i = 0; i < els.length; ++i) {
                     if (els[i].nodeName === 'svg') {

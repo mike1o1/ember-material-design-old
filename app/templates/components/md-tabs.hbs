@@ -9,14 +9,14 @@
                         aria-label="Previous Page"
                         aria-disabled="{{if canPageBack 'false' 'true'}}"
                         class="{{if canPageBack '' 'md-disabled'}}">
-            <md-icon md-svg-icon="tabs-arrow"></md-icon>
+            {{md-icon md-svg-icon="tabs-arrow"}}
         </md-prev-button>
         <md-next-button tabindex="-1"
                         role="button"
                         aria-label="Next Page"
                         aria-disabled="{{if canPageForward 'false' 'true'}}"
                         class="{{if canPageForward '' 'md-disabled'}}">
-            <md-icon md-svg-icon="tabs-arrow"></md-icon>
+            {{md-icon md-svg-icon="tabs-arrow"}}
         </md-next-button>
 
     {{/if}}
