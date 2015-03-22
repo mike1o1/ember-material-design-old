@@ -37,7 +37,7 @@ export default Ember.Controller.extend({
 
     selectedTab: function() {
         return this.get('tabs').objectAt(this.get('selectedIndex'));
-    }.property('selectedIndex'),
+    }.property('selectedIndex', 'tabs.[]'),
 
     actions: {
         showSource: function() {

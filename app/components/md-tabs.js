@@ -3,12 +3,22 @@ import Ember from 'ember';
 var MdTabs = Ember.Component.extend({
     tagName: 'md-tabs',
 
-    attributeBindings: ['md-selected'],
+    attributeBindings: ['selectedIndex'],
+
+    selectedIndex: -1,
 
     isCreated: false,
 
-    setCreatedProperty: function() {
+    setupTabs: function() {
         this.set('isCreated', true);
+
+        // if no tabs have been selected, select the first item
+        if (this.get('selectedIndex') === -1) {
+            this.set('selectedIndex', 0);
+        }
+
+        this.set('selectedItem.isSelected', true);
+
     }.on('didInsertElement'),
 
     childTabs: function() {
@@ -21,16 +31,13 @@ var MdTabs = Ember.Component.extend({
         });
     }.property(),
 
-    tabsLength: function() {
-        return this.get('tabComponents.length');
-    }.property('tabComponents.[]'),
-
     selectedItem: function() {
-        if (this.get('md-selected') >= this.get('tabComponents.length')) {
+        if (this.get('selectedIndex') >= this.get('tabComponents.length')) {
             return null;
         }
-        return this.get('tabComponents').objectAt(this.get('md-selected'));
-    }.property('md-selected', 'tabComponents.[]'),
+
+        return this.get('tabComponents').objectAt(this.get('selectedIndex'));
+    }.property('selectedIndex', 'tabComponents.[]'),
 
     add: function(tabComponent, index) {
 
@@ -42,8 +49,11 @@ var MdTabs = Ember.Component.extend({
             this.get('tabComponents').addObject(tabComponent);
         }
 
-        if (this.indexOf(tabComponent) === this.get('md-selected')) {
-            tabComponent.set('isSelected', true);
+        
+        // if component has been created, and this tab matches our index, select it
+        if (this.get('isCreated') && (this.indexOf(tabComponent) === this.get('selectedIndex') || this.get('selectedIndex') === -1)) {
+            this.select(tabComponent);
+            //tabComponent.set('isSelected', true);
         }
     },
 
@@ -78,7 +88,7 @@ var MdTabs = Ember.Component.extend({
 
         this.deselect(this.get('selectedItem'));
 
-        this.set('md-selected', this.indexOf(tabComponent));
+        this.set('selectedIndex', this.indexOf(tabComponent));
         tabComponent.set('isSelected', true);
     },
 
@@ -87,12 +97,12 @@ var MdTabs = Ember.Component.extend({
             return;
         }
 
-        this.set('md-selected', -1);
+        this.set('selectedIndex', -1);
         tabComponent.set('isSelected', false);
     },
 
     next: function(tabComponent) {
-        var currentIndex = this.indexOf(tabComponent);
+        var currentIndex = this.indexOf(tabComponent || this.get('selectedItem'));
 
         while (true) {
             if (!this.inRange(currentIndex)) {
@@ -118,7 +128,7 @@ var MdTabs = Ember.Component.extend({
     },
 
     previous: function(tabComponent) {
-        var currentIndex = this.indexOf(tabComponent);
+        var currentIndex = this.indexOf(tabComponent || this.get('selectedItem'));
 
         while (true) {
             if (!this.inRange(currentIndex)) {

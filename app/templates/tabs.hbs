@@ -19,18 +19,17 @@
             {{/md-toolbar}}
 
             {{#md-tabs style='border-top: solid 1px #00ADC3;' classNameBindings='showSource::ng-hide'
-                classNames='demo-source-tabs'
-                md-selected=0}}
+            classNames='demo-source-tabs'}}
                 {{#md-tab-header-items}}
                     {{#each sourceFiles as |tab index|}}
-                        {{#md-tab tab=tab position=index}}
+                        {{#md-tab tab=tab}}
                             {{tab.name}}
                         {{/md-tab}}
                     {{/each}}
                 {{/md-tab-header-items}}
                 {{#md-tabs-content}}
                     {{#each sourceFiles as |tab index|}}
-                        {{#md-tab-content tab=tab position=index}}
+                        {{#md-tab-content tab=tab}}
                             <md-content md-scroll-y class="demo-source-container">
                                 {{code-snippet name=tab.content }}
                             </md-content>
@@ -51,7 +50,7 @@
 
                         <div class="sample" layout="column">
 
-                            {{#md-tabs md-selected=selectedIndex flex=''}}
+                            {{#md-tabs selectedIndex=selectedIndex flex=''}}
 
                                 {{#md-tab-header-items}}
                                     {{#each tabs as |tab index|}}
@@ -101,7 +100,8 @@
                                         {{md-input type="text" id="content"}}
                                     {{/md-input-container}}
                                     {{#md-button class="add-tab md-primary" style="max-height: 40px" action='addTab'}}
-                                        Add Tab{{/md-button}}
+                                        Add Tab
+                                    {{/md-button}}
                                 </div>
                             </form>
 
