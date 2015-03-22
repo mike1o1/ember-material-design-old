@@ -1,173 +1,308 @@
 import Ember from 'ember';
+import RippleMixin from '../mixins/ripples';
 
-var MdTabs = Ember.Component.extend(Ember.Evented, {
+var MdTabs = Ember.Component.extend(Ember.Evented, RippleMixin, {
     tagName: 'md-tabs',
 
-    attributeBindings: ['selectedIndex'],
+    constants: Ember.inject.service('constants'),
 
-    selectedIndex: -1,
+    attributeBindings: ['selectedIndex', 'tabs', 'md-border-bottom', 'md-stretch-tabs'],
 
-    isCreated: false,
+    tabs: Ember.ArrayProxy.create({content: []}),
+    lastSelectedIndex: null,
+    focusIndex: 0,
+    offsetLeft: 0,
+    hasContent: true,
+    hasFocus: false,
+    lastClick: false,
 
-    setupTabs: function() {
+    tabsLength: function() {
+        return this.get('tabs.length');
+    }.property('tabs.[]'),
 
-        Ember.run.schedule('afterRender', this, () => {
-            this.set('isCreated', true);
-            console.log('setup complete');
-        });
-
-        // if no tabs have been selected, select the first item
-        if (this.get('selectedIndex') === -1) {
-            this.set('selectedIndex', 0);
-        }
-
-        this.set('selectedItem.isSelected', true);
-
-    }.on('didInsertElement'),
-
-    tabComponents: function() {
-        return Ember.ArrayProxy.create({
-            content: []
-        });
+    elements: function() {
+        return {};
     }.property(),
 
-    selectedItem: function() {
-        if (this.get('selectedIndex') >= this.get('tabComponents.length')) {
-            return null;
+    setupComponent: function() {
+        Ember.run.schedule('afterRender', this, this.updateInkBarStyles);
+        Ember.run.schedule('afterRender', this, this.getElements);
+    }.on('didInsertElement'),
+
+    getElements: function() {
+        // TODO: make these components and have them auto register?
+        var elements = {};
+        elements.canvas = this.$()[0].getElementsByTagName('md-tab-canvas')[0];
+        elements.wrapper = elements.canvas.getElementsByTagName('md-pagination-wrapper')[0];
+        elements.tabs = elements.wrapper.getElementsByTagName('md-tab-item');
+        elements.dummies = elements.canvas.getElementsByTagName('md-dummy-tab');
+        elements.inkBar = elements.wrapper.getElementsByTagName('md-ink-bar')[0];
+
+        this.set('elements', elements);
+    }.on('didInsertElement'),
+
+    keyDown: function(event) {
+        switch(event.keyCode) {
+            case this.get('constants.KEY_CODE.LEFT_ARROW'):
+                event.preventDefault();
+                this.incrementSelectedIndex(-1, true);
+                break;
+            case this.get('constants.KEY_CODE.RIGHT_ARROW'):
+                event.preventDefault();
+                this.incrementSelectedIndex(1, true);
+                break;
+            case this.get('constants.KEY_CODE.SPACE'):
+            case this.get('constants.KEY_CODE.ENTER'):
+                event.preventDefault();
+                this.set('selectedIndex', this.get('focusIndex'));
+                break;
         }
+        this.set('lastClick', false);
+    },
 
-        return this.get('tabComponents').objectAt(this.get('selectedIndex'));
-    }.property('selectedIndex', 'tabComponents.[]'),
-
-    add: function(tabComponent, index) {
-
-        if (!this.get('isCreated')) {
-            this.get('tabComponents').insertAt(0, tabComponent);
-        } else if (typeof index !== 'undefined' && index <= this.get('tabComponents.length')) {
-            this.get('tabComponents').insertAt(index, tabComponent);
-        } else {
-            this.get('tabComponents').addObject(tabComponent);
-        }
-
-
-        // if component has been created, and this tab matches our index, select it
-        if (this.get('isCreated') && (this.indexOf(tabComponent) === this.get('selectedIndex') || this.get('selectedIndex') === -1)) {
-            this.select(tabComponent);
-            //tabComponent.set('isSelected', true);
+    incrementSelectedIndex: function(inc, focus) {
+        var newIndex,
+            index = focus ? this.get('focusIndex') : this.get('selectedIndex');
+        for (newIndex = index + inc;
+            this.get('tabs').objectAt(newIndex) && this.get('tabs').objectAt(newIndex).get('disabled');
+            newIndex += inc) {}
+        if (this.get('tabs').objectAt(newIndex)) {
+            if (focus) {
+                this.set('focusIndex', newIndex);
+            } else {
+                this.set('selectedIndex', newIndex);
+            }
         }
     },
 
-    remove: function(tabComponent, noReselect) {
-        if (!this.get('tabComponents').contains(tabComponent)) {
+    handleOffseChange: function() {
+        var left = this.get('offsetLeft');
+        Ember.$(this.get('elements.wrapper')).css('left', '-' + left + 'px');
+    }.observes('offsetLeft'),
+
+    handleFocusIndexChange: function() {
+        var newIndex = this.get('focusIndex');
+        if (!this.get('elements.tabs')[newIndex]) {
             return;
         }
 
-        if (noReselect) {
-            return;
-        }
+        this.adjustOffset();
+        this.redirectFocus();
 
-        var isSelectedItem = this.get('selectedItem') === tabComponent,
-            newTab = this.previous() || this.next();
+    }.observes('focusIndex'),
 
-        this.deselect(tabComponent);
-        this.get('tabComponents').removeObject(tabComponent);
-
-        if (isSelectedItem) {
-            this.select(newTab);
-        }
+    redirectFocus: function() {
+        // TODO: implement after dummies are implemented
+        //this.get('elements.dummies')[this.get('focusIndex')].focus();
     },
 
-    select: function(tabComponent, rightToLeft) {
+    adjustOffset: function() {
+        var tab = this.get('elements.tabs')[this.get('focusIndex')],
+            left = tab.offsetLeft,
+            right = tab.offsetWidth + left;
+
         this.beginPropertyChanges();
-        if (!tabComponent || tabComponent.get('isSelected') || tabComponent.get('disabled')) {
-            return;
-        }
-
-        if (!this.get('tabComponents').contains(tabComponent)) {
-            return;
-        }
-
-        this.deselect(this.get('selectedItem'));
-
-        this.set('selectedIndex', this.indexOf(tabComponent));
-        tabComponent.set('isSelected', true);
+        var offsetLeft = this.get('offsetLeft');
+        this.set('offsetLeft', Math.max(offsetLeft, this.fixOffset(right - this.get('elements.canvas.clientWidth'))));
+        this.set('offsetLeft', Math.min(offsetLeft, this.fixOffset(left)));
         this.endPropertyChanges();
     },
 
-    deselect: function(tabComponent) {
-        if (!tabComponent || !tabComponent.get('isSelected')) {
+    attachRipple: function(element) {
+        var options = {
+            colorElement: Ember.$(this.get('elements.inkBar'))
+        };
+
+        this.get('rippleService').attachTabBehavior(element, options);
+    },
+
+    shouldStretchTabs: function() {
+        switch (this.get('md-stretch-tabs')) {
+            case 'always': return true;
+            case 'never': return false;
+            default: return !this.get('shouldPaginate') && window.matchMedia('(max-width: 600px)').matches;
+        }
+    }.property('shouldPaginate'),
+
+    shouldPaginate: function() {
+        if (!this.get('elements.tabs') || this.get('elements.tabs.length') <= 1) {
+            return false;
+        }
+        var canvasWidth = this.$().prop('clientWidth');
+        Ember.EnumerableUtils.forEach(this.get('element.tabs'), function(tab) {
+            canvasWidth -= tab.offsetWidth;
+        });
+        return canvasWidth <= 0;
+    }.property('element.tabs.[]'),
+
+    insertTab: function(tabData, index) {
+        var self = this;
+        var proto = {
+            getIndex: function() {
+                return self.get('tabs').indexOf(tab);
+            },
+            isActive: function() {
+                return this.getIndex() === self.get('selectedIndex');
+            },
+            isLeft: function() {
+                return this.getIndex() < self.get('selectedIndex');
+            },
+            isRight: function() {
+                return this.getIndex() > self.get('selectedIndex');
+            },
+            hasFocus: function() {
+                return !self.get('lastClick') && self.get('hasFocus') && this.getIndex() === self.get('focusIndex');
+            }
+        },
+            tab = Ember.merge(proto, tabData);
+
+        if (typeof tabData.template !== 'string') {
+            self.set('hasContent', false);
+        }
+
+        if (Ember.isPresent(index)) {
+            this.get('tabs').insertAt(Math.min(this.get('tabs.length'), index), tab);
+        } else {
+            this.get('tabs').addObject(tab);
+        }
+
+        return tab;
+    },
+
+    removeTab: function(tabData) {
+        this.get('tabs').removeAt(tabData.getIndex());
+        this.refreshIndex();
+
+        // wait for the item to be removed from the DOM
+        Ember.run.schedule('afterRender', this, this.updateInkBarStyles);
+    },
+
+    select: function(index) {
+        this.beginPropertyChanges();
+        this.set('focusIndex', index);
+        this.set('selectedIndex', index);
+        this.set('lastClick', true);
+        this.endPropertyChanges();
+    },
+
+    scroll: function(event) {
+        if (!this.get('shouldPaginate')) {
             return;
         }
 
-        if (!this.get('tabComponents').contains(tabComponent)) {
+        event.preventDefault();
+
+        this.set('offsetLeft', this.fixOffset(this.get('offsetLeft') - event.wheelDelta));
+    },
+
+    fixOffset: function(value) {
+        var lastTab = this.get('elements.tabs')[this.get('elements.tabs.length') - 1],
+            totalWidth = lastTab.offsetLeft + lastTab.offsetWidth;
+
+        value = Math.max(0, value);
+        value = Math.min(totalWidth - this.get('elements.canvas.clientWidth'), value);
+        return value;
+    },
+
+    nextPage: function() {
+        var viewportWidth = this.get('elements.canvas.clientWidth'),
+            totalWidth = viewportWidth + this.get('offsetLeft'),
+            i, tab;
+
+        for(i = 0; i < this.get('elements.tabs.length'); i++) {
+            tab = this.get('elements.tabs')[i];
+            if (tab.offsetLeft + tab.offsetWidth > totalWidth) break;
+        }
+        this.set('offsetLeft', this.fixOffset(tab.offsetLeft));
+    },
+
+    previousPage: function() {
+        var i, tab;
+        for (i = 0; i < this.get('elements.tabs.length'); i++) {
+            tab = this.get('elements.tabs')[i];
+            if (tab.offsetLeft + tab.offsetWidth >= this.get('offsetLeft')) break;
+        }
+        this.set('offsetLeft', this.fixOffset(tab.offsetLeft + tab.offsetWidth - this.get('elements.canvas.clientWidth')));
+    },
+
+    canPageBack: function() {
+        return this.get('offsetLeft') > 0;
+    }.property('offsetLeft'),
+
+    canPageForward: function() {
+
+        if (!this.get('elements.tabs')) {
+            return false;
+        }
+
+        var lastTab = this.get('elements.tabs')[this.get('elements.tabs.length') - 1];
+        return lastTab && lastTab.offsetLeft + lastTab.offsetWidth > this.get('elements.canvas.clientWidth') + this.get('offsetLeft');
+    }.property('offsetLeft'),
+
+    refreshIndex: function() {
+        this.set('selectedIndex', this.getNearestSafeIndex(this.get('selectedIndex')));
+        this.set('focusIndex', this.getNearestSafeIndex(this.get('focusIndex')));
+    },
+
+    handleSelectedIndexChange: function() {
+        this.set('lastSelectedIndex', this.get('selectedIndex'));
+        this.set('selectedIndex', this.getNearestSafeIndex(this.get('selectedIndex')));
+        this.updateInkBarStyles();
+    }.observes('selectedIndex'),
+
+    updateInkBarStyles: function() {
+        if (!this.get('tabs.length') > 0) {
             return;
         }
 
-        console.log('deselecting');
-        this.set('selectedIndex', -1);
-        tabComponent.set('isSelected', false);
+        var index = this.get('selectedIndex'),
+            totalWidth = this.get('elements.wrapper.offsetWidth'),
+            tab = this.get('elements.tabs')[index],
+            left = tab.offsetLeft,
+            right = totalWidth - left - tab.offsetWidth;
+
+        this.updateInkBarClassName();
+        Ember.$(this.get('elements.inkBar')).css({left: left + 'px', right: right + 'px'});
     },
 
-    next: function(tabComponent) {
-        var currentIndex = this.indexOf(tabComponent || this.get('selectedItem'));
+    updateInkBarClassName: function() {
+        var newIndex = this.get('selectedIndex'),
+            oldIndex = this.get('lastSelectedIndex'),
+            ink = Ember.$(this.get('elements.inkBar'));
 
-        while (true) {
-            if (!this.inRange(currentIndex)) {
-                return null;
-            }
+        ink.removeClass('md-left md-right');
+        if (!typeof oldIndex === 'number') {
+            return;
+        }
 
-            var nextIndex = currentIndex + 1;
-            var foundItem = null;
-            if (this.inRange(nextIndex)) {
-                foundItem = this.get('tabComponents').objectAt(nextIndex);
-            }
-
-            if ((foundItem === null) || (nextIndex === this.get('tabComponents.length'))) {
-                return null;
-            }
-
-            if (foundItem && !foundItem.get('disabled')) {
-                return foundItem;
-            }
-
-            currentIndex = nextIndex;
+        if (newIndex < oldIndex) {
+            ink.addClass('md-left');
+        } else if (newIndex > oldIndex) {
+            ink.addClass('md-right');
         }
     },
 
-    previous: function(tabComponent) {
-        var currentIndex = this.indexOf(tabComponent || this.get('selectedItem'));
+    getNearestSafeIndex: function(newIndex) {
+        var maxOffset = Math.max(this.get('tabs.length') - newIndex, newIndex),
+            i, tab;
 
-        while (true) {
-            if (!this.inRange(currentIndex)) {
-                return null;
+        for (i = 0; i <= maxOffset; i++) {
+            tab = this.get('tabs').objectAt(newIndex + i);
+            if (tab && (tab.get('disabled') !== true)) {
+                return tab.getIndex();
             }
 
-            var nextIndex = currentIndex + -1;
-            var foundItem = null;
-            if (this.inRange(nextIndex)) {
-                foundItem = this.get('tabComponents').objectAt(nextIndex);
+            tab = this.get('tabs').objectAt(newIndex - 1);
+            if (tab && (tab.get('disabled') !== true)) {
+                return tab.getIndex();
             }
-
-            if ((foundItem === null) || (nextIndex === this.get('tabComponents.length'))) {
-                return null;
-            }
-
-            if (foundItem && !foundItem.get('disabled')) {
-                return foundItem;
-            }
-
-            currentIndex = nextIndex;
         }
-    },
-
-    indexOf: function(tabComponent) {
-        return this.get('tabComponents').indexOf(tabComponent);
-    },
-
-    inRange: function(index) {
-        var length = this.get('tabComponents.length');
-        return length && (index > -1) && (index < length);
+        return newIndex;
     }
+
+
+
+
 });
 
 export default MdTabs;

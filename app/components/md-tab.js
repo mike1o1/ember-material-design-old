@@ -1,48 +1,63 @@
 import Ember from 'ember';
-import RippleMixin from '../mixins/ripples';
 
-
-var MdTab = Ember.Component.extend(RippleMixin, {
+var MdTab = Ember.Component.extend({
     tagName: 'md-tab',
 
-    attributeBindings: ['label', 'disabled', 'tab', 'position'],
+    attributeBindings: ['label', 'disabled', 'tab', 'active'],
 
     classNameBindings: ['isSelected:active'],
 
-    setupRipples: function() {
-        if (this.get('mdNoInk')) {
-            return;
+    tabs: Ember.computed.alias('tabsComponent.tabs'),
+
+    tabsComponent: Ember.computed.alias('parentView'),
+
+    data: null,
+
+    setupComponent: function() {
+
+        var tabs = this.$().parent()[0].getElementsByTagName('md-tab'),
+            index = Array.prototype.indexOf.call(tabs, this.$()[0]),
+            data = this.get('tabsComponent').insertTab({
+                index: index,
+                template: this.getTemplate(),
+                label: this.getLabel()
+            }, index);
+
+        this.set('data', data);
+    }.on('didInsertElement'),
+
+    setActive: function() {
+        if (this.get('active')) {
+            this.get('tabsComponent').select(this.get('data').getIndex());
+        }
+    }.observes('active'),
+
+    updateLabel: function() {
+        this.set('data.label', this.get('label'));
+        this.get('tabsComponent').updateInkBarStyles();
+    }.observes('label'),
+
+    getLabel: function() {
+
+        // if label provided, then send label
+        if (this.get('label')) {
+            return this.get('label');
         }
 
-        var inkBarElement = this.get('headerItems').$('md-tabs-ink-bar');
+        // otherwise, we have to search for the md-tab-label element
+        var label = this.$().find('md-tab-label');
+        if (label) {
+            return label.html();
+        }
 
-        this.get('rippleService').attachTabBehavior(this.$(), {
-            colorElement: inkBarElement
-        });
+        // otherwise we have no label
+        return 'Missing Label';
+    },
 
-    }.on('didInsertElement'),
-
-    insertToParent: function() {
-        var parentContainer = this.get('tabsContainer');
-        parentContainer.add(this);
-    }.on('didInsertElement'),
-
-    removeFromParent: function() {
-        var parentContainer = this.get('tabsContainer');
-        parentContainer.remove(this);
-    }.on('willDestroyElement'),
-
-
-    headerItems: Ember.computed.alias('parentView'),
-
-    tabsContainer: Ember.computed.alias('parentView.parentView'),
-
-    isSelected: false,
-
-    click: function() {
-        this.get('tabsContainer').select(this);
+    getTemplate: function() {
+        var content = this.$().find('md-tab-template');
+        return content.length ? content.html() : this.get('label') ? this.$().html() : null;
     }
-
 
 
 });

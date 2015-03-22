@@ -16,8 +16,6 @@ export default Ember.Controller.extend({
         ]
     }),
 
-
-
     tabs: Ember.ArrayProxy.create({
         content: [
             { title: 'One', content: "Tabs will become paginated if there isn't enough room for them."},
@@ -32,6 +30,10 @@ export default Ember.Controller.extend({
             { title: 'Ten', content: "If you're still reading this, you should just go check out the API docs for tabs!"}
         ]
     }),
+
+    canRemoveTabs: function() {
+        return this.get('tabs.length') <= 1;
+    }.property('tabs.length'),
 
     selectedIndex: 2,
 
@@ -56,7 +58,6 @@ export default Ember.Controller.extend({
 
         removeTab: function() {
             this.get('tabs').removeAt(this.get('selectedIndex'));
-
         }
     }
 });
