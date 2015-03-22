@@ -1,5 +1,8 @@
 import Ember from 'ember';
-import { raw } from 'ic-ajax';
+import {
+    raw
+}
+from 'ic-ajax';
 
 var config = {
     defaultIconSize: 24
@@ -33,8 +36,8 @@ Icon.prototype = {
 /**
  * Clone the Icon DOM element; which is stored as an angular.element()
  */
-function cloneSVG(){
-    return Ember.$( this.element[0].cloneNode(true) );
+function cloneSVG() {
+    return Ember.$(this.element[0].cloneNode(true));
 }
 
 /**
@@ -45,18 +48,18 @@ function prepareAndStyle() {
     var iconSize = this.config ? this.config.iconSize : config.defaultIconSize;
     var svg = this.element;
 
-        svg[0].setAttribute('fit', '');
-        svg[0].setAttribute('height', '100%');
-        svg[0].setAttribute('width', '100%');
-        svg[0].setAttribute('preserveAspectRatio', 'xMidYMid meet');
-        svg[0].setAttribute('viewBox', svg.attr('viewBox') || ('0 0 ' + iconSize + ' ' + iconSize));
+    svg[0].setAttribute('fit', '');
+    svg[0].setAttribute('height', '100%');
+    svg[0].setAttribute('width', '100%');
+    svg[0].setAttribute('preserveAspectRatio', 'xMidYMid meet');
+    svg[0].setAttribute('viewBox', svg.attr('viewBox') || ('0 0 ' + iconSize + ' ' + iconSize));
 
 
 
-        svg.css({
-                'pointer-events' : 'none',
-                'display' : 'block'
-            });
+    svg.css({
+        'pointer-events': 'none',
+        'display': 'block'
+    });
 
     this.element = svg;
 }
@@ -69,23 +72,27 @@ var IconService = Ember.Service.extend({
 
     preloadIcons: function() {
 
-        var svgRegistry = [
-            {
-                id : 'tabs-arrow',
-                url: 'tabs-arrow.svg',
-                svg: '<svg version="1.1" x="0px" y="0px" viewBox="0 0 24 24"><g id="tabs-arrow"><polygon points="15.4,7.4 14,6 8,12 14,18 15.4,16.6 10.8,12 "/></g></svg>'
-            },
-            {
-                id : 'close',
-                url: 'close.svg',
-                svg: '<svg version="1.1" x="0px" y="0px" viewBox="0 0 24 24"><g id="close"><path d="M19 6.41l-1.41-1.41-5.59 5.59-5.59-5.59-1.41 1.41 5.59 5.59-5.59 5.59 1.41 1.41 5.59-5.59 5.59 5.59 1.41-1.41-5.59-5.59z"/></g></svg>'
-            },
-            {
-                id:  'cancel',
-                url: 'cancel.svg',
-                svg: '<svg version="1.1" x="0px" y="0px" viewBox="0 0 24 24"><g id="cancel"><path d="M12 2c-5.53 0-10 4.47-10 10s4.47 10 10 10 10-4.47 10-10-4.47-10-10-10zm5 13.59l-1.41 1.41-3.59-3.59-3.59 3.59-1.41-1.41 3.59-3.59-3.59-3.59 1.41-1.41 3.59 3.59 3.59-3.59 1.41 1.41-3.59 3.59 3.59 3.59z"/></g></svg>'
-            }
-        ];
+        var svgRegistry = [{
+            id: 'tabs-arrow',
+            url: 'tabs-arrow.svg',
+            svg: '<svg version="1.1" x="0px" y="0px" viewBox="0 0 24 24"><g><polygon points="15.4,7.4 14,6 8,12 14,18 15.4,16.6 10.8,12 "/></g></svg>'
+
+        }, {
+            id: 'close',
+            url: 'close.svg',
+            svg: '<svg version="1.1" x="0px" y="0px" viewBox="0 0 24 24"><g><path d="M19 6.41l-1.41-1.41-5.59 5.59-5.59-5.59-1.41 1.41 5.59 5.59-5.59 5.59 1.41 1.41 5.59-5.59 5.59 5.59 1.41-1.41-5.59-5.59z"/></g></svg>'
+
+        }, {
+            id: 'cancel',
+            url: 'cancel.svg',
+            svg: '<svg version="1.1" x="0px" y="0px" viewBox="0 0 24 24"><g><path d="M12 2c-5.53 0-10 4.47-10 10s4.47 10 10 10 10-4.47 10-10-4.47-10-10-10zm5 13.59l-1.41 1.41-3.59-3.59-3.59 3.59-1.41-1.41 3.59-3.59-3.59-3.59 1.41-1.41 3.59 3.59 3.59-3.59 1.41 1.41-3.59 3.59 3.59 3.59z"/></g></svg>'
+
+        }, {
+            id: 'toggle-arrow',
+            url: 'toggle-arrow-svg',
+            svg: '<svg version="1.1" x="0px" y="0px" viewBox="0 0 48 48"><path d="M24 16l-12 12 2.83 2.83 9.17-9.17 9.17 9.17 2.83-2.83z"/><path d="M0 0h48v48h-48z" fill="none"/></svg>'
+
+        }];
 
         svgRegistry.forEach((asset) => {
             this.icon(asset.id, asset.url);
@@ -184,14 +191,16 @@ var IconService = Ember.Service.extend({
         if (this.templateCache[url]) {
             req = Ember.RSVP.Promise.resolve(this.templateCache[url]);
         } else {
-            req = raw(url, { dataType: 'text'});
+            req = raw(url, {
+                dataType: 'text'
+            });
         }
 
         return req
             .then(function(response) {
                 var els = Ember.$(response.jqXHR.responseText);
 
-                for(var i = 0; i < els.length; ++i) {
+                for (var i = 0; i < els.length; ++i) {
                     if (els[i].nodeName === 'svg') {
                         return els[i];
                     }
