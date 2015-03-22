@@ -7,42 +7,7 @@
 
         <section class="demo-container {{showSourceClass}}">
 
-            {{#md-toolbar classNames='demo-toolbar'}}
-                <div class="md-toolbar-tools">
-                    <span>Dynamic Tabs</span>
-                    <span flex></span>
-                    {{#md-button action='showSource' layoutType="row" layout-align="center center" style='min-width: 72px;'}}
-                        {{md-icon md-svg-src='images/icons/ic_visibility_24px.svg' style='margin: 0 4px 0 0;'}}
-                        <span>Source</span>
-                    {{/md-button}}
-                </div>
-            {{/md-toolbar}}
-
-            {{#md-tabs style='border-top: solid 1px #00ADC3;' classNameBindings='showSource::ng-hide'
-            classNames='demo-source-tabs'}}
-                {{#md-tab-header-items}}
-                    {{#each sourceFiles as |tab index|}}
-                        {{#md-tab tab=tab}}
-                            {{tab.name}}
-                        {{/md-tab}}
-                    {{/each}}
-                {{/md-tab-header-items}}
-                {{#md-tabs-content}}
-                    {{#each sourceFiles as |tab index|}}
-                        {{#md-tab-content tab=tab}}
-                            <md-content md-scroll-y class="demo-source-container">
-                                {{code-snippet name=tab.content }}
-                            </md-content>
-                        {{/md-tab-content}}
-                    {{/each}}
-                {{/md-tabs-content}}
-            {{/md-tabs}}
-
-
-
             <demo-include class="md-whiteframe-z1 demoDynamicTabs">
-
-
                 <div class="demo-content ">
 
                     <div class="display-content">
@@ -76,7 +41,7 @@
 
                             {{/md-tabs}}
 
-                            <form layout="column" style="padding-top:20px;padding-left:20px;">
+                            <form layout="column" style="padding-top:20px;padding-left:20px;" {{action 'addTab' on='submit'}}>
                                 <div layout="row" layout-sm="column" layout-margin>
                                     {{#md-input-container value=selectedIndex}}
                                         <label for="activeIndex">Active Index</label>
@@ -99,7 +64,7 @@
                                         <label for="content">Content</label>
                                         {{md-input type="text" id="content"}}
                                     {{/md-input-container}}
-                                    {{#md-button class="add-tab md-primary" style="max-height: 40px" action='addTab'}}
+                                    {{#md-button class="add-tab md-primary" style="max-height: 40px" }}
                                         Add Tab
                                     {{/md-button}}
                                 </div>

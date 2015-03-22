@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-var MdTabs = Ember.Component.extend({
+var MdTabs = Ember.Component.extend(Ember.Evented, {
     tagName: 'md-tabs',
 
     attributeBindings: ['selectedIndex'],
@@ -10,7 +10,11 @@ var MdTabs = Ember.Component.extend({
     isCreated: false,
 
     setupTabs: function() {
-        this.set('isCreated', true);
+
+        Ember.run.schedule('afterRender', this, () => {
+            this.set('isCreated', true);
+            console.log('setup complete');
+        });
 
         // if no tabs have been selected, select the first item
         if (this.get('selectedIndex') === -1) {
@@ -20,10 +24,6 @@ var MdTabs = Ember.Component.extend({
         this.set('selectedItem.isSelected', true);
 
     }.on('didInsertElement'),
-
-    childTabs: function() {
-
-    },
 
     tabComponents: function() {
         return Ember.ArrayProxy.create({
@@ -49,7 +49,7 @@ var MdTabs = Ember.Component.extend({
             this.get('tabComponents').addObject(tabComponent);
         }
 
-        
+
         // if component has been created, and this tab matches our index, select it
         if (this.get('isCreated') && (this.indexOf(tabComponent) === this.get('selectedIndex') || this.get('selectedIndex') === -1)) {
             this.select(tabComponent);
@@ -78,6 +78,7 @@ var MdTabs = Ember.Component.extend({
     },
 
     select: function(tabComponent, rightToLeft) {
+        this.beginPropertyChanges();
         if (!tabComponent || tabComponent.get('isSelected') || tabComponent.get('disabled')) {
             return;
         }
@@ -90,6 +91,7 @@ var MdTabs = Ember.Component.extend({
 
         this.set('selectedIndex', this.indexOf(tabComponent));
         tabComponent.set('isSelected', true);
+        this.endPropertyChanges();
     },
 
     deselect: function(tabComponent) {
@@ -97,6 +99,11 @@ var MdTabs = Ember.Component.extend({
             return;
         }
 
+        if (!this.get('tabComponents').contains(tabComponent)) {
+            return;
+        }
+
+        console.log('deselecting');
         this.set('selectedIndex', -1);
         tabComponent.set('isSelected', false);
     },
