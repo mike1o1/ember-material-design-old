@@ -24,8 +24,7 @@
                    class="{{if shouldPaginate 'md-paginated' ''}}"
                    role="tablist">
         <md-pagination-wrapper>
-            {{#each tab in tabs}}
-
+            {{#each tabs as |tab index|}}
                 {{md-tab-item  tabindex="1"
                 classNames="md-tab"
                 style="max-width: {{if tabWidth '{{tabWidth}} + 'px' 'none'}}"
@@ -34,7 +33,6 @@
                 label=tab.label
                 tab=tab
                 }}
-
             {{/each}}
             <md-ink-bar></md-ink-bar>
         </md-pagination-wrapper>
@@ -45,7 +43,7 @@
 {{#if hasContent}}
     <md-tab-content-wrapper>
         {{#each tabs as |tab index|}}
-            {{md-tab-content md-tab-data=tab role="tabpanel"}}
+            {{md-tab-content tab=tab role="tabpanel"}}
         {{/each}}
     </md-tab-content-wrapper>
 {{/if}}

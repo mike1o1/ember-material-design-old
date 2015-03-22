@@ -19,7 +19,7 @@ var MdTab = Ember.Component.extend({
             index = Array.prototype.indexOf.call(tabs, this.$()[0]),
             data = this.get('tabsComponent').insertTab({
                 index: index,
-                template: this.getTemplate(),
+                tabContent: this.getTemplate(),
                 label: this.getLabel()
             }, index);
 

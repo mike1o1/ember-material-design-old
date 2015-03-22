@@ -16,7 +16,6 @@
                         <div class="sample" layout="column">
 
                             {{#md-tabs selectedIndex=selectedIndex md-border-bottom=''}}
-
                                 {{#each tab in tabs}}
                                     {{#md-tab disabled=tab.disabled label=tab.title}}
                                         <div class="demo-tab" style="padding: 25px; text-align: center;">
@@ -27,7 +26,6 @@
 
                                     {{/md-tab}}
                                 {{/each}}
-
                             {{/md-tabs}}
 
                             <form layout="column" style="padding-top:20px;padding-left:20px;" {{action 'addTab' on='submit'}}>
