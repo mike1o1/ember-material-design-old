@@ -10,7 +10,12 @@ var MdTabWrapper = Ember.Component.extend({
 
     shouldStretchTabs: function() {
         return this.get('tabsComponent.shouldStretchTabs');
-    }.property('tabsComponent.shouldStretchTabs')
+    }.property('tabsComponent.shouldStretchTabs'),
+
+    shouldPaginate: function() {
+        console.log('should tab wrapper paginate?', this.get('tabsComponent.shouldPaginate'));
+        return this.get('tabsComponent.shouldPaginate');
+    }.property('tabsComponent.shouldPaginate')
 });
 
 export default MdTabWrapper;

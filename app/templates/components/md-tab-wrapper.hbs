@@ -3,18 +3,20 @@
 </md-tab-data>
 
 {{#if shouldPaginate}}
+    {{shouldPaginate}}
+    {{tabsComponent.shouldPaginate}}
     <md-prev-button tabindex="-1"
                     role="button"
                     aria-label="Previous Page"
-                    aria-disabled="{{if canPageBack 'false' 'true'}}"
+                    aria-disabled="{{if tabsComponent.canPageBack 'false' 'true'}}"
                     class="{{if canPageBack '' 'md-disabled'}}">
         {{md-icon md-svg-icon="tabs-arrow"}}
     </md-prev-button>
     <md-next-button tabindex="-1"
                     role="button"
                     aria-label="Next Page"
-                    aria-disabled="{{if canPageForward 'false' 'true'}}"
-                    class="{{if canPageForward '' 'md-disabled'}}">
+                    aria-disabled="{{if tabsComponent.canPageForward 'false' 'true'}}"
+                    class="{{if tabsComponent.canPageForward '' 'md-disabled'}}">
         {{md-icon md-svg-icon="tabs-arrow"}}
     </md-next-button>
 
