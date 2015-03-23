@@ -209,6 +209,8 @@ var MdTabs = Ember.Component.extend(Ember.Evented, RippleMixin, {
             this.get('tabs').addObject(tab);
         }
 
+        Ember.run.schedule('afterRender', this, this.updateInkBarStyles);
+
         return tab;
     },
 
@@ -217,7 +219,7 @@ var MdTabs = Ember.Component.extend(Ember.Evented, RippleMixin, {
         this.refreshIndex();
 
         // wait for the item to be removed from the DOM
-        Ember.run.schedule('sync', this, this.updateInkBarStyles);
+        Ember.run.schedule('afterRender', this, this.updateInkBarStyles);
     },
 
     select: function(index) {
@@ -294,6 +296,7 @@ var MdTabs = Ember.Component.extend(Ember.Evented, RippleMixin, {
     }.observes('selectedIndex'),
 
     updateInkBarStyles: function() {
+        console.log('updating ink bar styles');
         if (!this.get('tabs.length') > 0) {
             return;
         }
