@@ -4,6 +4,12 @@ import RippleMixin from '../mixins/ripples';
 var MdTabs = Ember.Component.extend(Ember.Evented, RippleMixin, {
     tagName: 'md-tabs',
 
+    mediaQueries: Ember.inject.service('media-queries'),
+
+    setupMediaQuery: function() {
+        this.get('mediaQueries').match('sm', '(max-width: 600px)');
+    }.on('didInsertElement'),
+
     constants: Ember.inject.service('constants'),
 
     attributeBindings: ['selectedIndex', 'tabs', 'md-border-bottom', 'md-stretch-tabs'],
@@ -150,9 +156,9 @@ var MdTabs = Ember.Component.extend(Ember.Evented, RippleMixin, {
         switch (this.get('md-stretch-tabs')) {
             case 'always': return true;
             case 'never': return false;
-            default: return !this.get('shouldPaginate') && window.matchMedia('(max-width: 600px)').matches;
+            default: return !this.get('shouldPaginate') && this.get('mediaQueries.isSm')
         }
-    }.property('shouldPaginate'),
+    }.property('shouldPaginate', 'mediaQueries.isSm'),
 
     shouldPaginate: function() {
         if (!this.get('tabElements.tabs') || this.get('tabElements.tabs.length') <= 1) {
@@ -163,7 +169,7 @@ var MdTabs = Ember.Component.extend(Ember.Evented, RippleMixin, {
             canvasWidth -= tab.offsetWidth;
         });
         return canvasWidth <= 0;
-    }.observes('tabs.[]'),
+    }.property('tabs.[]'),
 
     insertTab: function(tabData, index) {
         var self = this;
