@@ -24,10 +24,6 @@ var MdTabs = Ember.Component.extend(Ember.Evented, RippleMixin, {
         }));
     }.on('init'),
 
-    tabsLength: function() {
-        return this.get('tabs.length');
-    }.property('tabs.[]'),
-
     tabElements: function() {
         return {};
     }.property(),
@@ -38,6 +34,10 @@ var MdTabs = Ember.Component.extend(Ember.Evented, RippleMixin, {
         Ember.run.schedule('afterRender', this, function() {
             this.set('tabs.content', this.get('tabs').sortBy('index'));
             Ember.run.later(this, this.updateInkBarStyles, 350);
+
+            console.log('component setup');
+            this.select(this.get('selectedIndex'));
+
         });
     }.on('didInsertElement'),
 
@@ -53,8 +53,6 @@ var MdTabs = Ember.Component.extend(Ember.Evented, RippleMixin, {
     }.on('willDestroyElement'),
 
     handleWindowResize: function() {
-
-        console.log('handling resize');
         this.set('lastSelectedIndex', this.get('selectedIndex'));
         this.updateInkBarStyles();
     }.on('resize'),
@@ -107,7 +105,7 @@ var MdTabs = Ember.Component.extend(Ember.Evented, RippleMixin, {
         }
     },
 
-    handleOffseChange: function() {
+    handleOffsetChange: function() {
         var left = this.get('offsetLeft');
         Ember.$(this.get('tabElements.wrapper')).css('left', '-' + left + 'px');
     }.observes('offsetLeft'),
@@ -165,7 +163,7 @@ var MdTabs = Ember.Component.extend(Ember.Evented, RippleMixin, {
             canvasWidth -= tab.offsetWidth;
         });
         return canvasWidth <= 0;
-    }.property('tabs.[]'),
+    }.observes('tabs.[]'),
 
     insertTab: function(tabData, index) {
         var self = this;

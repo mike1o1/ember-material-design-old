@@ -31,7 +31,8 @@ export default Ember.Controller.extend({
         ]
     }),
 
-    canRemoveTabs: function() {
+    cantRemoveTabs: function() {
+
         return this.get('tabs.length') <= 1;
     }.property('tabs.length'),
 

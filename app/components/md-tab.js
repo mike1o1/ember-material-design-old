@@ -9,7 +9,9 @@ var MdTab = Ember.Component.extend({
 
     tabs: Ember.computed.alias('tabsComponent.tabs'),
 
-    tabsComponent: Ember.computed.alias('parentView'),
+    tabWrapperComponent: Ember.computed.alias('parentView'),
+
+    tabsComponent: Ember.computed.alias('tabWrapperComponent.parentView'),
 
     data: null,
 
@@ -25,6 +27,10 @@ var MdTab = Ember.Component.extend({
 
         this.set('data', data);
     }.on('didInsertElement'),
+
+    removeTab: function() {
+        this.get('tabsComponent').removeTab(this.get('data'));
+    }.on('willDestroyElement'),
 
     setActive: function() {
         if (this.get('active')) {

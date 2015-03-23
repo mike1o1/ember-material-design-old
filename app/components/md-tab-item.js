@@ -6,7 +6,8 @@ var MdTabItem = Ember.Component.extend({
     attributeBindings: ['tab', 'role', 'disabled', 'label'],
     classNameBindings: ['isActive:md-active', 'isFocused:md-focus', 'isDisabled:md-disabled'],
 
-    tabsComponent: Ember.computed.alias('parentView'),
+    tabWrapperComponent: Ember.computed.alias('parentView'),
+    tabsComponent: Ember.computed.alias('tabWrapperComponent.parentView'),
 
     setupRipples: function() {
         this.get('tabsComponent').attachRipple(this.$());

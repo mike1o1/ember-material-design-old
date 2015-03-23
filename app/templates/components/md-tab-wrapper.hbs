@@ -1,0 +1,41 @@
+<md-tab-data>
+    {{yield}}
+</md-tab-data>
+
+{{#if shouldPaginate}}
+    <md-prev-button tabindex="-1"
+                    role="button"
+                    aria-label="Previous Page"
+                    aria-disabled="{{if canPageBack 'false' 'true'}}"
+                    class="{{if canPageBack '' 'md-disabled'}}">
+        {{md-icon md-svg-icon="tabs-arrow"}}
+    </md-prev-button>
+    <md-next-button tabindex="-1"
+                    role="button"
+                    aria-label="Next Page"
+                    aria-disabled="{{if canPageForward 'false' 'true'}}"
+                    class="{{if canPageForward '' 'md-disabled'}}">
+        {{md-icon md-svg-icon="tabs-arrow"}}
+    </md-next-button>
+
+{{/if}}
+<md-tab-canvas tabindex="0"
+               class="{{if shouldPaginate 'md-paginated' ''}}"
+               role="tablist">
+    <md-pagination-wrapper>
+        {{tabsLength}}
+        {{#each tabs as |tab index|}}
+            {{md-tab-item  tabindex="1"
+            classNames="md-tab"
+            style="max-width: {{if tabWidth '{{tabWidth}} + 'px' 'none'}}"
+            role="tab"
+            aria-selected="{{isActive}}"
+            label=tab.label
+            tab=tab
+            }}
+        {{/each}}
+        <md-ink-bar></md-ink-bar>
+    </md-pagination-wrapper>
+    <!--Need to add visually hidden items for accessibility-->
+
+</md-tab-canvas>

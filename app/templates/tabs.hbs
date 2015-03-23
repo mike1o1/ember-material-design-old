@@ -16,19 +16,31 @@
                         <div class="sample" layout="column">
 
                             {{#md-tabs selectedIndex=selectedIndex md-border-bottom=''}}
-                                {{#each tab in tabs}}
-                                    {{#md-tab disabled=tab.disabled label=tab.title}}
-                                        <div class="demo-tab" style="padding: 25px; text-align: center;">
-                                            {{tab.content}}
-                                            <br/>
-                                            {{#md-button class="md-primary md-raised" disabled="{{canRemoveTabs}}"}}Remove Tab{{/md-button}}
-                                        </div>
 
-                                    {{/md-tab}}
-                                {{/each}}
+                                {{#md-tab-wrapper}}
+                                    {{#each tab in tabs}}
+                                        {{#md-tab disabled=tab.disabled label=tab.title}}
+                                            <md-tab-label>{{tab.title}}</md-tab-label>
+                                        {{/md-tab}}
+                                    {{/each}}
+                                {{/md-tab-wrapper}}
+
+                                {{#md-tab-content-wrapper}}
+                                    {{#each tab in tabs}}
+                                        {{#md-tab-content}}
+                                            <div class="demo-tab" style="padding: 25px; text-align: center;">
+                                                {{tab.title}}
+                                                <br/>
+                                                {{#md-button class="md-primary md-raised" disabled=cantRemoveTabs action='removeTab'}}
+                                                    Remove Tab{{/md-button}}
+                                            </div>
+                                        {{/md-tab-content}}
+                                    {{/each}}
+                                {{/md-tab-content-wrapper}}
                             {{/md-tabs}}
 
-                            <form layout="column" style="padding-top:20px;padding-left:20px;" {{action 'addTab' on='submit'}}>
+                            <form layout="column"
+                                  style="padding-top:20px;padding-left:20px;" {{action 'addTab' on='submit'}}>
                                 <div layout="row" layout-sm="column" layout-margin>
                                     {{#md-input-container value=selectedIndex}}
                                         <label for="activeIndex">Active Index</label>
