@@ -68,6 +68,9 @@ var MdTabs = Ember.Component.extend(Ember.Evented, RippleMixin, {
     }.on('resize'),
 
     getElements: function() {
+        if (!this.$()) {
+            return;
+        }
         // TODO: make these components and have them auto register?
         var elements = {};
         elements.canvas = this.$()[0].getElementsByTagName('md-tab-canvas')[0];
@@ -77,7 +80,7 @@ var MdTabs = Ember.Component.extend(Ember.Evented, RippleMixin, {
         elements.inkBar = elements.wrapper.getElementsByTagName('md-ink-bar')[0];
 
         this.elements = elements;
-    }.on('willInsertElement'),
+    }.on('didInsertElement').observes('tabs.[]'),
 
     keyDown: function(event) {
         switch (event.keyCode) {
