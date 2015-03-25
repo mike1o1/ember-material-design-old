@@ -28,6 +28,10 @@ var MdTab = Ember.Component.extend({
         this.set('data', data);
     }.on('didInsertElement'),
 
+    parentComponentSetup: function() {
+        console.log('parent setup');
+    }.on('registerElement'),
+
     removeTab: function() {
         this.get('tabsComponent').removeTab(this.get('data'));
     }.on('willDestroyElement'),

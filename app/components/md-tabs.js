@@ -36,6 +36,7 @@ var MdTabs = Ember.Component.extend(Ember.Evented, RippleMixin, {
     }.property(),
 
     setupComponent: function() {
+        console.log('main component setup');
         this.set('tabs.content', this.get('tabs').sortBy('index'));
         Ember.run.schedule('afterRender', this, function() {
 
@@ -310,30 +311,7 @@ var MdTabs = Ember.Component.extend(Ember.Evented, RippleMixin, {
         return value;
     },
 
-    nextPage: function() {
-        var viewportWidth = this.elements.canvas.clientWidth,
-            totalWidth = viewportWidth + this.get('offsetLeft'),
-            i, tab;
 
-        for (i = 0; i < this.elements.tabs.length; i++) {
-            tab = this.elements.tabs[i];
-            if (tab.offsetLeft + tab.offsetWidth > totalWidth) {
-                break;
-            }
-        }
-        this.set('offsetLeft', this.fixOffset(tab.offsetLeft));
-    },
-
-    previousPage: function() {
-        var i, tab;
-        for (i = 0; i < this.elements.tabs.length; i++) {
-            tab = this.elements.tabs[i];
-            if (tab.offsetLeft + tab.offsetWidth >= this.get('offsetLeft')) {
-                break;
-            }
-        }
-        this.set('offsetLeft', this.fixOffset(tab.offsetLeft + tab.offsetWidth - this.elements.canvas.clientWidth));
-    },
 
     canPageBack: function() {
         return this.get('offsetLeft') > 0;
@@ -411,6 +389,34 @@ var MdTabs = Ember.Component.extend(Ember.Evented, RippleMixin, {
             }
         }
         return newIndex;
+    },
+
+    actions: {
+        nextPage: function() {
+            console.log('next page');
+            var viewportWidth = this.elements.canvas.clientWidth,
+                totalWidth = viewportWidth + this.get('offsetLeft'),
+                i, tab;
+
+            for (i = 0; i < this.elements.tabs.length; i++) {
+                tab = this.elements.tabs[i];
+                if (tab.offsetLeft + tab.offsetWidth > totalWidth) {
+                    break;
+                }
+            }
+            this.set('offsetLeft', this.fixOffset(tab.offsetLeft));
+        },
+
+        previousPage: function() {
+            var i, tab;
+            for (i = 0; i < this.elements.tabs.length; i++) {
+                tab = this.elements.tabs[i];
+                if (tab.offsetLeft + tab.offsetWidth >= this.get('offsetLeft')) {
+                    break;
+                }
+            }
+            this.set('offsetLeft', this.fixOffset(tab.offsetLeft + tab.offsetWidth - this.elements.canvas.clientWidth));
+        },
     }
 
 
