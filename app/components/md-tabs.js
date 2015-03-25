@@ -36,27 +36,12 @@ var MdTabs = Ember.Component.extend(Ember.Evented, RippleMixin, {
     }.property(),
 
     setupComponent: function() {
-        console.log('main component setup');
         this.set('tabs.content', this.get('tabs').sortBy('index'));
         Ember.run.schedule('afterRender', this, function() {
-
-
-            //this.getElements();
-
             this.calculatePagination();
-
-
-
-
-            //Ember.run.later(this, this.updateInkBarStyles, 350);
-
-            //Ember.run.schedule('sync', this, this.calculatePagination);
-
-            console.log('component setup');
             this.select(this.get('selectedIndex'));
             this.set('offsetLeft', this.get('offsetLeft'));
             this.updateInkBarStyles();
-
         });
     }.on('didInsertElement'),
 
