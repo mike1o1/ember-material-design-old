@@ -15,7 +15,17 @@ export function initialize(/* container, application */) {
     // but ripples will only apply if the class is named 'md-button'
     // and the 'md-no-ink' attribute isn't set
     Ember.LinkView.reopen(RipplesMixin, {
+        didInsertElement: function() {
+            this._super();
 
+            var isMdButton = this.get('classNames').contains('md-button');
+            if (!isMdButton || this.get('mdNoInk')) {
+                return;
+            }
+
+            var rs = this.get('rippleService');
+            rs.attachButtonBehavior(this.$());
+        }
     });
 
 }

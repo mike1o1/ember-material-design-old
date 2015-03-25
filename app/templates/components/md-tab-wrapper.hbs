@@ -24,7 +24,7 @@
 <md-tab-canvas tabindex="0"
                class="{{if shouldPaginate 'md-paginated' ''}}"
                role="tablist">
-    <md-pagination-wrapper>
+    <md-pagination-wrapper style="left: -{{tabsComponent.offsetLeft}}px">
         {{tabsLength}}
         {{#each tabs as |tab index|}}
             {{md-tab-item  tabindex="1"
