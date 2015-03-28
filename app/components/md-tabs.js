@@ -130,8 +130,15 @@ var MdTabs = Ember.Component.extend(Ember.Evented, RippleMixin, {
 
     redirectFocus: function() {
         // TODO: implement after dummies are implemented
-        //this.get('elements.dummies')[this.get('focusIndex')].focus();
-    },
+        if (!this.elements || !this.elements.dummies || !this.get('focusIndex')) {
+            console.log('skipping focus');
+            return;
+        }
+
+        console.log('setting focus on: ' + this.get('focusIndex'));
+
+        this.elements.dummies[this.get('focusIndex')].focus();
+    }.on('focusIn'),
 
     adjustOffset: function() {
         var tab = this.elements.tabs[this.get('focusIndex')],
