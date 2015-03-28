@@ -17,8 +17,8 @@ export default Ember.Controller.extend({
 
     user2: {
         name: 'John Doe',
-        email: 'ipsum@lorem.com',
+        email: '',
         phone: '',
-        address: ''
+        address: 'Mountain View, CA'
     }
 });

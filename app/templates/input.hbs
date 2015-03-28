@@ -81,7 +81,7 @@
 
             </demo-include>
 
-            <demo-include class="md-whiteframe-z1 buttondemoBasicUsage">
+            <demo-include class="md-whiteframe-z1 inputdemoIcons">
 
                 <div class="demo-content">
 
@@ -90,7 +90,7 @@
                         <br/>
                         <md-content class="md-padding">
                             {{#md-input-container md-no-float='' value=user2.name}}
-                                {{md-icon md-svg-src="icons/ic_person_24px.svg"}}
+                                {{md-icon md-svg-src="icons/ic_person_24px.svg" class="name"}}
                                 {{md-input type="text" placeholder="Name"}}
                             {{/md-input-container}}
                             {{#md-input-container md-no-float='' value=user2.phon}}
@@ -98,8 +98,8 @@
                                 {{md-input type="text" placeholder="Phone Number"}}
                             {{/md-input-container}}
                             {{#md-input-container md-no-float=''}}
-                                {{md-icon md-svg-src="icons/ic_email_24px.svg"}}
-                                {{md-input type="email" placeholder="Email"}}
+                                {{md-icon md-svg-src="icons/ic_email_24px.svg" class="email"}}
+                                {{md-input type="email" placeholder="Email (required)" required="required"}}
                             {{/md-input-container}}
                             {{#md-input-container md-no-float=''}}
                                 {{md-icon md-svg-src="icons/ic_place_24px.svg"}}
