@@ -18,11 +18,16 @@ md-tabs {
   margin: 0;
   border-radius: 2px;
   overflow: hidden;
+  position: relative;
 
   *,
   *:before,
   *:after {
     box-sizing: border-box;
+  }
+
+  &:not(.md-no-tab-content) {
+    min-height: 200 + $tabs-header-height;
   }
 
   &[md-align-tabs="bottom"] {
@@ -174,7 +179,11 @@ md-tabs {
   md-tab-content-wrapper {
     display: block;
     min-height: 200px;
-    position: relative;
+    position: absolute;
+    top: $tabs-header-height;
+    left: 0;
+    right: 0;
+    bottom: 0;
     overflow: hidden;
     md-tab-content {
       display: block;

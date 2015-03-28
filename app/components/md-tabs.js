@@ -178,7 +178,7 @@ var MdTabs = Ember.Component.extend(Ember.Evented, RippleMixin, {
             canvasWidth -= tab.offsetWidth;
         });
 
-        var shouldPaginate = canvasWidth <= 0;
+        var shouldPaginate = canvasWidth < 0;
 
         this.set('shouldPaginate', shouldPaginate);
         //console.log('should paginate: ', this.get('shouldPaginate'));
@@ -211,6 +211,7 @@ var MdTabs = Ember.Component.extend(Ember.Evented, RippleMixin, {
 
         if (typeof tabData.tabContent !== 'string') {
             self.set('hasContent', false);
+
         }
 
         if (Ember.isPresent(index)) {

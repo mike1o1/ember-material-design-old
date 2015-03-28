@@ -311,8 +311,7 @@ docs-demo {
   z-index: 1;
   -webkit-transition: all 0.45s cubic-bezier(0.35, 0, 0.25, 1);
   transition: all 0.45s cubic-bezier(0.35, 0, 0.25, 1);
-  max-height: 448px;
-  min-height: 448px;
+  height: 448px;
   background: #fff;
   overflow: hidden;
 }
