@@ -343,12 +343,6 @@ md-tabs.demo-source-tabs .active md-tab-label {
   position: relative;
   overflow:hidden;
   min-height: 448px;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -moz-box;
-  display: -moz-flex;
-  display: -ms-flexbox;
-  display: flex;
 }
 .small-demo .demo-source-tabs:not(.ng-hide) {
   min-height: 224px;
@@ -366,14 +360,7 @@ md-tabs.demo-source-tabs .active md-tab-label {
   -ms-flex: 1 1 auto;
   flex: 1 1 auto;
 }
-.demo-content > * {
-  -webkit-box-flex: 1 1 0%;
-  -webkit-flex: 1 1 0%;
-  -moz-box-flex: 1 1 0%;
-  -moz-flex: 1 1 0%;
-  -ms-flex: 1 1 0%;
-  flex: 1 1 0%;
-}
+
 .demo-content > div[layout-fill] {
   min-height: 448px;
 }
