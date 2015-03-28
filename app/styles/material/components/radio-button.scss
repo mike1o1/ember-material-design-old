@@ -3,10 +3,17 @@ $radio-height: $radio-width !default;
 
 md-radio-button,
 .md-switch-button {
+  box-sizing: border-box;
   display: block;
   margin: 15px;
   white-space: nowrap;
   cursor: pointer;
+
+  *,
+  *:before,
+  *:after {
+    box-sizing: border-box;
+  }
 
   input {
     display: none;
@@ -76,4 +83,10 @@ md-radio-group {
   border: 1px dotted transparent;
   display: block;
   outline: none;
+}
+
+@media screen and (-ms-high-contrast: active) {
+  md-radio-button .md-on {
+    background-color: #fff;
+  }
 }

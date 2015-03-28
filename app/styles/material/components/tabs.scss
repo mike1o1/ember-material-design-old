@@ -13,10 +13,18 @@ md-tab-data {
 }
 
 md-tabs {
+  box-sizing: border-box;
   display: block;
   margin: 0;
   border-radius: 2px;
   overflow: hidden;
+
+  *,
+  *:before,
+  *:after {
+    box-sizing: border-box;
+  }
+
   &[md-align-tabs="bottom"] {
     padding-bottom: $tabs-header-height;
     position: relative;

@@ -44,7 +44,7 @@ $button-fab-toast-offset: $button-fab-height * 0.75;
   font-weight: 500;
   font-style: inherit;
   font-variant: inherit;
-  font-size: inherit;
+  font-size: $body-font-size-base;
   font-family: inherit;
   line-height: inherit;
   text-decoration: none;
@@ -67,7 +67,6 @@ $button-fab-toast-offset: $button-fab-height * 0.75;
   &.rb-hide {
     transition: none;
   }
-;
 
   &.md-cornered {
     border-radius: 0;
@@ -113,7 +112,7 @@ $button-fab-toast-offset: $button-fab-height * 0.75;
       overflow: hidden;
        // The following hack causes Safari to respect overflow hidden for ripples
       -webkit-mask-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC);
-    
+
     }
 
     md-icon {
@@ -143,6 +142,12 @@ $button-fab-toast-offset: $button-fab-height * 0.75;
 
 }
 
+@media screen and (-ms-high-contrast: active) {
+  .md-button.md-raised,
+  .md-button.md-fab {
+    border: 1px solid #fff;
+  }
+}
 
 
 

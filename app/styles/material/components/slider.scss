@@ -270,3 +270,8 @@ md-slider {
   }
 }
 
+@media screen and (-ms-high-contrast: active) {
+  md-slider .md-track {
+    border-bottom: 1px solid #fff;
+  }
+}

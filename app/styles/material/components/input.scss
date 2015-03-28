@@ -156,5 +156,10 @@ md-input-container {
   }
 }
 
+@media screen and (-ms-high-contrast: active) {
+  md-input-container > md-icon {
+    fill: #fff;
+  }
+}
 
 

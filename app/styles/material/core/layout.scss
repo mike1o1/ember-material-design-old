@@ -113,6 +113,7 @@
   [#{$flexName}],
   [#{$flexName}="true"],
   [#{$flexName}="flex"] {
+    box-sizing: border-box;
     flex: 1;
   }
 
