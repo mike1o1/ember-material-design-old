@@ -21,6 +21,7 @@ Router.map(function() {
   this.route('icon');
   this.route('radio-button');
   this.route('tabs');
+  this.route('typography');
 });
 
 export default Router;

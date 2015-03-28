@@ -356,9 +356,7 @@ var RippleService = Ember.Service.extend({
             isHeld = false;
             var ripple = ripples[ripples.length - 1];
 
-            Ember.run.schedule('render', this, () => {
-                updateElement(ripple);
-            });
+            updateElement(ripple);
         }
 
     }
