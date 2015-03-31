@@ -15,7 +15,7 @@ var MdIcon = Ember.Component.extend({
     classNameBindings: ['iconClass'],
 
     fontIcon: function() {
-        return 'md-font ' + this.get('mdFontIcon');
+        var fontIcon = 'md-font ' + this.get('mdFontIcon');
     }.property('mdFontIcon'),
 
     loadIcon: function() {

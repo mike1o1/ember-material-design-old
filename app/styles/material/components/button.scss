@@ -1,12 +1,16 @@
-$button-line-height: 25px !default;
-$button-padding: 2px 6px 3px !default;
+$button-line-height: 3.60rem !default;
+$button-padding: 0 0.600rem !default;
+$button-margin: 0.600rem 0.800rem !default;
+$button-min-width: 8.800rem !default;
 
 // Fab buttons
-$button-fab-width: 56px !default;
-$button-fab-height: 56px !default;
-$button-fab-padding: 16px !default;
-$button-fab-mini-width: 40px !default;
-$button-fab-mini-height: 40px !default;
+$button-fab-width: 5.600rem !default;
+$button-fab-height: 5.600rem !default;
+$button-fab-line-height: 5.600rem !default;
+$button-fab-padding: 1.60rem !default;
+$button-fab-mini-width: 4.00rem !default;
+$button-fab-mini-height: 4.00rem !default;
+$button-fab-mini-line-height: 4.00rem !default;
 
 $button-fab-toast-offset: $button-fab-height * 0.75;
 
@@ -14,7 +18,7 @@ $button-fab-toast-offset: $button-fab-height * 0.75;
   * Position a FAB button.
   */
 @mixin fab-position($spot, $top: auto, $right: auto, $bottom: auto, $left: auto) {
-  &.md-fab-#{spot} {
+  &.md-fab-#{$spot} {
     top: $top;
     right: $right;
     bottom: $bottom;
@@ -24,7 +28,7 @@ $button-fab-toast-offset: $button-fab-height * 0.75;
 }
 
 .md-button {
-
+  box-sizing: border-box;
   color: currentColor;
 
   user-select: none;
@@ -32,8 +36,10 @@ $button-fab-toast-offset: $button-fab-height * 0.75;
 
   outline: none;
   border: 0;
-  padding: 6px;
-  margin: 0;
+  display: inline-block;
+  padding: $button-padding;
+  margin: $button-margin;
+  line-height: $button-line-height;
   background: transparent;
   white-space: nowrap;
 
@@ -42,29 +48,33 @@ $button-fab-toast-offset: $button-fab-height * 0.75;
   // Always uppercase buttons
   text-transform: uppercase;
   font-weight: 500;
+  font-size: $body-font-size-base;
   font-style: inherit;
   font-variant: inherit;
-  font-size: $body-font-size-base;
   font-family: inherit;
-  line-height: inherit;
   text-decoration: none;
 
   cursor: pointer;
   overflow: hidden; // for ink element
 
   transition: box-shadow $swift-ease-out-duration $swift-ease-out-timing-function,
-  background-color $swift-ease-out-duration $swift-ease-out-timing-function,
-  transform $swift-ease-out-duration $swift-ease-out-timing-function;
+              background-color $swift-ease-out-duration $swift-ease-out-timing-function;
+
+  *,
+  *:before,
+  *:after {
+    box-sizing: border-box;
+  }
 
   &:focus {
     outline: none;
   }
 
-  &:hover {
+  &:hover, &:focus {
     text-decoration: none;
   }
 
-  &.rb-hide {
+  &.ng-hide, &.ng-leave {
     transition: none;
   }
 
@@ -78,23 +88,28 @@ $button-fab-toast-offset: $button-fab-height * 0.75;
   }
 
   &.md-raised {
-    transform: translate3d(0, 0, 0);
-
     &:not([disabled]) {
       @extend .md-shadow-bottom-z-1;
     }
   }
 
+  &:not(.md-fab) {
+    min-width: $button-min-width;
+  }
+
+
   &.md-fab {
     @include fab-position(bottom-right, auto, ($button-fab-width - $button-fab-padding) / 2, ($button-fab-height - $button-fab-padding) / 2, auto);
-    @include fab-position(left, auto, auto, ($button-fab-height - $button-fab-padding) / 2, ($button-fab-width - $button-fab-padding) / 2);
+    @include fab-position(bottom-left, auto, auto, ($button-fab-height - $button-fab-padding) / 2, ($button-fab-width - $button-fab-padding) / 2);
     @include fab-position(top-right, ($button-fab-height - $button-fab-padding) / 2, ($button-fab-width - $button-fab-padding) / 2, auto, auto);
     @include fab-position(top-left, ($button-fab-height - $button-fab-padding) / 2, auto, auto, ($button-fab-width - $button-fab-padding) / 2);
 
     z-index: $z-index-fab;
 
+    line-height: $button-fab-line-height;
     width: $button-fab-width;
     height: $button-fab-height;
+    vertical-align: middle;
 
     @extend .md-shadow-bottom-z-1;
     border-radius: 50%;
@@ -120,27 +135,84 @@ $button-fab-toast-offset: $button-fab-height * 0.75;
     }
 
     &.md-mini {
+      line-height: $button-fab-mini-line-height;
       width: $button-fab-mini-width;
       height: $button-fab-mini-height;
 
-      md-icon {
-
-      }
     }
   }
 
   &:not([disabled]) {
     &.md-raised,
     &.md-fab {
-      &:focus,
-      &:hover {
-        transform: translate3d(0, -1px, 0);
+      &:focus {
+        @extend .md-shadow-bottom-z-1;
+      }
+      &:active {
         @extend .md-shadow-bottom-z-2;
       }
     }
   }
-
 }
+
+.md-toast-open-top {
+  .md-button.md-fab-top-left,
+  .md-button.md-fab-top-right {
+    transform: translate3d(0, $button-fab-toast-offset, 0);
+    &:not([disabled]) {
+      &:focus,
+      &:hover {
+        transform: translate3d(0, $button-fab-toast-offset - 1, 0);
+      }
+    }
+  }
+}
+
+.md-toast-open-bottom {
+  .md-button.md-fab-bottom-left,
+  .md-button.md-fab-bottom-right {
+    transform: translate3d(0, -$button-fab-toast-offset, 0);
+    &:not([disabled]) {
+      &:focus,
+      &:hover {
+        transform: translate3d(0, -$button-fab-toast-offset - 1, 0);
+      }
+    }
+  }
+}
+
+.md-button-group {
+  display: flex;
+  flex: 1;
+  width: 100%;
+}
+
+.md-button-group > .md-button {
+  flex: 1;
+
+  display: block;
+
+  overflow: hidden;
+
+  width: 0;
+
+  border-width: 1px 0px 1px 1px;
+  border-radius: 0;
+
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  &:first-child {
+    border-radius: 2px 0px 0px 2px;
+  }
+  &:last-child {
+    border-right-width: 1px;
+    border-radius: 0px 2px 2px 0px;
+  }
+}
+
+
 
 @media screen and (-ms-high-contrast: active) {
   .md-button.md-raised,

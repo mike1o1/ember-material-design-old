@@ -4,7 +4,8 @@ export default Ember.Controller.extend({
     showSource: false,
 
     showSourceClass: function() {
-        return this.get('showSource') ? 'show-source' : '';
+        var showSourceClass = this.get('showSource') ? 'show-source' : '';
+        return showSourceClass.htmlSafe();
     }.property('showSource'),
 
     demoName: '',

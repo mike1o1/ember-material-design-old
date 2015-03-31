@@ -1,45 +1,36 @@
 $button-border-radius: 3px !default;
 $button-fab-border-radius: 50% !default;
 
-md-toolbar .md-button.md-fab {
-  background-color: white;
-}
-
 .md-button {
-  // theme specific items
   border-radius: $button-border-radius;
 
   &:not([disabled]) {
-    &:hover,
     &:focus {
       background-color: rgba(color($background, "500"), 0.2);
-    }
-  }
-
-  &.md-primary {
-    color: color($primary);
-
-    &.md-raised,
-    &.md-fab {
-      color: color($primary, contrast);
-      background-color: color($primary);
-      &:not([disabled]) {
-        &:hover,
-        &:focus {
-          background-color: color($primary, "600");
-        }
-      }
     }
   }
 
   &.md-fab {
     border-radius: $button-fab-border-radius;
     background-color: color($accent);
-    color: color($accent, contrast);
+    color: color($accent, 'contrast');
     &:not([disabled]) {
-      &:hover,
       &:focus {
         background-color: color($accent, 'A700');
+      }
+    }
+  }
+
+  &.md-primary {
+    color: color($primary);
+    &.md-raised,
+    &.md-fab {
+      color: color($primary, contrast);
+      background-color: color($primary);
+      &:not([disabled]) {
+        &:focus {
+          background-color: color($primary, "600");
+        }
       }
     }
   }
@@ -48,7 +39,6 @@ md-toolbar .md-button.md-fab {
     color: color($background, contrast);
     background-color: color($background, "50");
     &:not([disabled]) {
-      &:hover,
       &:focus {
         background-color: color($background, "200");
       }
@@ -60,10 +50,9 @@ md-toolbar .md-button.md-fab {
 
     &.md-raised,
     &.md-fab {
-      color: color($warn, contrast);
+      color: color($warn, 'contrast');
       background-color: color($warn);
       &:not([disabled]) {
-        &:hover,
         &:focus {
           background-color: color($warn, "700");
         }
@@ -79,7 +68,6 @@ md-toolbar .md-button.md-fab {
       color: color($accent, contrast);
       background-color: color($accent);
       &:not([disabled]) {
-        &:hover,
         &:focus {
           background-color: color($accent, "700");
         }
@@ -90,8 +78,14 @@ md-toolbar .md-button.md-fab {
   &[disabled],
   &.md-raised[disabled],
   &.md-fab[disabled] {
-    color: color($foreground, "3");
-    background-color: transparent;
+    color: color($foreground, "2");
     cursor: not-allowed;
+  }
+  &.md-raised[disabled],
+  &.md-fab[disabled] {
+    background-color: color($foreground, '4');
+  }
+  &[disabled] {
+    background-color: transparent;
   }
 }

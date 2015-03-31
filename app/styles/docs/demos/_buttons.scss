@@ -1,5 +1,4 @@
 .buttondemoBasicUsage {
-  /** From vulcanized demo **/
 }
 
 .buttondemoBasicUsage section {
@@ -15,14 +14,9 @@
   margin-right: 7px;
 }
 
-.buttondemoBasicUsage section .md-button:not(.md-fab) {
-  min-width: 10em;
-}
-
 .buttondemoBasicUsage section .md-button {
-  display: block;
-  margin: 1em;
-  line-height: 25px;
+  margin-top: 16px;
+  margin-bottom: 16px;
 }
 
 .buttondemoBasicUsage .label {

@@ -38,20 +38,29 @@
 
                             <section layout="row" layout-sm="column" layout-align="center center">
                                 {{#md-button class="md-fab" aria-label="Eat cake"}}
-                                    :|
+                                    {{md-icon md-svg-src="images/icons/cake.svg" style="margin-top:12px;"}}
                                 {{/md-button}}
 
                                 {{#md-button class="md-fab md-primary" aria-label="Use Android"}}
-                                    :|
+                                    {{md-icon md-svg-src="images/icons/android.svg"}}
                                 {{/md-button}}
 
                                 {{#md-button class="md-fab" disabled="true" aria-label="Comment"}}
-                                    :|
+                                    {{md-icon md-svg-src="images/icons/ic_comment_24px.svg"}}
                                 {{/md-button}}
 
                                 {{#md-button class="md-fab md-primary md-hue-2" aria-label="Profile"}}
-                                    :|
+                                    {{md-icon md-svg-src="images/icons/ic_people_24px.svg"}}
                                 {{/md-button}}
+
+                                {{#md-button class="md-fab md-mini" aria-label="Eat cake" ng-href="#"}}
+                                    {{md-icon md-svg-src="images/icons/cake.svg" style="margin-top:6px;"}}
+                                {{/md-button}}
+
+                                {{#md-button class="md-fab md-mini md-primary" aria-label="Use Android"}}
+                                    {{md-icon md-svg-src="images/icons/android.svg" style="color: greenyellow;"}}
+                                {{/md-button}}
+
                                 <div class="label">FAB</div>
                             </section>
 

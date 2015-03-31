@@ -22,6 +22,7 @@ Router.map(function() {
   this.route('radio-button');
   this.route('tabs');
   this.route('typography');
+  this.route('tooltip');
 });
 
 export default Router;
