@@ -10,22 +10,17 @@ md-tooltip {
     position: absolute;
     border-radius: 50%;
     transform: translate(-50%, -50%) scale(0);
-    opacity: 1;
-    &.md-show-add {
+    opacity: 0;
+
+    &.md-show {
       transition: $swift-ease-out;
-      transform: translate(-50%, -50%) scale(0);
-      opacity: 0;
-    }
-    &.md-show, &md-show-add-active {
       transform: translate(-50%, -50%) scale(1);
       opacity: 1;
     }
-    &.md-show-remove {
+    &.md-hide {
       transition: $swift-ease-in;
-      &.md-show-remove-active {
-        transform: translate(-50%, -50%) scale(0);
-        opacity: 0;
-      }
+      transform: translate(-50%, -50%) scale(0);
+      opacity: 0;
     }
   }
 
@@ -39,18 +34,14 @@ md-tooltip {
     padding: 8px;
     background: transparent;
     opacity: 0;
-    &.md-show-add {
+    &.md-show {
       transition: $swift-ease-out;
-      opacity: 0;
-    }
-    &.md-show, &md-show-add-active {
       opacity: 1;
     }
-    &.md-show-remove {
+    &.md-hide {
       transition: $swift-ease-in;
-      &.md-show-remove-active {
-        opacity: 0;
-      }
+      opacity: 0;
+
     }
   }
 
