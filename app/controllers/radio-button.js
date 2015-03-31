@@ -46,10 +46,12 @@ export default Ember.Controller.extend({
         addItem: function() {
             var r = Math.ceil(Math.random() * 1000);
             this.get('radioData').addObject({label: r, value: r});
+            return false;
         },
 
         removeItem: function() {
             this.get('radioData').popObject();
+            return false;
         }
     }
 });
