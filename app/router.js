@@ -23,6 +23,7 @@ Router.map(function() {
   this.route('tabs');
   this.route('typography');
   this.route('tooltip');
+  this.route('toast');
 });
 
 export default Router;

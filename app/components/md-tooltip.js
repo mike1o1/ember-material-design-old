@@ -25,8 +25,6 @@ var MdTooltip = Ember.Component.extend({
 
     rootElement: function() {
         var re = this.container.lookup('application:main').get('rootElement');
-
-
         return Ember.$(re);
     }.property(),
 
@@ -49,7 +47,6 @@ var MdTooltip = Ember.Component.extend({
         if (!this.get('visible')) {
             return;
         }
-        console.log('visible changed: ' + this.get('visible'));
 
         var tooltipParent = this.get('tooltipParent');
 
@@ -59,16 +56,6 @@ var MdTooltip = Ember.Component.extend({
 
 
     }),
-
-    hideTooltip: Ember.observer('visible', function() {
-        if (this.get('visible')) {
-            return;
-        }
-
-
-    }),
-
-
 
     setupComponent: function() {
 
