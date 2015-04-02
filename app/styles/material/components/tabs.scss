@@ -33,7 +33,7 @@ md-tabs {
   &[md-align-tabs="bottom"] {
     padding-bottom: $tabs-header-height;
     position: relative;
-    md-tab-wrapper {
+    md-tabs-wrapper {
       position: absolute;
       bottom: 0;
       left: 0;
@@ -42,12 +42,22 @@ md-tabs {
     }
   }
   &[md-border-bottom] {
-    md-tab-wrapper {
+    md-tabs-wrapper {
       border-width: 1px;
       border-style: solid;
     }
   }
-  md-tab-wrapper {
+
+  &[md-dynamic-height] {
+    transition: height $swift-ease-in-out-duration $swift-ease-in-out-timing-function;
+    md-tabs-content-wrapper {
+      md-tab-content {
+        bottom: initial;
+      }
+    }
+  }
+
+  md-tabs-wrapper {
     display: block;
     position: relative;
     md-ink-bar {
@@ -181,7 +191,7 @@ md-tabs {
     }
   }
 
-  md-tab-content-wrapper {
+  md-tabs-content-wrapper {
     display: block;
     min-height: 200px;
     position: absolute;

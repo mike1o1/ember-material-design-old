@@ -16,15 +16,15 @@
 
                             {{#md-tabs selectedIndex=selectedIndex md-border-bottom=''}}
 
-                                {{#md-tab-wrapper}}
+                                {{#md-tabs-wrapper}}
                                     {{#each tab in tabs}}
                                         {{#md-tab disabled=tab.disabled label=tab.title}}
                                             <md-tab-label>{{tab.title}}</md-tab-label>
                                         {{/md-tab}}
                                     {{/each}}
-                                {{/md-tab-wrapper}}
+                                {{/md-tabs-wrapper}}
 
-                                {{#md-tab-content-wrapper}}
+                                {{#md-tabs-content-wrapper}}
                                     {{#each tab in tabs}}
                                         {{#md-tab-content}}
                                             <div class="demo-tab" style="padding: 25px; text-align: center;">
@@ -35,7 +35,7 @@
                                             </div>
                                         {{/md-tab-content}}
                                     {{/each}}
-                                {{/md-tab-content-wrapper}}
+                                {{/md-tabs-content-wrapper}}
                             {{/md-tabs}}
 
                             <form layout="column"

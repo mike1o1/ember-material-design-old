@@ -24,6 +24,7 @@ var MdTabs = Ember.Component.extend(Ember.Evented, RippleMixin, {
     hasContent: true,
     hasFocus: false,
     lastClick: false,
+    dynamicHeight: false,
 
     setupTabs: function() {
         this.set('tabs', Ember.ArrayProxy.create({
@@ -42,6 +43,7 @@ var MdTabs = Ember.Component.extend(Ember.Evented, RippleMixin, {
             this.select(this.get('selectedIndex'));
             this.set('offsetLeft', this.get('offsetLeft'));
             this.updateInkBarStyles();
+            this.updateHeightFromContent();
         });
     }.on('didInsertElement'),
 
@@ -65,6 +67,7 @@ var MdTabs = Ember.Component.extend(Ember.Evented, RippleMixin, {
 
         this.set('lastSelectedIndex', this.get('selectedIndex'));
         this.updateInkBarStyles();
+        this.updateHeightFromContent();
     }.on('resize'),
 
     getElements: function() {
@@ -73,11 +76,16 @@ var MdTabs = Ember.Component.extend(Ember.Evented, RippleMixin, {
         }
         // TODO: make these components and have them auto register?
         var elements = {};
-        elements.canvas = this.$()[0].getElementsByTagName('md-tab-canvas')[0];
-        elements.wrapper = elements.canvas.getElementsByTagName('md-pagination-wrapper')[0];
-        elements.tabs = elements.wrapper.getElementsByTagName('md-tab-item');
+        elements.wrapper = this.$()[0].getElementsByTagName('md-tabs-wrapper')[0];
+        elements.canvas = elements.wrapper.getElementsByTagName('md-tab-canvas')[0];
+        elements.paging = elements.canvas.getElementsByTagName('md-pagination-wrapper')[0];
+        elements.tabs = elements.paging.getElementsByTagName('md-tab-item');
         elements.dummies = elements.canvas.getElementsByTagName('md-dummy-tab');
-        elements.inkBar = elements.wrapper.getElementsByTagName('md-ink-bar')[0];
+        elements.inkBar = elements.paging.getElementsByTagName('md-ink-bar')[0];
+
+        // gather tab content items
+        elements.contentsWrapper = this.$()[0].getElementsByTagName('md-tabs-content-wrapper')[0];
+        elements.contents = elements.contentsWrapper.getElementsByTagName('md-tab-content');
 
         this.elements = elements;
     }.on('didInsertElement').observes('tabs.[]'),
@@ -129,13 +137,9 @@ var MdTabs = Ember.Component.extend(Ember.Evented, RippleMixin, {
     }.observes('focusIndex'),
 
     redirectFocus: function() {
-        // TODO: implement after dummies are implemented
         if (!this.elements || !this.elements.dummies || !this.get('focusIndex')) {
-            console.log('skipping focus');
             return;
         }
-
-        console.log('setting focus on: ' + this.get('focusIndex'));
 
         this.elements.dummies[this.get('focusIndex')].focus();
     }.on('focusIn'),
@@ -302,9 +306,23 @@ var MdTabs = Ember.Component.extend(Ember.Evented, RippleMixin, {
 
     handleSelectedIndexChange: function() {
         this.set('selectedIndex', this.getNearestSafeIndex(this.get('selectedIndex')));
+        this.updateHeightFromContent();
         this.updateInkBarStyles();
         this.set('lastSelectedIndex', this.get('selectedIndex'));
     }.observes('selectedIndex'),
+
+    updateHeightFromContent: function() {
+        if (!this.get('dynamicHeight')) {
+            return this.$().css('height', '');
+        }
+
+        var tabContent = this.elements.contents[this.get('selectedIndex')],
+            contentHeight = tabContent.offsetHeight,
+            tabsHeight = this.elements.wrapper.offsetHeight,
+            newHeight = contentHeight + tabsHeight;
+
+        this.$().css('height', newHeight + 'px');
+    },
 
     updateInkBarStyles: function() {
         if (!this.elements.tabs.length > 0) {
@@ -312,7 +330,7 @@ var MdTabs = Ember.Component.extend(Ember.Evented, RippleMixin, {
         }
 
         var index = this.get('selectedIndex'),
-            totalWidth = this.elements.wrapper.offsetWidth,
+            totalWidth = this.elements.paging.offsetWidth,
             tab = this.elements.tabs[index],
             left = tab.offsetLeft,
             right = totalWidth - left - tab.offsetWidth;

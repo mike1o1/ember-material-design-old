@@ -1,5 +1,5 @@
 md-tabs {
-  md-tab-wrapper {
+  md-tabs-wrapper {
     background-color: transparent;
     border-color: color($foreground, '4');
   }
@@ -29,7 +29,7 @@ md-tabs {
   }
 
   &.md-accent {
-    md-tab-wrapper {
+    md-tabs-wrapper {
       background-color: color($accent);
     }
 
@@ -50,7 +50,7 @@ md-tabs {
   }
 
   &.md-primary {
-    md-tab-wrapper {
+    md-tabs-wrapper {
       background-color: color($primary);
     }
     md-tab:not([disabled]) {
@@ -65,7 +65,7 @@ md-tabs {
   }
 
   &.md-warn {
-    md-tab-wrapper {
+    md-tabs-wrapper {
       background-color: color($warn);
     }
 
