@@ -4,7 +4,7 @@ var MdTabContent = Ember.Component.extend({
     tagName: 'md-tab-content',
 
     attributeBindings: ['tab', 'active'],
-    
+
     tabContentWrapperComponent: Ember.computed.alias('parentView'),
 
     tabsComponent: Ember.computed.alias('tabContentWrapperComponent.parentView'),
