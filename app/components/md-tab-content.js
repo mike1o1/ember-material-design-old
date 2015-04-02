@@ -4,7 +4,7 @@ var MdTabContent = Ember.Component.extend({
     tagName: 'md-tab-content',
 
     attributeBindings: ['tab', 'active'],
-
+    
     tabContentWrapperComponent: Ember.computed.alias('parentView'),
 
     tabsComponent: Ember.computed.alias('tabContentWrapperComponent.parentView'),
@@ -40,7 +40,7 @@ var MdTabContent = Ember.Component.extend({
         this.set('index', index);
     }.observes('tabs.[]'),
 
-    classNameBindings: ['tabIsRight:md-right', 'tabIsLeft:md-left', 'noTransition:md-no-transition', 'isActive:md-active'],
+    classNameBindings: ['tabIsRight:md-right', 'tabIsLeft:md-left', 'noTransition:md-no-transition', 'isActive:md-active', 'dynamicHeight:md-no-scroll'],
 
     tabIsRight: function() {
 
@@ -48,6 +48,10 @@ var MdTabContent = Ember.Component.extend({
 
         //return this.get('tab') && this.get('tab').isRight();
     }.property('tabsComponent.selectedIndex', 'index'),
+
+    dynamicHeight: function() {
+        return this.get('tabsComponent.dynamicHeight');
+    }.property('tabsComponent.dynamicHeight'),
 
     tabIsLeft: function() {
         return this.get('index') < this.get('tabsComponent.selectedIndex');
