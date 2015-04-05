@@ -217,7 +217,7 @@ var MdTabs = Ember.Component.extend(Ember.Evented, RippleMixin, {
         }
 
         this.set('shouldPaginate', shouldPaginate);
-        
+
     }.observes('tabs.[]'),
 
     shouldPaginate: function() {

@@ -33,7 +33,7 @@ var MdCheckbox = Ember.Component.extend(RippleMixin, {
     },
 
     keyPress: function(event) {
-        if (event.which === this.get('constants.KEY_CODE.SPACE')) {
+        if (event.which === this.get('constants.KEY_CODE.SPACE') || event.which === this.get('constants.KEY_CODE.ENTER')) {
             this.click();
         }
     }
