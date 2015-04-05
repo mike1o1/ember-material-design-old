@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import RipplesMixin from '../mixins/ripples';
 
-var RbButtonComponent = Ember.Component.extend(RipplesMixin, {
+var MdButtonComponent = Ember.Component.extend(RipplesMixin, {
 
     tagName: 'button',
 
@@ -36,4 +36,4 @@ var RbButtonComponent = Ember.Component.extend(RipplesMixin, {
 
 });
 
-export default RbButtonComponent;
+export default MdButtonComponent;

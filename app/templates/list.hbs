@@ -10,23 +10,32 @@
 
                             <md-list>
 
-                                {{#each item in todos}}
-                                    <md-item ng-repeat="item in todos">
-                                        <md-item-content>
-                                            <div class="md-tile-left">
-                                                <img {{bind-attr src=item.face alt=item.who}} class="face">
-                                            </div>
-                                            <div class="md-tile-content">
-                                                <h3>{{item.what}}</h3>
-                                                <h4>{{item.who}}</h4>
-
-                                                <p>
-                                                    {{item.notes}}
-                                                </p>
-                                            </div>
-                                        </md-item-content>
-                                    </md-item>
+                                {{#each todos as |item index|}}
+                                    {{#md-item class="md-3-line"}}
+                                        <img class="md-avatar" src="{{item.face}}?{{index}}" alt="{{item.who}}">
+                                        <div class="md-item-text">
+                                            <h3>{{item.who}}</h3>
+                                            <h4>{{item.what}}</h4>
+                                            <p>{{item.notes}}</p>
+                                        </div>
+                                    {{/md-item}}
                                 {{/each}}
+
+                                {{#md-item class="md-2-line"}}
+                                    <img class="md-avatar" src="{{firstTodo.face}}?20" alt="{{firstTodo.who}}"/>
+                                    <div class="md-item-text">
+                                        <h3>{{firstTodo.who}}</h3>
+                                        <p>Secondary Text</p>
+                                    </div>
+                                {{/md-item}}
+
+                                {{#md-item class="md-3-line"}}
+                                    <img class="md-avatar" src="{{firstTodo.face}}?25" alt="{{firstTodo.who}}"/>
+                                    <div class="md-item-text">
+                                        <h3>{{firstTodo.who}}</h3>
+                                        <p>Secondary line text Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam massa quam.</p>
+                                    </div>
+                                {{/md-item}}
 
                             </md-list>
 
