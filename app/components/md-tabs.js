@@ -26,6 +26,7 @@ var MdTabs = Ember.Component.extend(Ember.Evented, RippleMixin, {
     lastClick: false,
     dynamicHeight: false,
     centerTabs: false,
+    noPagination: false,
 
     setupTabs: function() {
         this.set('tabs', Ember.ArrayProxy.create({
@@ -206,13 +207,21 @@ var MdTabs = Ember.Component.extend(Ember.Evented, RippleMixin, {
             canvasWidth -= tab.offsetWidth;
         });
 
+
+
         var shouldPaginate = canvasWidth < 0;
 
+        var noPagination = this.get('noPagination');
+        if (noPagination) {
+            shouldPaginate = false;
+        }
+
         this.set('shouldPaginate', shouldPaginate);
-        //console.log('should paginate: ', this.get('shouldPaginate'));
+        
     }.observes('tabs.[]'),
 
     shouldPaginate: function() {
+
         return false;
     }.property(''),
 
