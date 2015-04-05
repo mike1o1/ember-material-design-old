@@ -25,6 +25,7 @@ var MdTabs = Ember.Component.extend(Ember.Evented, RippleMixin, {
     hasFocus: false,
     lastClick: false,
     dynamicHeight: false,
+    centerTabs: false,
 
     setupTabs: function() {
         this.set('tabs', Ember.ArrayProxy.create({
@@ -145,6 +146,10 @@ var MdTabs = Ember.Component.extend(Ember.Evented, RippleMixin, {
     }.on('focusIn'),
 
     adjustOffset: function() {
+        if (this.get('shouldCenterTabs')) {
+            return;
+        }
+
         var tab = this.elements.tabs[this.get('focusIndex')],
             left = tab.offsetLeft,
             right = tab.offsetWidth + left;
@@ -155,6 +160,14 @@ var MdTabs = Ember.Component.extend(Ember.Evented, RippleMixin, {
         this.set('offsetLeft', Math.min(offsetLeft, this.fixOffset(left)));
         this.endPropertyChanges();
     },
+
+    offsetLeftStyle: function() {
+        var offsetLeft = this.get('offsetLeft');
+        var newValue = this.get('shouldCenterTabs') ? '' : '-' + offsetLeft + 'px';
+        newValue = 'left: ' + newValue;
+
+        return newValue.htmlSafe();
+    }.property('offsetLeft'),
 
     attachRipple: function(element) {
 
@@ -179,6 +192,10 @@ var MdTabs = Ember.Component.extend(Ember.Evented, RippleMixin, {
                 return !this.get('shouldPaginate') && this.get('mediaQueries.isSm')
         }
     }.property('mediaQueries.isSm', 'shouldPaginate'),
+
+    shouldCenterTabs: function() {
+        return this.get('centerTabs') && !this.get('shouldPaginate');
+    }.property('shouldPaginate', 'centerTabs'),
 
     calculatePagination: function() {
         if (!this.elements || !this.elements.tabs || this.elements.tabs.length <= 1) {
