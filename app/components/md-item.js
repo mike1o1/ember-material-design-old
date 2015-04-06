@@ -2,7 +2,7 @@ import Ember from 'ember';
 
 var MdItemComponent = Ember.Component.extend({
     tagName: 'md-item',
-    classNameBindings: ['hasProxiedElement::md-no-style'],
+    classNameBindings: ['hasProxiedElement::md-no-proxy'],
     hasProxiedElement: false,
 
     setupComponent: function() {

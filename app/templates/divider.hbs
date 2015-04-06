@@ -25,25 +25,21 @@
                         {{/md-toolbar}}
 
                         <md-content>
-                            <md-list>
+                            {{#md-list}}
                                 {{#each item in messages}}
+                                    {{#md-item class="md-3-line"}}
+                                        <div class="md-item-text">
+                                            <h3>{{item.what}}</h3>
+                                            <h4>{{item.who}}</h4>
 
-
-                                    <md-item>
-                                        <md-item-content>
-                                            <div class="md-tile-content">
-                                                <h3>{{item.what}}</h3>
-                                                <h4>{{item.who}}</h4>
-
-                                                <p>
-                                                    {{item.notes}}
-                                                </p>
-                                            </div>
-                                        </md-item-content>
-                                        <md-divider ng-if="!$last"></md-divider>
-                                    </md-item>
+                                            <p>
+                                                {{item.notes}}
+                                            </p>
+                                        </div>
+                                        <md-divider></md-divider>
+                                    {{/md-item}}
                                 {{/each}}
-                            </md-list>
+                            {{/md-list}}
                         </md-content>
 
                         {{#md-toolbar class="md-theme-light"}}
@@ -53,26 +49,22 @@
                         {{/md-toolbar}}
 
                         <md-content>
-                            <md-list>
+                            {{#md-list}}
                                 {{#each item in messages}}
-                                    <md-item ng-repeat="item in messages">
-                                        <md-item-content>
-                                            <div class="md-tile-left">
-                                                <img {{bind-attr src=item.face alt=item.who}} class="face">
-                                            </div>
-                                            <div class="md-tile-content">
-                                                <h3>{{item.what}}</h3>
-                                                <h4>{{item.who}}</h4>
+                                    {{#md-item class="md-3-line"}}
+                                        <img src="{{item.face}}" alt="{{item.who}}" class="face">
+                                        <div class="md-item-text">
+                                            <h3>{{item.what}}</h3>
+                                            <h4>{{item.who}}</h4>
 
-                                                <p>
-                                                    {{item.notes}}
-                                                </p>
-                                            </div>
-                                        </md-item-content>
-                                        <md-divider md-inset ng-if="!$last"></md-divider>
-                                    </md-item>
+                                            <p>
+                                                {{item.notes}}
+                                            </p>
+                                        </div>
+                                        <md-divider md-inset></md-divider>
+                                    {{/md-item}}
                                 {{/each}}
-                            </md-list>
+                            {{/md-list}}
                         </md-content>
                     </div>
 
