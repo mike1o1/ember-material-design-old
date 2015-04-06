@@ -34,7 +34,7 @@ Icon.prototype = {
 };
 
 /**
- * Clone the Icon DOM element; which is stored as an angular.element()
+ * Clone the Icon DOM element
  */
 function cloneSVG() {
     return Ember.$(this.element[0].cloneNode(true));
@@ -52,9 +52,8 @@ function prepareAndStyle() {
     svg[0].setAttribute('height', '100%');
     svg[0].setAttribute('width', '100%');
     svg[0].setAttribute('preserveAspectRatio', 'xMidYMid meet');
-    svg[0].setAttribute('viewBox', svg.attr('viewBox') || ('0 0 ' + iconSize + ' ' + iconSize));
 
-
+    svg[0].setAttribute('viewBox', svg[0].getAttribute('viewBox') || ('0 0 ' + iconSize + ' ' + iconSize));
 
     svg.css({
         'pointer-events': 'none',

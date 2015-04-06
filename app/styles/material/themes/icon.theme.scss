@@ -1,4 +1,7 @@
 md-icon {
+
+  color: color($foreground, '2');
+
   &.md-primary {
     color: color($primary);
   }
