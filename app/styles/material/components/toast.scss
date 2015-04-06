@@ -71,6 +71,10 @@ md-toast {
     cursor: pointer;
     text-transform: uppercase;
     float: right;
+
+    &.md-button {
+      min-width: 0;
+    }
   }
 }
 
