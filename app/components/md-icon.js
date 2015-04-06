@@ -6,7 +6,7 @@ var MdIcon = Ember.Component.extend({
 
     tagName: 'md-icon',
 
-    attributeBindings: ['mdFontIcon', 'md-svg-icon', 'md-svg-src', 'style'],
+    attributeBindings: ['style'],
 
     iconName: function() {
         return this.get('md-svg-icon') || this.get('md-svg-src') || '';
@@ -15,7 +15,7 @@ var MdIcon = Ember.Component.extend({
     classNameBindings: ['iconClass'],
 
     fontIcon: function() {
-        var fontIcon = 'md-font ' + this.get('mdFontIcon');
+        return 'md-font ' + this.get('mdFontIcon');
     }.property('mdFontIcon'),
 
     loadIcon: function() {
