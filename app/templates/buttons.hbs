@@ -38,7 +38,7 @@
 
                             <section layout="row" layout-sm="column" layout-align="center center">
                                 {{#md-button class="md-fab" aria-label="Eat cake"}}
-                                    {{md-icon md-svg-src="images/icons/cake.svg" style="margin-top:12px;"}}
+                                    {{md-icon md-svg-src="images/icons/cake.svg"}}
                                 {{/md-button}}
 
                                 {{#md-button class="md-fab md-primary" aria-label="Use Android"}}
@@ -54,7 +54,7 @@
                                 {{/md-button}}
 
                                 {{#md-button class="md-fab md-mini" aria-label="Eat cake" ng-href="#"}}
-                                    {{md-icon md-svg-src="images/icons/cake.svg" style="margin-top:6px;"}}
+                                    {{md-icon md-svg-src="images/icons/cake.svg"}}
                                 {{/md-button}}
 
                                 {{#md-button class="md-fab md-mini md-primary" aria-label="Use Android"}}
@@ -81,6 +81,21 @@
                                 {{#md-button class="md-accent"}}Accent{{/md-button}}
                                 {{#md-button class="md-accent md-raised md-hue-1"}}Accent Hue 1{{/md-button}}
                                 <div class="label">Themed</div>
+                            </section>
+
+                            <section layout="row" layout-sm="column" layout-align="center center">
+                                {{#md-button class="md-icon-button md-primary"}}
+                                    {{md-icon md-svg-icon="images/icons/menu.svg"}}
+                                {{/md-button}}
+                                {{#md-button class="md-icon-button md-accent"}}
+                                    {{md-icon md-svg-icon="images/icons/favorite.svg"}}
+                                {{/md-button}}
+                                {{#md-button class="md-icon-button"}}
+                                    {{md-icon md-svg-icon="images/icons/more_vert.svg"}}
+                                {{/md-button}}
+
+
+                                <div class="label">Icon Button</div>
                             </section>
 
                         </md-content>
