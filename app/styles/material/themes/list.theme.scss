@@ -1,6 +1,6 @@
 md-list {
-  md-item.md-double-line .md-item-text,
-  md-item.md-triple-line .md-item-text {
+  md-list-item.md-double-line .md-list-item-text,
+  md-list-item.md-triple-line .md-list-item-text {
     h3, h4 {
       color: color($foreground, '1');
     }
@@ -15,7 +15,7 @@ md-list {
     background-color: color($background, '100');
   }
 
-  md-item > md-icon {
+  md-list-item > md-icon {
     color: color($foreground, '2');
 
     &.md-highlight {

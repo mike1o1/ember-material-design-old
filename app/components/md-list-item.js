@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 var MdItemComponent = Ember.Component.extend({
-    tagName: 'md-item',
+    tagName: 'md-list-item',
     classNameBindings: ['hasProxiedElement::md-no-proxy'],
     hasProxiedElement: false,
 
@@ -31,11 +31,11 @@ var MdItemComponent = Ember.Component.extend({
     wrapIn: function(type) {
         var container;
         if (type == 'div') {
-            container = Ember.$('<div class="md-no-style md-item-inner">');
+            container = Ember.$('<div class="md-no-style md-list-item-inner">');
             container.append(this.$().contents());
             this.$().addClass('md-proxy-focus');
         } else {
-            container = Ember.$('<button tabindex="0" class="md-no-style"><div class="md-item-inner"></div></button>');
+            container = Ember.$('<button tabindex="0" class="md-no-style"><div class="md-list-item-inner"></div></button>');
 
             // TODO: setup button click action
             container.children().eq(0).append(this.$().contents());
