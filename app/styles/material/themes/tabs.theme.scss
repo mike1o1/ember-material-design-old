@@ -1,3 +1,58 @@
+@mixin md-tab-primary {
+  md-tabs-wrapper {
+    background-color: color($primary);
+  }
+  md-tab-item:not([disabled]) {
+    color: color($primary, '100');
+    &.md-active, &.md-focus {
+      color: color($primary, 'contrast');
+    }
+    &.md-focus {
+      background: rgba(color($primary, 'contrast'), 0.1);
+    }
+  }
+}
+
+@mixin md-tab-warn {
+  md-tabs-wrapper {
+    background-color: color($warn);
+  }
+
+  md-tab-item:not([disabled]) {
+    color: color($warn, '100');
+    &.md-active, &.md-focus {
+      color: color($warn, 'contrast');
+    }
+    &.md-focus {
+      background: rgba(color($warn, 'contrast'), 0.1);
+    }
+  }
+}
+
+@mixin md-tab-accent {
+  md-tabs-wrapper {
+    background-color: color($accent);
+  }
+
+  md-tab-item:not([disabled]) {
+    color: color($accent, '100');
+    &.md-active, &.md-focus {
+      color: color($accent, 'contrast');
+    }
+    &.md-focus {
+      background: rgba(color($accent, 'contrast'), 0.1);
+    }
+  }
+
+  md-ink-bar {
+    color: rgba(color($primary, '600'), 1);
+    background: rgba(color($primary, '600'), 1);
+  }
+}
+
+
+
+
 md-tabs {
   md-tabs-wrapper {
     background-color: transparent;
@@ -29,54 +84,26 @@ md-tabs {
   }
 
   &.md-accent {
-    md-tabs-wrapper {
-      background-color: color($accent);
-    }
-
-    md-tab:not([disabled]) {
-      color: color($accent, '100');
-      &.md-active, &.md-focus {
-        color: color($accent, 'contrast');
-      }
-      &.md-focus {
-        background: rgba(color($accent, 'contrast'), 0.1);
-      }
-    }
-
-    md-ink-bar {
-      color: rgba(color($primary, '600'), 1.0);
-      background: rgba(color($primary, '600'), 1.0);
-    }
+    @include md-tab-accent();
   }
 
   &.md-primary {
-    md-tabs-wrapper {
-      background-color: color($primary);
-    }
-    md-tab:not([disabled]) {
-      color: color($primary, '100');
-      &.md-active, &.md-focus {
-        color: color($primary, 'contrast');
-      }
-      &.md-focus {
-        background: rgba(color($primary, 'contrast'), 0.1);
-      }
-    }
+    @include md-tab-primary();
   }
 
   &.md-warn {
-    md-tabs-wrapper {
-      background-color: color($warn);
-    }
-
-    md-tab:not([disabled]) {
-      color: color($warn, '100');
-      &.md-active, &.md-focus {
-        color: color($warn, 'contrast');
-      }
-      &.md-focus {
-        background: rgba(color($warn, 'contrast'), 0.1);
-      }
-    }
+    @include md-tab-warn();
   }
+}
+
+md-toolbar > md-tabs {
+  @include md-tab-primary();
+}
+
+md-toolbar.md-accent > md-tabs {
+  @include md-tab-accent();
+}
+
+md-toolbar.md-warn > md-tabs {
+  @include md-tab-warn();
 }
