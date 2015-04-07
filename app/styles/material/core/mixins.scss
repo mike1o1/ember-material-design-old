@@ -11,8 +11,8 @@
 
 @mixin input-placeholder-color($color) {
   &::-webkit-input-placeholder,
-  &::-moz-placeholder, /* Firefox 19+ */
-  &:-moz-placeholder, /* Firefox 18- */
+  &::-moz-placeholder,
+  &:-moz-placeholder,
   &:-ms-input-placeholder {
     color: $color;
   }
